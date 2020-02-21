@@ -1,6 +1,9 @@
 import os
 import sys
 import importlib
+import logging
+
+logger = logging.getLogger("petab_test_suite")
 
 
 def main():
@@ -11,7 +14,7 @@ def main():
 
     for case in case_list:
         case_dir = os.path.join(os.getcwd(), 'cases', case)
-        print('# ', case, case_dir)
+        logger.info('# ', case, case_dir)
+
         sys.path.append(case_dir)
         importlib.import_module(case)
-
