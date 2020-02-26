@@ -17,7 +17,7 @@ setup(
     long_description_content_type='text/markdown',
     url='https://github.com/PEtab-dev/petab_test_suite',
     author='PEtab-dev',
-    #author_email='',
+    # author_email='',
     classifiers=[
         # How mature is this project? Common values are
         #   3 - Alpha
@@ -38,7 +38,7 @@ setup(
     keywords='PEtab testsuite',
     packages=find_packages(where='petab_test_suite'),
     python_requires='>=3.7',
-    #install_requires=[''],
+    # install_requires=[''],
     entry_points={
         'console_scripts': [
             'create_petab_tests = petabtests.core:main',

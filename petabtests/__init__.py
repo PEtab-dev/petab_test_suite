@@ -7,7 +7,8 @@ from petab.C import *
 import yaml
 from shutil import copyfile
 
-def yaml_name(_id: Union[int,str]) -> str:
+
+def yaml_name(_id: Union[int, str]) -> str:
     return test_id_str(_id) + '.yaml'
 
 
@@ -16,9 +17,12 @@ def test_id_str(_id: str) -> str:
 
 
 """Analytical model"""
+
+
 def analytical_a(t, a0, b0, k1, k2):
     return k2 * (a0 + b0) / (k1 + k2) \
            + (a0 - k2 * (a0 + b0) / (k1 + k2)) * np.exp(-(k1 + k2) * t)
+
 
 def analytical_b(t, a0, b0, k1, k2):
     return k1 * (a0 + b0) / (k1 + k2) \
@@ -26,10 +30,10 @@ def analytical_b(t, a0, b0, k1, k2):
 
 
 def write_files(test_id,
-        condition_dfs: List[pd.DataFrame],
-        measurement_dfs: List[pd.DataFrame],
-        observable_dfs: List[pd.DataFrame],
-        parameter_df: pd.DataFrame) -> None:
+                condition_dfs: List[pd.DataFrame],
+                measurement_dfs: List[pd.DataFrame],
+                observable_dfs: List[pd.DataFrame],
+                parameter_df: pd.DataFrame) -> None:
     id_str = test_id_str(test_id)
     # petab yaml
     model_name = 'model.xml'
@@ -46,10 +50,11 @@ def write_files(test_id,
         ]
     }
 
-    for name, writer, dfs in zip(['conditions', 'measurements', 'observables'],
-        [petab.write_condition_df, petab.write_measurement_df,
-         petab.write_observable_df],
-                        [condition_dfs, measurement_dfs, observable_dfs]):
+    for name, writer, dfs in zip(
+            ['conditions', 'measurements', 'observables'],
+            [petab.write_condition_df, petab.write_measurement_df,
+             petab.write_observable_df],
+            [condition_dfs, measurement_dfs, observable_dfs]):
         for idx, df in enumerate(dfs):
             if len(dfs) == 1:
                 idx = ''
@@ -69,4 +74,3 @@ def write_files(test_id,
 
     with open(os.path.join('cases', id_str, yaml_fname), 'w') as outfile:
         yaml.dump(config, outfile, default_flow_style=False)
-
