@@ -1,4 +1,4 @@
 	parameterId	parameterScale	lowerBound	upperBound	nominalValue	estimate
-0	b0	lin	0	10	1	1
-1	k1	lin	0	10	1	1
-2	k2	lin	0	10	1	1
+0	b0	lin	0	10	0.0	1
+1	k1	lin	0	10	0.8	1
+2	k2	lin	0	10	0.6	1
