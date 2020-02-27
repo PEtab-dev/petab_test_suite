@@ -1,5 +1,6 @@
 from petabtests import *
 from petab.C import *
+import petab
 
 import pandas as pd
 
@@ -43,17 +44,22 @@ write_problem(test_id=test_id,
               observable_dfs=[observable_df],
               measurement_dfs=[measurement_df])
 
-# results --------------------------------------------------------------------
+# solutions ------------------------------------------------------------------
 
 simulation_df = measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION})
 simulation_df[SIMULATION] = [analytical_b(t, 1, 0, 0.8, 0.6) \
                              for t in simulation_df[TIME]]
 
+chi2 = petab.calculate_chi2(
+    measurement_df, simulation_df, observable_df, parameter_df)
+
+llh = petab.calculate_llh(
+    measurement_df, simulation_df, observable_df, parameter_df)
 
 # write files
 
 write_solution(test_id=test_id,
-               llh=None,
-               chi2=None,
+               chi2=chi2,
+               llh=llh,
                simulation_dfs=[simulation_df])

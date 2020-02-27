@@ -41,7 +41,7 @@ setup(
     # install_requires=[''],
     entry_points={
         'console_scripts': [
-            'create_petab_tests = petabtests.core:main',
+            'petab_test_suite_create = petabtests.core:main',
         ]
     },
 

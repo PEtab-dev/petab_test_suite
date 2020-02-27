@@ -16,11 +16,11 @@ SIMULATION_FILES = 'simulation_files'
 
 
 def problem_yaml_name(_id: Union[int, str]) -> str:
-    return test_id_str(_id) + '.yaml'
+    return '_' + test_id_str(_id) + '.yaml'
 
 
 def solution_yaml_name(_id: Union[int, str]) -> str:
-    return test_id_str(_id) + '_solution.yaml'
+    return '_' + test_id_str(_id) + '_solution.yaml'
 
 
 def test_id_str(_id: str) -> str:
@@ -33,7 +33,7 @@ def write_problem(test_id,
                   observable_dfs: List[pd.DataFrame],
                   measurement_dfs: List[pd.DataFrame]) -> None:
     id_str = test_id_str(test_id)
-    model_name = 'model.xml'  # TODO allow passing a model
+    model_name = '_model.xml'  # TODO allow passing a model
     yaml_fname = problem_yaml_name(test_id)
 
     # petab yaml
@@ -50,7 +50,7 @@ def write_problem(test_id,
     }
 
     # parameters
-    fname = f"parameters.tsv"
+    fname = f"_parameters.tsv"
     petab.write_parameter_df(parameter_df,
                              os.path.join('cases', id_str, fname))
     config[PARAMETER_FILE] = fname
@@ -77,15 +77,14 @@ def write_problem(test_id,
 
 def write_solution(test_id,
                    simulation_dfs: List[pd.DataFrame],
-                   chi2, llh):
+                   chi2: float, llh: float):
     id_str = test_id_str(test_id)
     yaml_fname = solution_yaml_name(test_id)
 
     # solution yaml
     config = {
-        FORMAT_VERSION: petab.__format_version__,
-        CHI2: chi2,
-        LLH: llh,
+        CHI2: float(chi2),
+        LLH: float(llh),
         SIMULATION_FILES: [],
     }
 
@@ -103,7 +102,7 @@ def _write_dfs_to_files(id_str, name, writer, dfs, config):
     for idx, df in enumerate(dfs):
         if len(dfs) == 1:
             idx = ''
-        fname = f"{name}{idx}.tsv"
+        fname = f"_{name}{idx}.tsv"
         writer(df, os.path.join('cases', id_str, fname))
         if config:
             config[name[0:-1] + '_files'].append(fname)
