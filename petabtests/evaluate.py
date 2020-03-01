@@ -24,8 +24,8 @@ def evaluate_simulations(
         gt_simulation_dfs: Union[List[pd.DataFrame], pd.DataFrame],
         tol: float = 1e-3):
     """Evaluate whether simulations match."""
-    if simulation_dfs == None:
-        return False
+    #if not simulation_dfs:
+    #    return False
     return absolute_simulations_distance_for_tables(
         simulation_dfs, gt_simulation_dfs) < tol
 
@@ -59,6 +59,7 @@ def absolute_simulations_distance_for_tables(
         distances.append(distance)
     
     distance = sum(distances) / len(distances)
+    print(distance)
     return distance
 
 
