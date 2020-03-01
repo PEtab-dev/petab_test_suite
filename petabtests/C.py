@@ -19,4 +19,9 @@ DEFAULT_MODEL_FILE = os.path.join(REPO_DIR, 'conversion.xml')
 
 LLH = 'llh'
 CHI2 = 'chi2'
+SIMULATION_DFS = 'simulation_dfs'
 SIMULATION_FILES = 'simulation_files'
+
+TOL_SIMULATIONS = 'tol_simulations'
+TOL_CHI2 = 'tol_chi2'
+TOL_LLH = 'tol_llh'

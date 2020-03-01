@@ -29,7 +29,8 @@ def write_problem(
         condition_dfs: Union[List[pd.DataFrame], pd.DataFrame],
         observable_dfs: Union[List[pd.DataFrame], pd.DataFrame],
         measurement_dfs: Union[List[pd.DataFrame], pd.DataFrame],
-        sbml_files: Union[List[str], str] = None) -> None:
+        sbml_files: Union[List[str], str] = None,
+        ) -> None:
     """Write problem to files.
 
     Parameters
@@ -110,7 +111,10 @@ def write_solution(
         test_id: int,
         simulation_dfs: List[pd.DataFrame],
         chi2: float,
-        llh: float):
+        llh: float,
+        tol_simulations: float = 1e-3,
+        tol_chi2: float = 1e-3,
+        tol_llh: float = 1e-3):
     """Write solution to files.
 
     Parameters
@@ -129,6 +133,9 @@ def write_solution(
         SIMULATION_FILES: [],
         CHI2: float(chi2),
         LLH: float(llh),
+        TOL_SIMULATIONS: float(tol_simulations),
+        TOL_CHI2: float(tol_chi2),
+        TOL_LLH: float(tol_llh)
     }
 
     # write simulations
@@ -153,3 +160,25 @@ def _write_dfs_to_files(
         writer(df, os.path.join('cases', id_str, fname))
         if config_list is not None:
             config_list.append(fname)
+
+
+def load_solution(test_id: Union[int, str]):
+    id_str = test_id_str(test_id)
+    dir_ = os.path.join(CASES_DIR, id_str)
+
+    # load yaml
+    yaml_file = solution_yaml_name(id_str)
+    with open(os.path.join(dir_, yaml_file)) as f:
+        config = yaml.full_load(f)
+
+    # load data
+    chi2 = config[CHI2]
+    llh = config[LLH]
+    simulation_dfs = [
+        pd.read_csv(os.path.join(dir_, simulation_file), sep='\t')
+        for simulation_file in config[SIMULATION_FILES]]
+
+    config.pop(SIMULATION_FILES)
+    config[SIMULATION_DFS] = simulation_dfs
+
+    return config
