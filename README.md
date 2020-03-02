@@ -21,3 +21,7 @@ Further, installation of the petabtests module installs a routine to recreate th
 
     cd petab_test_suite
     petabtests_create
+
+## Evaluating resuls
+
+To evaluate how a tool performs on a given test problem, three metrics are employed: Simulations, chi2 value and log-likelihood. A tool can be said to cover a test problem if simulations and log-likelihood match to the ground truth values up to some tolerance, which is specified for each problem.
