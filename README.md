@@ -32,9 +32,13 @@ the problem and solution files for all test problems. It can be invoked via
     cd petab_test_suite
     petabtests_create
 
-## Evaluating results
+## Evaluate results
 
 To evaluate how a tool performs on a given test problem, three metrics are
 employed: Simulations, chi2 value and log-likelihood. A tool can be said to
-cover a test problem if simulations and log-likelihood match to the ground
-truth values up to some tolerance, which is specified for each problem.
+cover a test problem if any of those values matches the ground truth values
+up to some tolerance.
+TODO A table with cases as rows will be created, with a column for each tool,
+indicating whether the test case is covered. Additional information if the
+tool allows to compute e.g. likelihood, or only chi2 values, is supposed to
+be provided.
