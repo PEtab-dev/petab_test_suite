@@ -20,7 +20,6 @@ measurement_df = pd.DataFrame(data={
     SIMULATION_CONDITION_ID: ['c0', 'c0'],
     TIME: [0, 10],
     MEASUREMENT: [0.7, 0.1],
-    OBSERVABLE_PARAMETERS: ['scaling_A;offset_A', 'scaling_A;offset_A']
 })
 
 observable_df = pd.DataFrame(data={
