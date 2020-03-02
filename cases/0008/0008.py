@@ -5,7 +5,7 @@ import petab
 import pandas as pd
 
 
-test_id = 1
+test_id = 8
 
 # problem --------------------------------------------------------------------
 
@@ -16,10 +16,10 @@ condition_df = pd.DataFrame(data={
 }).set_index([CONDITION_ID])
 
 measurement_df = pd.DataFrame(data={
-    OBSERVABLE_ID: ['obs_a', 'obs_a'],
-    SIMULATION_CONDITION_ID: ['c0', 'c0'],
-    TIME: [0, 10],
-    MEASUREMENT: [0.7, 0.1]
+    OBSERVABLE_ID: ['obs_a', 'obs_a', 'obs_a'],
+    SIMULATION_CONDITION_ID: ['c0', 'c0', 'c0'],
+    TIME: [0, 10, 10],
+    MEASUREMENT: [0.7, 0.1, 0.2]
 })
 
 observable_df = pd.DataFrame(data={
