@@ -5,7 +5,7 @@ import petab
 import pandas as pd
 
 
-test_id = 1
+test_id = 3
 
 # problem --------------------------------------------------------------------
 
@@ -19,13 +19,14 @@ measurement_df = pd.DataFrame(data={
     OBSERVABLE_ID: ['obs_a', 'obs_a'],
     SIMULATION_CONDITION_ID: ['c0', 'c0'],
     TIME: [0, 10],
-    MEASUREMENT: [0.7, 0.1]
+    MEASUREMENT: [0.7, 0.1],
+    OBSERVABLE_PARAMETERS: ['0.5;2', '0.5;2']
 })
 
 observable_df = pd.DataFrame(data={
     OBSERVABLE_ID: ['obs_a'],
-    OBSERVABLE_FORMULA: ['A'],
-    NOISE_FORMULA: [1]
+    OBSERVABLE_FORMULA: ['observableParameter1_obs_a * A + observableParameter2_obs_a'],
+    NOISE_FORMULA: [0.5]
 }).set_index([OBSERVABLE_ID])
 
 parameter_df = pd.DataFrame(data={
@@ -50,7 +51,7 @@ write_problem(test_id=test_id,
 
 simulation_df = measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION})
-simulation_df[SIMULATION] = [analytical_a(t, 1, 0, 0.8, 0.6) \
+simulation_df[SIMULATION] = [0.5 * analytical_a(t, 1, 0, 0.8, 0.6) + 2 \
                              for t in simulation_df[TIME]]
 
 chi2 = petab.calculate_chi2(

@@ -5,8 +5,6 @@ import petab
 import pandas as pd
 
 
-"""Multiple conditions."""
-
 test_id = 2
 
 # problem --------------------------------------------------------------------

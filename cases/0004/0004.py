@@ -5,7 +5,7 @@ import petab
 import pandas as pd
 
 
-test_id = 1
+test_id = 4
 
 # problem --------------------------------------------------------------------
 
@@ -19,22 +19,23 @@ measurement_df = pd.DataFrame(data={
     OBSERVABLE_ID: ['obs_a', 'obs_a'],
     SIMULATION_CONDITION_ID: ['c0', 'c0'],
     TIME: [0, 10],
-    MEASUREMENT: [0.7, 0.1]
+    MEASUREMENT: [0.7, 0.1],
+    OBSERVABLE_PARAMETERS: ['scaling_A;offset_A', 'scaling_A;offset_A']
 })
 
 observable_df = pd.DataFrame(data={
     OBSERVABLE_ID: ['obs_a'],
-    OBSERVABLE_FORMULA: ['A'],
+    OBSERVABLE_FORMULA: ['scaling_A * A + offset_A'],
     NOISE_FORMULA: [1]
 }).set_index([OBSERVABLE_ID])
 
 parameter_df = pd.DataFrame(data={
-    PARAMETER_ID: ['a0', 'b0', 'k1', 'k2'],
-    PARAMETER_SCALE: [LIN] * 4,
-    LOWER_BOUND: [0] * 4,
-    UPPER_BOUND: [10] * 4,
-    NOMINAL_VALUE: [1, 0, 0.8, 0.6],
-    ESTIMATE: [1] * 4,
+    PARAMETER_ID: ['a0', 'b0', 'k1', 'k2', 'scaling_A', 'offset_A'],
+    PARAMETER_SCALE: [LIN] * 6,
+    LOWER_BOUND: [0] * 6,
+    UPPER_BOUND: [10] * 6,
+    NOMINAL_VALUE: [1, 0, 0.8, 0.6, 0.5, 2],
+    ESTIMATE: [1] * 6,
 }).set_index(PARAMETER_ID)
 
 
@@ -50,7 +51,7 @@ write_problem(test_id=test_id,
 
 simulation_df = measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION})
-simulation_df[SIMULATION] = [analytical_a(t, 1, 0, 0.8, 0.6) \
+simulation_df[SIMULATION] = [0.5 * analytical_a(t, 1, 0, 0.8, 0.6) + 2\
                              for t in simulation_df[TIME]]
 
 chi2 = petab.calculate_chi2(
