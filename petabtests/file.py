@@ -172,8 +172,6 @@ def load_solution(test_id: Union[int, str]):
         config = yaml.full_load(f)
 
     # load data
-    chi2 = config[CHI2]
-    llh = config[LLH]
     simulation_dfs = [
         pd.read_csv(os.path.join(dir_, simulation_file), sep='\t')
         for simulation_file in config[SIMULATION_FILES]]

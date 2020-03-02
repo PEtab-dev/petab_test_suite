@@ -13,7 +13,7 @@ REPO_DIR = os.path.join(BASE_DIR, 'petabtests')
 
 CASES_LIST = sorted(f.name for f in os.scandir(CASES_DIR) if f.is_dir())
 
-DEFAULT_MODEL_FILE = os.path.join(REPO_DIR, 'conversion.xml') 
+DEFAULT_MODEL_FILE = os.path.join(REPO_DIR, 'conversion.xml')
 
 # constants
 

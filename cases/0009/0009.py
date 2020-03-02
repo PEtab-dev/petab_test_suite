@@ -57,7 +57,7 @@ steady_state_a = analytical_a(1000, 1, 0, 0.3, 0.6)
 steady_state_b = analytical_b(1000, 1, 0, 0.3, 0.6)
 # use steady state as initial state
 simulation_df[SIMULATION] = [
-    analytical_a(t, steady_state_a, steady_state_b, 0.8, 0.6) \
+    analytical_a(t, steady_state_a, steady_state_b, 0.8, 0.6)
     for t in simulation_df[TIME]]
 
 chi2 = petab.calculate_chi2(
