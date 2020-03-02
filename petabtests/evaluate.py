@@ -57,7 +57,7 @@ def absolute_simulations_distance_for_tables(
         distance = absolute_simulations_distance_for_table(
             simulation_df, gt_simulation_df)
         distances.append(distance)
-    
+
     distance = sum(distances) / len(distances)
     return distance
 
