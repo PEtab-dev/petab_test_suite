@@ -37,6 +37,9 @@ setup(
     ],
     keywords='PEtab testsuite',
     packages=find_packages(where='petab_test_suite'),
+    install_requires=['numpy',
+                      'pandas',
+                      'petab>=0.1.3'],
     python_requires='>=3.7',
     # install_requires=[''],
     entry_points={
