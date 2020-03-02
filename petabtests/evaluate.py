@@ -59,7 +59,6 @@ def absolute_simulations_distance_for_tables(
         distances.append(distance)
     
     distance = sum(distances) / len(distances)
-    print(distance)
     return distance
 
 
@@ -70,7 +69,7 @@ def absolute_simulations_distance_for_table(
     # gropuing columns
     grouping_cols = [OBSERVABLE_ID, SIMULATION_CONDITION_ID, TIME]
     if PREEQUILIBRATION_CONDITION_ID in simulations :
-        grouping.append(PREEQUILIBRATION_CONDITION_ID)
+        grouping_cols.append(PREEQUILIBRATION_CONDITION_ID)
     relevant_cols = grouping_cols.copy()
     # append simulation columng last for correct sorting
     relevant_cols.append(SIMULATION)
@@ -78,7 +77,6 @@ def absolute_simulations_distance_for_table(
     # restrict tables
     simulations = simulations[relevant_cols]
     gt_simulations = gt_simulations[relevant_cols]
-
     # sort both in the same way to enable direct comparison
     # and to get the smallest distance
     simulations = simulations.sort_values(by=relevant_cols)
