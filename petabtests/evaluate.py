@@ -2,7 +2,7 @@ from typing import List, Union
 import numpy as np
 import pandas as pd
 from petab.C import *
-from .C import *
+from .C import *  # noqa: F403
 
 
 def evaluate_chi2(chi2: float, gt_chi2: float, tol: float = 1e-3):

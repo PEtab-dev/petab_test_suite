@@ -4,11 +4,11 @@ from typing import Callable, List, Union
 import pandas as pd
 import petab
 import os
-from petab.C import *
+from petab.C import *  # noqa: F403
 import yaml
 from shutil import copyfile
 
-from .C import *
+from .C import *  # noqa: F403
 
 
 def problem_yaml_name(_id: Union[int, str]) -> str:
