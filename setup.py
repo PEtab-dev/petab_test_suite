@@ -32,6 +32,7 @@ setup(
         'License :: OSI Approved :: BSD 3-Clause "New" or "Revised"'
         ' License (BSD-3-Clause)',
 
+        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
     ],
@@ -40,7 +41,7 @@ setup(
     install_requires=['numpy',
                       'pandas',
                       'petab>=0.1.3'],
-    python_requires='>=3.7',
+    python_requires='>=3.6',
     # install_requires=[''],
     entry_points={
         'console_scripts': [
