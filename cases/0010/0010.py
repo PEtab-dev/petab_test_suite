@@ -14,7 +14,7 @@ model = DEFAULT_MODEL_FILE
 condition_df = pd.DataFrame(data={
     CONDITION_ID: ['preeq_c0', 'c0'],
     'k1': [0.3, 0.8],
-    'b0': [0, 0],
+    'B': [0, 0],
 }).set_index([CONDITION_ID])
 
 measurement_df = pd.DataFrame(data={
@@ -47,7 +47,8 @@ write_problem(test_id=test_id,
               parameter_df=parameter_df,
               condition_dfs=[condition_df],
               observable_dfs=[observable_df],
-              measurement_dfs=[measurement_df])
+              measurement_dfs=[measurement_df],
+              sbml_files=['conversion_modified.xml'])
 
 # solutions ------------------------------------------------------------------
 
@@ -55,7 +56,6 @@ simulation_df = measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION})
 # simulate for far time point as steady state
 steady_state_a = analytical_a(1000, 1, 0, 0.3, 0.6)
-steady_state_b = analytical_b(1000, 1, 0, 0.3, 0.6)
 # use steady state as initial state
 simulation_df[SIMULATION] = [
     analytical_a(t, steady_state_a, 0, 0.8, 0.6)
