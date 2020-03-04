@@ -51,8 +51,8 @@ write_problem(test_id=test_id,
 
 simulation_df = measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION})
-simulation_df[SIMULATION] = [analytical_a(t, 1, 0, 0.8, 0.6)
-                             for t in simulation_df[TIME]]
+simulation_df[SIMULATION] = [10 * analytical_a(0, 1, 0, 0.8, 0.6),
+                             15 * analytical_a(10, 1, 0, 0.8, 0.6)]
 
 chi2 = petab.calculate_chi2(
     measurement_df, simulation_df, observable_df, parameter_df)
