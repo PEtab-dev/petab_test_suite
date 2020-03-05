@@ -45,7 +45,8 @@ setup(
     # install_requires=[''],
     entry_points={
         'console_scripts': [
-            'petabtests_create = petabtests.core:main',
+            'petabtests_create = petabtests.core:create',
+            'petabtests_clear = petabtests.core:clear',
         ]
     },
 

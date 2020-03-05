@@ -2,19 +2,19 @@ from typing import List, Union
 import numpy as np
 import pandas as pd
 from petab.C import *
-from .C import *
+from .C import *  # noqa: F403
 
 
 def evaluate_chi2(chi2: float, gt_chi2: float, tol: float = 1e-3):
     """Evaluate whether chi square values match."""
-    if chi2 == None:
+    if chi2 is None:
         return False
     return abs(chi2 - gt_chi2) < tol
 
 
 def evaluate_llh(llh: float, gt_llh: float, tol: float = 1e-3):
     """Evaluate whether log likelihoods match."""
-    if llh == None:
+    if llh is None:
         return False
     return abs(llh - gt_llh) < tol
 
@@ -24,11 +24,8 @@ def evaluate_simulations(
         gt_simulation_dfs: Union[List[pd.DataFrame], pd.DataFrame],
         tol: float = 1e-3):
     """Evaluate whether simulations match."""
-    #if not simulation_dfs:
-    #    return False
     return absolute_simulations_distance_for_tables(
         simulation_dfs, gt_simulation_dfs) < tol
-
 
 
 def absolute_simulations_distance_for_tables(
@@ -57,9 +54,8 @@ def absolute_simulations_distance_for_tables(
         distance = absolute_simulations_distance_for_table(
             simulation_df, gt_simulation_df)
         distances.append(distance)
-    
+
     distance = sum(distances) / len(distances)
-    print(distance)
     return distance
 
 
@@ -69,8 +65,8 @@ def absolute_simulations_distance_for_table(
     """Compute absolute normalized distance between simulations."""
     # gropuing columns
     grouping_cols = [OBSERVABLE_ID, SIMULATION_CONDITION_ID, TIME]
-    if PREEQUILIBRATION_CONDITION_ID in simulations :
-        grouping.append(PREEQUILIBRATION_CONDITION_ID)
+    if PREEQUILIBRATION_CONDITION_ID in simulations:
+        grouping_cols.append(PREEQUILIBRATION_CONDITION_ID)
     relevant_cols = grouping_cols.copy()
     # append simulation columng last for correct sorting
     relevant_cols.append(SIMULATION)
@@ -83,6 +79,7 @@ def absolute_simulations_distance_for_table(
     # and to get the smallest distance
     simulations = simulations.sort_values(by=relevant_cols)
     gt_simulations = gt_simulations.sort_values(by=relevant_cols)
+
     # check if equal grouping is applied
     for col in grouping_cols:
         vals, gt_vals = simulations[col], gt_simulations[col]

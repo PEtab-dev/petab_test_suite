@@ -4,11 +4,11 @@ from typing import Callable, List, Union
 import pandas as pd
 import petab
 import os
-from petab.C import *
+from petab.C import *  # noqa: F403
 import yaml
 from shutil import copyfile
 
-from .C import *
+from .C import *  # noqa: F403
 
 
 def problem_yaml_name(_id: Union[int, str]) -> str:
@@ -70,12 +70,19 @@ def write_problem(
         ]
     }
 
-    # maybe copy models
+    # copy models
     if sbml_files is None:
-        # use default model
-        sbml_files = ['_model.xml']
-        copyfile(DEFAULT_MODEL_FILE, os.path.join(dir_, sbml_files[0]))
-    config[PROBLEMS][0][SBML_FILES] = sbml_files
+        sbml_files = [DEFAULT_MODEL_FILE]
+    copied_sbml_files = []
+    for i_sbml, sbml_file in enumerate(sbml_files):
+        if len(sbml_files) == 1:
+            copied_sbml_file = '_model.xml'
+        else:
+            copied_sbml_file = f'_model{i_sbml}.xml'
+        copyfile(os.path.join(dir_, sbml_file),
+                 os.path.join(dir_, copied_sbml_file))
+        copied_sbml_files.append(copied_sbml_file)
+    config[PROBLEMS][0][SBML_FILES] = copied_sbml_files
 
     # write parameters
     parameters_file = '_parameters.tsv'
@@ -172,8 +179,6 @@ def load_solution(test_id: Union[int, str]):
         config = yaml.full_load(f)
 
     # load data
-    chi2 = config[CHI2]
-    llh = config[LLH]
     simulation_dfs = [
         pd.read_csv(os.path.join(dir_, simulation_file), sep='\t')
         for simulation_file in config[SIMULATION_FILES]]
