@@ -5,7 +5,7 @@ import petab
 import pandas as pd
 
 
-test_id = 14
+test_id = 15
 
 # problem --------------------------------------------------------------------
 
@@ -20,22 +20,22 @@ measurement_df = pd.DataFrame(data={
     SIMULATION_CONDITION_ID: ['c0', 'c0'],
     TIME: [0, 10],
     MEASUREMENT: [0.7, 0.1],
-    NOISE_PARAMETERS: ['0.5;2', '0.5;2']
+    NOISE_PARAMETERS: ['noise', 'noise']
 })
 
 observable_df = pd.DataFrame(data={
     OBSERVABLE_ID: ['obs_a'],
     OBSERVABLE_FORMULA: ['A'],
-    NOISE_FORMULA: ['noiseParameter1_obs_a + noiseParameter2_obs_a']
+    NOISE_FORMULA: ['noiseParameter1_obs_a']
 }).set_index([OBSERVABLE_ID])
 
 parameter_df = pd.DataFrame(data={
-    PARAMETER_ID: ['a0', 'b0', 'k1', 'k2'],
-    PARAMETER_SCALE: [LIN] * 4,
-    LOWER_BOUND: [0] * 4,
-    UPPER_BOUND: [10] * 4,
-    NOMINAL_VALUE: [1, 0, 0.8, 0.6],
-    ESTIMATE: [1] * 4,
+    PARAMETER_ID: ['a0', 'b0', 'k1', 'k2', 'noise'],
+    PARAMETER_SCALE: [LIN] * 5,
+    LOWER_BOUND: [0] * 5,
+    UPPER_BOUND: [10] * 5,
+    NOMINAL_VALUE: [1, 0, 0.8, 0.6, 5],
+    ESTIMATE: [1] * 5,
 }).set_index(PARAMETER_ID)
 
 
