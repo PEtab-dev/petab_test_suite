@@ -14,7 +14,7 @@ model = DEFAULT_MODEL_FILE
 condition_df = pd.DataFrame(data={
     CONDITION_ID: ['c0'],
     'a0': [3],
-    'b0': [2]
+    'B': [2]
 }).set_index([CONDITION_ID])
 
 measurement_df = pd.DataFrame(data={
@@ -46,7 +46,8 @@ write_problem(test_id=test_id,
               parameter_df=parameter_df,
               condition_dfs=[condition_df],
               observable_dfs=[observable_df],
-              measurement_dfs=[measurement_df])
+              measurement_dfs=[measurement_df],
+              sbml_files=['conversion_modified.xml'])
 
 # solutions ------------------------------------------------------------------
 
