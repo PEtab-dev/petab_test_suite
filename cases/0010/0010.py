@@ -32,12 +32,12 @@ observable_df = pd.DataFrame(data={
 }).set_index([OBSERVABLE_ID])
 
 parameter_df = pd.DataFrame(data={
-    PARAMETER_ID: ['a0', 'k2'],
-    PARAMETER_SCALE: [LIN] * 2,
-    LOWER_BOUND: [0] * 2,
-    UPPER_BOUND: [10] * 2,
-    NOMINAL_VALUE: [1, 0.6],
-    ESTIMATE: [1] * 2,
+    PARAMETER_ID: ['k2'],
+    PARAMETER_SCALE: [LIN],
+    LOWER_BOUND: [0],
+    UPPER_BOUND: [10],
+    NOMINAL_VALUE: [0.6],
+    ESTIMATE: [1],
 }).set_index(PARAMETER_ID)
 
 

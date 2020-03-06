@@ -3,7 +3,6 @@
 from typing import Callable, List, Union
 import pandas as pd
 import petab
-import os
 from petab.C import *  # noqa: F403
 import yaml
 from shutil import copyfile
@@ -43,6 +42,7 @@ def write_problem(
     sbml_files: PEtab SBML files. If None, then the default
         petabtests.DEFAULT_MODEL_FILE is used.
     """
+    print(f"Writing case {test_id}...")
     # convenience
     if isinstance(condition_dfs, pd.DataFrame):
         condition_dfs = [condition_dfs]
@@ -105,13 +105,17 @@ def write_problem(
                         petab.write_measurement_df, measurement_dfs,
                         config[PROBLEMS][0][MEASUREMENT_FILES])
 
-    # validate petab
+    # validate petab yaml
     petab.validate(config, path_prefix=dir_)
 
     # write yaml
     yaml_file = problem_yaml_name(test_id)
     with open(os.path.join(dir_, yaml_file), 'w') as outfile:
         yaml.dump(config, outfile, default_flow_style=False)
+
+    # validate written PEtab files
+    problem = petab.Problem.from_yaml(os.path.join(dir_, yaml_file))
+    petab.lint_problem(problem)
 
 
 def write_solution(
