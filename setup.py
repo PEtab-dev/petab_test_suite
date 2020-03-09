@@ -19,7 +19,7 @@ exec(read(path.join(here, 'petabtests', 'version.py')))
 
 setup(
     name='petabtests',
-    version=__version__,
+    version=__version__,  # noqa: F821
     description='PEtab testsuite library',
     long_description=long_description,
     long_description_content_type='text/markdown',
