@@ -30,6 +30,8 @@
     <listOfParameters>
       <parameter id="a0" name="a0" value="1" constant="true">
       </parameter>
+      <parameter id="b0" name="b0" value="1" constant="true">
+      </parameter>
       <parameter id="k1" name="k1" value="0" constant="true">
       </parameter>
       <parameter id="k2" name="k2" value="0" constant="true">
@@ -40,6 +42,11 @@
       <initialAssignment symbol="A">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <ci> a0 </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="B">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> b0 </ci>
         </math>
       </initialAssignment>
     </listOfInitialAssignments>
