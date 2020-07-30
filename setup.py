@@ -49,7 +49,8 @@ setup(
     packages=find_packages(where='petab_test_suite'),
     install_requires=['numpy',
                       'pandas',
-                      'petab>=0.1.4'],
+                      'petab>=0.1.4',
+                      'pysb'],
     python_requires='>=3.6',
     # install_requires=[''],
     entry_points={

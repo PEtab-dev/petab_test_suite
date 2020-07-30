@@ -40,7 +40,7 @@ def create():
                           observable_dfs=dfs['observable'],
                           measurement_dfs=dfs['measurement'],
                           model_files=model_file,
-                          format=format)
+                          format_=format)
 
             write_solution(test_id=case_module.test_id,
                            chi2=case_module.chi2,

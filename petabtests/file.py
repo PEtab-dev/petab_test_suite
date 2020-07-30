@@ -39,7 +39,7 @@ def write_problem(
         observable_dfs: Union[List[pd.DataFrame], pd.DataFrame],
         measurement_dfs: Union[List[pd.DataFrame], pd.DataFrame],
         model_files: Union[List[str], str],
-        format: str = 'sbml'
+        format_: str = 'sbml'
         ) -> None:
     """Write problem to files.
 
@@ -51,8 +51,9 @@ def write_problem(
     observable_dfs: PEtab observable tables.
     measurement_dfs: PEtab measurement tables.
     model_files: PEtab SBML/PySB files.
+    format: Model format (SBML/PySB)
     """
-    print(f"Writing case {test_id}...")
+    print(f"Writing case {test_id} {format_} ...")
     # convenience
     if isinstance(condition_dfs, pd.DataFrame):
         condition_dfs = [condition_dfs]
@@ -64,7 +65,7 @@ def write_problem(
         model_files = [model_files]
 
     # id to string
-    dir_ = case_dir(test_id, format)
+    dir_ = case_dir(test_id, format_)
 
     # petab yaml
     config = {
@@ -79,7 +80,7 @@ def write_problem(
         ]
     }
 
-    if format == 'sbml':
+    if format_ == 'sbml':
         suffix = '.xml'
     else:
         suffix = '.py'
