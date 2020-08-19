@@ -26,16 +26,16 @@ measurement_df = pd.DataFrame(data={
 observable_df = pd.DataFrame(data={
     OBSERVABLE_ID: ['obs_a'],
     OBSERVABLE_FORMULA: ['A'],
-    NOISE_FORMULA: ['noiseParameter1_obs_a + noiseParameter2_obs_a']
+    NOISE_FORMULA: ['noiseParameter1_obs_a * noiseParameter2_obs_a + noise3']
 }).set_index([OBSERVABLE_ID])
 
 parameter_df = pd.DataFrame(data={
-    PARAMETER_ID: ['a0', 'b0', 'k1', 'k2', 'noise1', 'noise2'],
-    PARAMETER_SCALE: [LIN] * 6,
-    LOWER_BOUND: [0] * 6,
-    UPPER_BOUND: [10] * 6,
-    NOMINAL_VALUE: [1, 0, 0.8, 0.6, 3, 2],
-    ESTIMATE: [1] * 6,
+    PARAMETER_ID: ['a0', 'b0', 'k1', 'k2', 'noise1', 'noise2', 'noise3'],
+    PARAMETER_SCALE: [LIN] * 7,
+    LOWER_BOUND: [0] * 7,
+    UPPER_BOUND: [10] * 7,
+    NOMINAL_VALUE: [1, 0, 0.8, 0.6, 3, 2, 0.1],
+    ESTIMATE: [1] * 7,
 }).set_index(PARAMETER_ID)
 
 
