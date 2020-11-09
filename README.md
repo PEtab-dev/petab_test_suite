@@ -48,7 +48,4 @@ up to some tolerance.
 The python module provides convenience functions for evaluation in
 [petabtests/evaluate.py](petabtests/evaluate.py).
 
-TODO A table with cases as rows will be created, with a column for each tool,
-indicating whether the test case is covered. Additional information if the
-tool allows to compute e.g. likelihood, or only chi2 values, is supposed to
-be provided.
+-> [Overview of passed test cases for different tools supporting PEtab](https://github.com/PEtab-dev/PEtab#petab-features-supported-in-different-tools)
