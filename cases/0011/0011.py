@@ -9,7 +9,7 @@ test_id = 11
 
 # problem --------------------------------------------------------------------
 
-model = DEFAULT_SBML_FILE
+model = 'conversion_modified.xml'
 
 condition_df = pd.DataFrame(data={
     CONDITION_ID: ['c0'],
