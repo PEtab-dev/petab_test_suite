@@ -31,5 +31,5 @@ jobs:
         pip install -e .
     - name: Run tests
       run: |
-        python -m flake8 --exclude=build,doc,tmp --extend-ignore=F403,F405
+        python -m flake8 --exclude=build,doc,tmp,cases/pysb/*/_model.py,cases/pysb/*/conversion_modified_pysb.py,petabtests/conversion_pysb.py --extend-ignore=F403,F405
         pytest test

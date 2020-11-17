@@ -9,7 +9,7 @@ test_id = 5
 
 # problem --------------------------------------------------------------------
 
-model = DEFAULT_MODEL_FILE
+model = 'conversion_modified.xml'
 
 condition_df = pd.DataFrame(data={
     CONDITION_ID: ['c0', 'c1'],
@@ -39,15 +39,6 @@ parameter_df = pd.DataFrame(data={
 }).set_index(PARAMETER_ID)
 
 
-# write files
-
-write_problem(test_id=test_id,
-              parameter_df=parameter_df,
-              condition_dfs=[condition_df],
-              observable_dfs=[observable_df],
-              measurement_dfs=[measurement_df],
-              sbml_files=['conversion_modified.xml'])
-
 # solutions ------------------------------------------------------------------
 
 simulation_df = measurement_df.copy(deep=True).rename(
@@ -61,9 +52,3 @@ chi2 = petab.calculate_chi2(
 llh = petab.calculate_llh(
     measurement_df, simulation_df, observable_df, parameter_df)
 print(llh)
-# write files
-
-write_solution(test_id=test_id,
-               chi2=chi2,
-               llh=llh,
-               simulation_dfs=[simulation_df])

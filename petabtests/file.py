@@ -10,6 +10,16 @@ from shutil import copyfile
 from .C import *  # noqa: F403
 
 
+def case_dir(_id: Union[int, str], format: str) -> str:
+    id_str = test_id_str(_id)
+    if format == 'sbml':
+        dir_ = os.path.join(CASES_DIR, id_str)
+    else:
+        dir_ = os.path.join(CASES_DIR, format, id_str)
+    os.makedirs(dir_, exist_ok=True)
+    return dir_
+
+
 def problem_yaml_name(_id: Union[int, str]) -> str:
     return '_' + test_id_str(_id) + '.yaml'
 
@@ -28,7 +38,8 @@ def write_problem(
         condition_dfs: Union[List[pd.DataFrame], pd.DataFrame],
         observable_dfs: Union[List[pd.DataFrame], pd.DataFrame],
         measurement_dfs: Union[List[pd.DataFrame], pd.DataFrame],
-        sbml_files: Union[List[str], str] = None,
+        model_files: Union[List[str], str],
+        format_: str = 'sbml'
         ) -> None:
     """Write problem to files.
 
@@ -39,10 +50,10 @@ def write_problem(
     condition_dfs: PEtab condition tables.
     observable_dfs: PEtab observable tables.
     measurement_dfs: PEtab measurement tables.
-    sbml_files: PEtab SBML files. If None, then the default
-        petabtests.DEFAULT_MODEL_FILE is used.
+    model_files: PEtab SBML/PySB files.
+    format: Model format (SBML/PySB)
     """
-    print(f"Writing case {test_id}...")
+    print(f"Writing case {test_id} {format_} ...")
     # convenience
     if isinstance(condition_dfs, pd.DataFrame):
         condition_dfs = [condition_dfs]
@@ -50,12 +61,11 @@ def write_problem(
         observable_dfs = [observable_dfs]
     if isinstance(measurement_dfs, pd.DataFrame):
         measurement_dfs = [measurement_dfs]
-    if isinstance(sbml_files, str):
-        sbml_files = [sbml_files]
+    if isinstance(model_files, str):
+        model_files = [model_files]
 
     # id to string
-    id_str = test_id_str(test_id)
-    dir_ = os.path.join(CASES_DIR, id_str)
+    dir_ = case_dir(test_id, format_)
 
     # petab yaml
     config = {
@@ -70,19 +80,22 @@ def write_problem(
         ]
     }
 
+    if format_ == 'sbml':
+        suffix = '.xml'
+    else:
+        suffix = '.py'
+
     # copy models
-    if sbml_files is None:
-        sbml_files = [DEFAULT_MODEL_FILE]
-    copied_sbml_files = []
-    for i_sbml, sbml_file in enumerate(sbml_files):
-        if len(sbml_files) == 1:
-            copied_sbml_file = '_model.xml'
+    copied_model_files = []
+    for i_sbml, model_file in enumerate(model_files):
+        if len(model_files) == 1:
+            copied_model_file = f'_model{suffix}'
         else:
-            copied_sbml_file = f'_model{i_sbml}.xml'
-        copyfile(os.path.join(dir_, sbml_file),
-                 os.path.join(dir_, copied_sbml_file))
-        copied_sbml_files.append(copied_sbml_file)
-    config[PROBLEMS][0][SBML_FILES] = copied_sbml_files
+            copied_model_file = f'_model{i_sbml}{suffix}'
+        copyfile(os.path.join(dir_, model_file),
+                 os.path.join(dir_, copied_model_file))
+        copied_model_files.append(copied_model_file)
+    config[PROBLEMS][0][SBML_FILES] = copied_model_files
 
     # write parameters
     parameters_file = '_parameters.tsv'
@@ -91,17 +104,17 @@ def write_problem(
     config[PARAMETER_FILE] = parameters_file
 
     # write conditions
-    _write_dfs_to_files(id_str, 'conditions',
+    _write_dfs_to_files(dir_, 'conditions',
                         petab.write_condition_df, condition_dfs,
                         config[PROBLEMS][0][CONDITION_FILES])
 
     # write observables
-    _write_dfs_to_files(id_str, 'observables',
+    _write_dfs_to_files(dir_, 'observables',
                         petab.write_observable_df, observable_dfs,
                         config[PROBLEMS][0][OBSERVABLE_FILES])
 
     # write measurements
-    _write_dfs_to_files(id_str, 'measurements',
+    _write_dfs_to_files(dir_, 'measurements',
                         petab.write_measurement_df, measurement_dfs,
                         config[PROBLEMS][0][MEASUREMENT_FILES])
 
@@ -120,9 +133,10 @@ def write_problem(
 
 def write_solution(
         test_id: int,
-        simulation_dfs: List[pd.DataFrame],
+        simulation_dfs: Union[List[pd.DataFrame], pd.DataFrame],
         chi2: float,
         llh: float,
+        format: str = 'sbml',
         tol_simulations: float = 1e-3,
         tol_chi2: float = 1e-3,
         tol_llh: float = 1e-3):
@@ -134,10 +148,14 @@ def write_solution(
     simulation_dfs: PEtab simulation tables.
     chi2: True chi square value.
     llh: True log likelihood value.
+    format: Model format (SBML/PySB)
     """
+
+    if isinstance(simulation_dfs, pd.DataFrame):
+        simulation_dfs = [simulation_dfs]
+
     # id to string
-    id_str = test_id_str(test_id)
-    dir_ = os.path.join(CASES_DIR, id_str)
+    dir_ = case_dir(test_id, format)
 
     # solution yaml
     config = {
@@ -150,7 +168,7 @@ def write_solution(
     }
 
     # write simulations
-    _write_dfs_to_files(id_str, "simulations",
+    _write_dfs_to_files(dir_, "simulations",
                         petab.write_measurement_df, simulation_dfs,
                         config[SIMULATION_FILES])
 
@@ -161,24 +179,23 @@ def write_solution(
 
 
 def _write_dfs_to_files(
-        id_str: str, name: str, writer: Callable,
+        dir_: str, name: str, writer: Callable,
         dfs: List[pd.DataFrame], config_list: List[str] = None):
     """Write data frames to files and add them to config."""
     for idx, df in enumerate(dfs):
         if len(dfs) == 1:
             idx = ''
         fname = f"_{name}{idx}.tsv"
-        writer(df, os.path.join('cases', id_str, fname))
+        writer(df, os.path.join(dir_, fname))
         if config_list is not None:
             config_list.append(fname)
 
 
-def load_solution(test_id: Union[int, str]):
-    id_str = test_id_str(test_id)
-    dir_ = os.path.join(CASES_DIR, id_str)
+def load_solution(test_id: Union[int, str], format: str):
+    dir_ = case_dir(test_id, format)
 
     # load yaml
-    yaml_file = solution_yaml_name(id_str)
+    yaml_file = solution_yaml_name(test_id)
     with open(os.path.join(dir_, yaml_file)) as f:
         config = yaml.full_load(f)
 
