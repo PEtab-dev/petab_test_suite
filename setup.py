@@ -26,21 +26,14 @@ setup(
     url='https://github.com/PEtab-dev/petab_test_suite',
     author='PEtab-dev',
     author_email='yannik.schaelte@gmail.com',
+    maintainer='PEtab-dev',
+    maintainer_email='yannik.schaelte@gmail.com',
     # author_email='',
     classifiers=[
-        # How mature is this project? Common values are
-        #   3 - Alpha
-        #   4 - Beta
-        #   5 - Production/Stable
         'Development Status :: 3 - Alpha',
-
-        # Indicate who your project is intended for
         'Intended Audience :: Developers',
-
-        # Pick your license as you wish
-        'License :: OSI Approved :: BSD 3-Clause "New" or "Revised"'
-        ' License (BSD-3-Clause)',
-
+        'License :: OSI Approved :: BSD License',
+        'Operating System :: OS Independent',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
