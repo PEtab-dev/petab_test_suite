@@ -1,0 +1,2 @@
+include petabtests/conversion.xml
+include petabtests/cases/*/*
