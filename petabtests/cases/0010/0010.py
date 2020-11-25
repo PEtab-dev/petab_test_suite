@@ -14,7 +14,7 @@ model = DEFAULT_SBML_FILE
 condition_df = pd.DataFrame(data={
     CONDITION_ID: ['preeq_c0', 'c0'],
     'k1': [0.3, 0.8],
-    'B': [0, 0],
+    'B': [0, 1],
 }).set_index([CONDITION_ID])
 
 measurement_df = pd.DataFrame(data={
@@ -49,7 +49,7 @@ simulation_df = measurement_df.copy(deep=True).rename(
 steady_state_a = analytical_a(1000, 1, 0, 0.3, 0.6)
 # use steady state as initial state
 simulation_df[SIMULATION] = [
-    analytical_a(t, steady_state_a, 0, 0.8, 0.6)
+    analytical_a(t, steady_state_a, 1, 0.8, 0.6)
     for t in simulation_df[TIME]]
 
 chi2 = petab.calculate_chi2(
