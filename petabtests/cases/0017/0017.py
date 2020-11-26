@@ -15,6 +15,7 @@ condition_df = pd.DataFrame(data={
     CONDITION_ID: ['preeq_c0', 'c0'],
     'k1': [0.3, 0.8],
     'B': [0, 'NaN'],
+    'A': [0, 1],
 }).set_index([CONDITION_ID])
 
 measurement_df = pd.DataFrame(data={
@@ -46,11 +47,10 @@ parameter_df = pd.DataFrame(data={
 simulation_df = measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION})
 # simulate for far time point as steady state
-steady_state_a = analytical_a(1000, 1, 0, 0.3, 0.6)
-steady_state_b = analytical_b(1000, 1, 0, 0.3, 0.6)
+steady_state_b = analytical_b(1000, 0, 0, 0.3, 0.6)
 # use steady state as initial state
 simulation_df[SIMULATION] = [
-    analytical_a(t, steady_state_a, steady_state_b, 0.8, 0.6)
+    analytical_a(t, 1, steady_state_b, 0.8, 0.6)
     for t in simulation_df[TIME]]
 
 chi2 = petab.calculate_chi2(
