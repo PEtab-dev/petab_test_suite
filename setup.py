@@ -44,7 +44,7 @@ setup(
                       'pandas',
                       'petab>=0.1.4',
                       'pysb'],
-    python_requires='>=3.6',
+    python_requires='>=3.7',
     entry_points={
         'console_scripts': [
             'petabtests_create = petabtests.core:create',
