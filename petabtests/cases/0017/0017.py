@@ -14,7 +14,7 @@ model = DEFAULT_SBML_FILE
 condition_df = pd.DataFrame(data={
     CONDITION_ID: ['preeq_c0', 'c0'],
     'k1': [0.3, 0.8],
-    'B': [0, 'NaN'],
+    'B': [2.0, 'NaN'],
     'A': [0, 1],
 }).set_index([CONDITION_ID])
 
@@ -47,7 +47,7 @@ parameter_df = pd.DataFrame(data={
 simulation_df = measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION})
 # simulate for far time point as steady state
-steady_state_b = analytical_b(1000, 0, 0, 0.3, 0.6)
+steady_state_b = analytical_b(1000, 0, 2.0, 0.3, 0.6)
 # use steady state as initial state
 simulation_df[SIMULATION] = [
     analytical_a(t, 1, steady_state_b, 0.8, 0.6)
