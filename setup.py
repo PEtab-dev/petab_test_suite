@@ -34,9 +34,9 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
     ],
     keywords='PEtab testsuite',
     packages=find_packages(),
@@ -44,7 +44,7 @@ setup(
                       'pandas',
                       'petab>=0.1.4',
                       'pysb'],
-    python_requires='>=3.6',
+    python_requires='>=3.7',
     entry_points={
         'console_scripts': [
             'petabtests_create = petabtests.core:create',
