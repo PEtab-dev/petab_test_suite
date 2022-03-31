@@ -12,6 +12,7 @@ skip_formats = {'pysb'}
 
 model = str(Path(__file__).parent / "model.xml")
 
+
 def get_model():
     import simplesbml
     model = simplesbml.SbmlModel()
@@ -27,6 +28,7 @@ def get_model():
     model.addRateRule("A", "compartment * k2 * B - compartment * k1 * A")
     model.addRateRule("B", "- compartment * k2 * B + compartment * k1 * A")
     return model
+
 
 with open(model, "w") as f:
     f.write(get_model().toSBML())
