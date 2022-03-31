@@ -40,10 +40,13 @@ setup(
     ],
     keywords='PEtab testsuite',
     packages=find_packages(),
-    install_requires=['numpy',
-                      'pandas',
-                      'petab>=0.1.4',
-                      'pysb'],
+    install_requires=[
+        'numpy',
+        'pandas',
+        'petab>=0.1.4',
+        'pysb',
+        'simplesbml',
+    ],
     python_requires='>=3.7',
     entry_points={
         'console_scripts': [
