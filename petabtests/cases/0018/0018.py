@@ -25,7 +25,7 @@ def get_model():
     model.addParameter("B", 0)
     model.addInitialAssignment("A", "a0")
     model.addInitialAssignment("B", "b0")
-    model.addRateRule("A", "compartment * k2 * B - compartment * k1 * A")
+    model.addRateRule("A", "k2 * B - k1 * A")
     model.addRateRule("B", "- compartment * k2 * B + compartment * k1 * A")
     return model
 
@@ -42,17 +42,17 @@ condition_df = pd.DataFrame(data={
 }).set_index([CONDITION_ID])
 
 measurement_df = pd.DataFrame(data={
-    OBSERVABLE_ID: ['obs_a', 'obs_a'],
-    PREEQUILIBRATION_CONDITION_ID: ['preeq_c0', 'preeq_c0'],
-    SIMULATION_CONDITION_ID: ['c0', 'c0'],
-    TIME: [1, 10],
-    MEASUREMENT: [0.7, 0.1]
+    OBSERVABLE_ID: ['obs_a'] * 3 + ['obs_b'],
+    PREEQUILIBRATION_CONDITION_ID: ['preeq_c0'] * 4,
+    SIMULATION_CONDITION_ID: ['c0'] * 4,
+    TIME: [0, 1, 10, 0],
+    MEASUREMENT: [0.1, 0.7, 0.1, 0.1]
 })
 
 observable_df = pd.DataFrame(data={
-    OBSERVABLE_ID: ['obs_a'],
-    OBSERVABLE_FORMULA: ['A'],
-    NOISE_FORMULA: [0.5]
+    OBSERVABLE_ID: ['obs_a', 'obs_b'],
+    OBSERVABLE_FORMULA: ['A', 'B'],
+    NOISE_FORMULA: [0.5, 0.2]
 }).set_index([OBSERVABLE_ID])
 
 parameter_df = pd.DataFrame(data={
@@ -72,9 +72,12 @@ simulation_df = measurement_df.copy(deep=True).rename(
 # simulate for far time point as steady state
 steady_state_b = analytical_b(1000, 0, 2.0, 0.3, 0.6)
 # use steady state as initial state
-simulation_df[SIMULATION] = [
+simulation_df.iloc[:3, simulation_df.columns.get_loc(SIMULATION)] = [
     analytical_a(t, 1, steady_state_b, 0.8, 0.6)
-    for t in simulation_df[TIME]]
+    for t in simulation_df[TIME]][:3]
+simulation_df.iloc[3:, simulation_df.columns.get_loc(SIMULATION)] = [
+    analytical_b(t, 1, steady_state_b, 0.8, 0.6)
+    for t in simulation_df[TIME]][3:]
 
 chi2 = petab.calculate_chi2(
     measurement_df, simulation_df, observable_df, parameter_df)

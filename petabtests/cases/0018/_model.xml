@@ -41,13 +41,11 @@
             <minus/>
             <apply>
               <times/>
-              <ci> compartment </ci>
               <ci> k2 </ci>
               <ci> B </ci>
             </apply>
             <apply>
               <times/>
-              <ci> compartment </ci>
               <ci> k1 </ci>
               <ci> A </ci>
             </apply>
