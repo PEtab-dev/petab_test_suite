@@ -160,8 +160,11 @@ def write_solution(
     # solution yaml
     config = {
         SIMULATION_FILES: [],
-        CHI2: float(chi2),
-        LLH: float(llh),
+        # round to 14 significant digits, as the last 0 tend to be different
+        #  across different systems. avoid repeated modifications of otherwise
+        #  unrelated test cases
+        CHI2: round(float(chi2), 14),
+        LLH: round(float(llh), 14),
         TOL_SIMULATIONS: float(tol_simulations),
         TOL_CHI2: float(tol_chi2),
         TOL_LLH: float(tol_llh)
