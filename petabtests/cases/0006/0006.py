@@ -58,6 +58,8 @@ simulation_df[SIMULATION] = [10 * analytical_a(0, 1, 0, 0.8, 0.6),
 
 case = PetabTestCase(
     id=6,
+    brief="Simulation. Time-point specific numeric observable parameter "
+          "overrides.",
     description=DESCRIPTION,
     model=DEFAULT_SBML_FILE,
     condition_dfs=[condition_df],

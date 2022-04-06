@@ -59,6 +59,8 @@ simulation_df[SIMULATION] = [analytical_a(10, 1, 0, 0.8, 0.6) + offset
 
 case = PetabTestCase(
     id=5,
+    brief="Simulation. Condition-specific parameters only defined in "
+          "parameter table.",
     description=DESCRIPTION,
     model='conversion_modified.xml',
     condition_dfs=[condition_df],

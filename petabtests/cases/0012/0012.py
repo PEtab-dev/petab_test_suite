@@ -56,6 +56,7 @@ simulation_df[SIMULATION] = [analytical_a(t, 1, 1, 0.8, 0.6)
 
 case = PetabTestCase(
     id=12,
+    brief="Simulation. Initial compartment size in condition table.",
     description=DESCRIPTION,
     model=DEFAULT_SBML_FILE,
     condition_dfs=[condition_df],

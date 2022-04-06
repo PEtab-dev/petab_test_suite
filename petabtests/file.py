@@ -15,6 +15,7 @@ from .C import *  # noqa: F403
 class PetabTestCase:
     """A PEtab test case"""
     id: int
+    brief: str
     description: str
     model: str
     condition_dfs: List[pd.DataFrame]
