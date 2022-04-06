@@ -1,6 +1,6 @@
 # PEtab test case 0003
 
-## Objective 
+## Objective
 
 This case tests support for numeric observable parameter overrides in
 measurement tables

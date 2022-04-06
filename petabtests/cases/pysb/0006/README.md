@@ -1,6 +1,6 @@
 # PEtab test case 0006
 
-## Objective 
+## Objective
 
 This case tests support for time-point specific overrides in the measurement
 table.

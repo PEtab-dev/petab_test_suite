@@ -1,11 +1,12 @@
-# PEtab test case 0008
+# PEtab test case 0006
 
-## Objective 
+## Objective
 
-This case tests support for replicate measurements.
+This case tests support for time-point specific overrides in the measurement
+table.
 
 The model is to be simulated for a single experimental condition. The single
-model output has multiple measurements for the same condition and timepoint.
+model output is scaled by a different parameter at each timepoint.
 
 ## Model
 

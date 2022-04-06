@@ -1,13 +1,27 @@
 """File input and output."""
-
+from dataclasses import dataclass
+from shutil import copyfile
 from typing import Callable, List, Union
+
 import pandas as pd
 import petab
-from petab.C import *  # noqa: F403
 import yaml
-from shutil import copyfile
+from petab.C import *  # noqa: F403
 
 from .C import *  # noqa: F403
+
+
+@dataclass
+class PetabTestCase:
+    """A PEtab test case"""
+    id: int
+    description: str
+    model: str
+    condition_dfs: List[pd.DataFrame]
+    observable_dfs: List[pd.DataFrame]
+    measurement_dfs: List[pd.DataFrame]
+    simulation_dfs: List[pd.DataFrame]
+    parameter_df: pd.DataFrame
 
 
 def case_dir(_id: Union[int, str], format: str) -> str:
@@ -28,8 +42,19 @@ def solution_yaml_name(_id: Union[int, str]) -> str:
     return '_' + test_id_str(_id) + '_solution.yaml'
 
 
-def test_id_str(_id: str) -> str:
+def test_id_str(_id: Union[int, str]) -> str:
     return f"{_id:0>4}"
+
+
+def write_info(case: PetabTestCase, format_: str):
+    # id to string
+    dir_ = case_dir(case.id, format_)
+    id_str = test_id_str(case.id)
+    filename = os.path.join(dir_, "README.md")
+    with open(filename, "w") as f:
+        f.write(f"# PEtab test case {id_str}\n\n")
+        f.write(case.description)
+        f.write("\n")
 
 
 def write_problem(
@@ -51,7 +76,7 @@ def write_problem(
     observable_dfs: PEtab observable tables.
     measurement_dfs: PEtab measurement tables.
     model_files: PEtab SBML/PySB files.
-    format: Model format (SBML/PySB)
+    format_: Model format (SBML/PySB)
     """
     print(f"Writing case {test_id} {format_} ...")
     # convenience

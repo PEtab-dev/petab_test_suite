@@ -1,9 +1,8 @@
-# PEtab test case 0001
+# PEtab test case 0012
 
 ## Objective
 
-This case features a simple test with two data points and no particular 
-features.
+This case tests initial compartment sizes in the condition table.
 
 ## Model
 

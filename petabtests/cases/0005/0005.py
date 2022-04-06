@@ -1,15 +1,27 @@
-from petabtests import *
-from petab.C import *
-import petab
+from inspect import cleandoc
 
 import pandas as pd
+from petab.C import *
 
+from petabtests import PetabTestCase, analytical_a
 
-test_id = 5
+DESCRIPTION = cleandoc("""
+## Objective
+
+This case tests support for parametric overrides from condition table.
+
+The model is to be simulated for two different experimental conditions
+(here: different initial concentrations). The observable is offsetted by
+a parametric override in the condition table (i.e. the actual value has
+to be taken from the parameter table).
+
+## Model
+
+A simple conversion reaction `A <=> B` in a single compartment, following
+mass action kinetics.
+""")
 
 # problem --------------------------------------------------------------------
-
-model = 'conversion_modified.xml'
 
 condition_df = pd.DataFrame(data={
     CONDITION_ID: ['c0', 'c1'],
@@ -38,7 +50,6 @@ parameter_df = pd.DataFrame(data={
     ESTIMATE: [1] * 6,
 }).set_index(PARAMETER_ID)
 
-
 # solutions ------------------------------------------------------------------
 
 simulation_df = measurement_df.copy(deep=True).rename(
@@ -46,9 +57,13 @@ simulation_df = measurement_df.copy(deep=True).rename(
 simulation_df[SIMULATION] = [analytical_a(10, 1, 0, 0.8, 0.6) + offset
                              for offset in [2, 3]]
 
-chi2 = petab.calculate_chi2(
-    measurement_df, simulation_df, observable_df, parameter_df)
-
-llh = petab.calculate_llh(
-    measurement_df, simulation_df, observable_df, parameter_df)
-print(llh)
+case = PetabTestCase(
+    id=5,
+    description=DESCRIPTION,
+    model='conversion_modified.xml',
+    condition_dfs=[condition_df],
+    observable_dfs=[observable_df],
+    measurement_dfs=[measurement_df],
+    simulation_dfs=[simulation_df],
+    parameter_df=parameter_df,
+)

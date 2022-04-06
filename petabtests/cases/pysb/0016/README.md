@@ -1,6 +1,6 @@
-# PEtab test case 00016
+# PEtab test case 0016
 
-## Objective 
+## Objective
 
 This case tests support for observable transformations to log scale.
 
