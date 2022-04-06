@@ -50,7 +50,7 @@ def write_info(case: PetabTestCase, format_: str):
     # id to string
     dir_ = case_dir(case.id, format_)
     id_str = test_id_str(case.id)
-    filename = os.path.join(dir_, f"{id_str}.md")
+    filename = os.path.join(dir_, "README.md")
     with open(filename, "w") as f:
         f.write(f"# PEtab test case {id_str}\n\n")
         f.write(case.description)
