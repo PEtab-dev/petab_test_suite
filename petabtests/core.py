@@ -37,6 +37,7 @@ def create():
             sys.path.append(str(case_dir))
             case_module = importlib.import_module(case_id)
             sys.path.pop()
+            # noinspection PyUnresolvedReferences
             case: PetabTestCase = case_module.case
             del sys.modules[case_id]
 

@@ -1,4 +1,5 @@
 """File input and output."""
+import os
 from dataclasses import dataclass
 from shutil import copyfile
 from typing import Callable, List, Union
