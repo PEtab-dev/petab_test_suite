@@ -5,7 +5,6 @@ from petab.C import *
 
 from petabtests import DEFAULT_SBML_FILE, PetabTestCase, analytical_a
 
-
 DESCRIPTION = cleandoc("""
 ## Objective
 
@@ -55,7 +54,6 @@ simulation_df = measurement_df.copy(deep=True).rename(
 simulation_df[SIMULATION] = [analytical_a(t, 1, 1, 0.8, 0.6)
                              for t in simulation_df[TIME]]
 
-
 case = PetabTestCase(
     id=12,
     description=DESCRIPTION,
@@ -64,5 +62,5 @@ case = PetabTestCase(
     observable_dfs=[observable_df],
     measurement_dfs=[measurement_df],
     simulation_dfs=[simulation_df],
-    parameter_df = parameter_df,
+    parameter_df=parameter_df,
 )

@@ -7,9 +7,9 @@ from petabtests import (DEFAULT_SBML_FILE, PetabTestCase, analytical_a,
                         analytical_b)
 
 DESCRIPTION = cleandoc("""
-## Objective 
+## Objective
 
-This case tests support for partial preequilibration with `NaN`'s in the 
+This case tests support for partial preequilibration with `NaN`'s in the
 condition file.
 
 The model is to be simulated for a preequilibration condition and a
@@ -17,7 +17,7 @@ simulation condition.
 For preequilibration, species `B` is initialized with `0`. For simulation,
 `B` is set to `NaN`, meaning that it is initialized with the result from
 preequilibration.
-`A` is reinitialized to the value in the condition table after 
+`A` is reinitialized to the value in the condition table after
 preequilibration.
 
 ## Model

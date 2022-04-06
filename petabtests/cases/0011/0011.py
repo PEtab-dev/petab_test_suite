@@ -3,8 +3,7 @@ from inspect import cleandoc
 import pandas as pd
 from petab.C import *
 
-from petabtests import  PetabTestCase, analytical_a
-
+from petabtests import PetabTestCase, analytical_a
 
 DESCRIPTION = cleandoc("""
 ## Objective
@@ -18,7 +17,6 @@ table, while for `A` it is given via an assignment rule in the SBML model.
 A simple conversion reaction `A <=> B` in a single compartment, following
 mass action kinetics.
 """)
-
 
 # problem --------------------------------------------------------------------
 
@@ -49,14 +47,12 @@ parameter_df = pd.DataFrame(data={
     ESTIMATE: [1] * 2,
 }).set_index(PARAMETER_ID)
 
-
 # solutions ------------------------------------------------------------------
 
 simulation_df = measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION})
 simulation_df[SIMULATION] = [analytical_a(t, 1, 2, 0.8, 0.6)
                              for t in simulation_df[TIME]]
-
 
 case = PetabTestCase(
     id=11,
@@ -66,5 +62,5 @@ case = PetabTestCase(
     observable_dfs=[observable_df],
     measurement_dfs=[measurement_df],
     simulation_dfs=[simulation_df],
-    parameter_df = parameter_df,
+    parameter_df=parameter_df,
 )

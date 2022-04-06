@@ -5,9 +5,8 @@ from petab.C import *
 
 from petabtests import PetabTestCase, analytical_a
 
-
 DESCRIPTION = cleandoc("""
-## Objective 
+## Objective
 
 This case tests support for parametric overrides from condition table.
 
@@ -21,7 +20,6 @@ to be taken from the parameter table).
 A simple conversion reaction `A <=> B` in a single compartment, following
 mass action kinetics.
 """)
-
 
 # problem --------------------------------------------------------------------
 
@@ -52,14 +50,12 @@ parameter_df = pd.DataFrame(data={
     ESTIMATE: [1] * 6,
 }).set_index(PARAMETER_ID)
 
-
 # solutions ------------------------------------------------------------------
 
 simulation_df = measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION})
 simulation_df[SIMULATION] = [analytical_a(10, 1, 0, 0.8, 0.6) + offset
                              for offset in [2, 3]]
-
 
 case = PetabTestCase(
     id=5,
@@ -69,5 +65,5 @@ case = PetabTestCase(
     observable_dfs=[observable_df],
     measurement_dfs=[measurement_df],
     simulation_dfs=[simulation_df],
-    parameter_df = parameter_df,
+    parameter_df=parameter_df,
 )

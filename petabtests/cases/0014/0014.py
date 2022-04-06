@@ -5,7 +5,6 @@ from petab.C import *
 
 from petabtests import DEFAULT_SBML_FILE, PetabTestCase, analytical_a
 
-
 DESCRIPTION = cleandoc("""
 ## Objective
 
@@ -48,14 +47,12 @@ parameter_df = pd.DataFrame(data={
     ESTIMATE: [1] * 4,
 }).set_index(PARAMETER_ID)
 
-
 # solutions ------------------------------------------------------------------
 
 simulation_df = measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION})
 simulation_df[SIMULATION] = [analytical_a(t, 1, 0, 0.8, 0.6)
                              for t in simulation_df[TIME]]
-
 
 case = PetabTestCase(
     id=14,
@@ -65,5 +62,5 @@ case = PetabTestCase(
     observable_dfs=[observable_df],
     measurement_dfs=[measurement_df],
     simulation_dfs=[simulation_df],
-    parameter_df = parameter_df,
+    parameter_df=parameter_df,
 )

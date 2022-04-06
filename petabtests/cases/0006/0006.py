@@ -5,9 +5,8 @@ from petab.C import *
 
 from petabtests import DEFAULT_SBML_FILE, PetabTestCase, analytical_a
 
-
 DESCRIPTION = cleandoc("""
-## Objective 
+## Objective
 
 This case tests support for time-point specific overrides in the measurement
 table.
@@ -50,14 +49,12 @@ parameter_df = pd.DataFrame(data={
     ESTIMATE: [1] * 4,
 }).set_index(PARAMETER_ID)
 
-
 # solutions ------------------------------------------------------------------
 
 simulation_df = measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION})
 simulation_df[SIMULATION] = [10 * analytical_a(0, 1, 0, 0.8, 0.6),
                              15 * analytical_a(10, 1, 0, 0.8, 0.6)]
-
 
 case = PetabTestCase(
     id=6,
@@ -67,5 +64,5 @@ case = PetabTestCase(
     observable_dfs=[observable_df],
     measurement_dfs=[measurement_df],
     simulation_dfs=[simulation_df],
-    parameter_df = parameter_df,
+    parameter_df=parameter_df,
 )

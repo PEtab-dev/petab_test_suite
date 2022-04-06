@@ -5,9 +5,8 @@ from petab.C import *
 
 from petabtests import DEFAULT_SBML_FILE, PetabTestCase, analytical_a
 
-
 DESCRIPTION = cleandoc("""
-## Objective 
+## Objective
 
 This case tests support for numeric observable parameter overrides in
 measurement tables
@@ -61,7 +60,6 @@ simulation_df = measurement_df.copy(deep=True).rename(
 simulation_df[SIMULATION] = [0.5 * analytical_a(t, 1, 0, 0.8, 0.6) + 2
                              for t in simulation_df[TIME]]
 
-
 case = PetabTestCase(
     id=3,
     description=DESCRIPTION,
@@ -70,5 +68,5 @@ case = PetabTestCase(
     observable_dfs=[observable_df],
     measurement_dfs=[measurement_df],
     simulation_dfs=[simulation_df],
-    parameter_df = parameter_df,
+    parameter_df=parameter_df,
 )

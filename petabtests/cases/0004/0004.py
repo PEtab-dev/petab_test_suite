@@ -5,24 +5,23 @@ from petab.C import *
 
 from petabtests import DEFAULT_SBML_FILE, PetabTestCase, analytical_a
 
-
 DESCRIPTION = cleandoc("""
-## Objective 
+## Objective
 
 This case tests support for parametric observable parameter overrides in
 measurement tables
 
 Simulated data describes measurements with different offset and scaling
-parameters for a single observable. These values of the respective (non-estimated)
-parameters referenced in `observableParameters` need to be looked up in
-the parameter table to replace the placeholders in `observableFormula`.
+parameters for a single observable. These values of the respective
+(non-estimated) parameters referenced in `observableParameters` need to be
+looked up in the parameter table to replace the placeholders in
+`observableFormula`.
 
 ## Model
 
 A simple conversion reaction `A <=> B` in a single compartment, following
 mass action kinetics.
 """)
-
 
 # problem --------------------------------------------------------------------
 
@@ -52,14 +51,12 @@ parameter_df = pd.DataFrame(data={
     ESTIMATE: [1] * 6,
 }).set_index(PARAMETER_ID)
 
-
 # solutions ------------------------------------------------------------------
 
 simulation_df = measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION})
 simulation_df[SIMULATION] = [0.5 * analytical_a(t, 1, 0, 0.8, 0.6) + 2
                              for t in simulation_df[TIME]]
-
 
 case = PetabTestCase(
     id=4,
@@ -69,5 +66,5 @@ case = PetabTestCase(
     observable_dfs=[observable_df],
     measurement_dfs=[measurement_df],
     simulation_dfs=[simulation_df],
-    parameter_df = parameter_df,
+    parameter_df=parameter_df,
 )

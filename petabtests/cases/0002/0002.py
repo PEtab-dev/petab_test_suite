@@ -5,7 +5,6 @@ from petab.C import *
 
 from petabtests import DEFAULT_SBML_FILE, PetabTestCase, analytical_a
 
-
 DESCRIPTION = cleandoc("""
 ## Objective
 
@@ -19,7 +18,6 @@ The model is to be simulated for two different experimental conditions
 A simple conversion reaction `A <=> B` in a single compartment, following
 mass action kinetics.
 """)
-
 
 # problem --------------------------------------------------------------------
 
@@ -59,7 +57,6 @@ simulation_df[SIMULATION] = [*[analytical_a(t, 0.8, 0, 0.8, 0.6)
                              *[analytical_a(t, 0.9, 0, 0.8, 0.6)
                                for t in [0, 10]]]
 
-
 case = PetabTestCase(
     id=2,
     description=DESCRIPTION,
@@ -68,5 +65,5 @@ case = PetabTestCase(
     observable_dfs=[observable_df],
     measurement_dfs=[measurement_df],
     simulation_dfs=[simulation_df],
-    parameter_df = parameter_df,
+    parameter_df=parameter_df,
 )
