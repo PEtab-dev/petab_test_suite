@@ -1,6 +1,6 @@
 # PEtab test case 0005
 
-## Objective 
+## Objective
 
 This case tests support for parametric overrides from condition table.
 

@@ -1,6 +1,6 @@
 # PEtab test case 0010
 
-## Objective 
+## Objective
 
 This case tests support for partial preequilibration.
 
