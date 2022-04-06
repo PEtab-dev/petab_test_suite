@@ -3,12 +3,15 @@ from inspect import cleandoc
 import pandas as pd
 from petab.C import *
 
-from petabtests import DEFAULT_SBML_FILE, PetabTestCase, analytical_a
+from petabtests import DEFAULT_PYSB_FILE, PetabTestCase, analytical_a
 
 DESCRIPTION = cleandoc("""
 ## Objective
 
-This case tests numeric noise parameter overrides in the measurement table.
+This case tests support for replicate measurements.
+
+The model is to be simulated for a single experimental condition. The single
+model output has multiple measurements for the same condition and timepoint.
 
 ## Model
 
@@ -23,17 +26,16 @@ condition_df = pd.DataFrame(data={
 }).set_index([CONDITION_ID])
 
 measurement_df = pd.DataFrame(data={
-    OBSERVABLE_ID: ['obs_a', 'obs_a'],
-    SIMULATION_CONDITION_ID: ['c0', 'c0'],
-    TIME: [0, 10],
-    MEASUREMENT: [0.7, 0.1],
-    NOISE_PARAMETERS: ['0.5;2', '0.5;2']
+    OBSERVABLE_ID: ['obs_a', 'obs_a', 'obs_a'],
+    SIMULATION_CONDITION_ID: ['c0', 'c0', 'c0'],
+    TIME: [0, 10, 10],
+    MEASUREMENT: [0.7, 0.1, 0.2]
 })
 
 observable_df = pd.DataFrame(data={
     OBSERVABLE_ID: ['obs_a'],
     OBSERVABLE_FORMULA: ['A'],
-    NOISE_FORMULA: ['noiseParameter1_obs_a + noiseParameter2_obs_a']
+    NOISE_FORMULA: [0.5]
 }).set_index([OBSERVABLE_ID])
 
 parameter_df = pd.DataFrame(data={
@@ -53,10 +55,10 @@ simulation_df[SIMULATION] = [analytical_a(t, 1, 0, 0.8, 0.6)
                              for t in simulation_df[TIME]]
 
 case = PetabTestCase(
-    id=14,
-    brief="Simulation. Multiple numeric noise parameter overrides.",
+    id=8,
+    brief="Simulation. Replicate measurements.",
     description=DESCRIPTION,
-    model=DEFAULT_SBML_FILE,
+    model=DEFAULT_PYSB_FILE,
     condition_dfs=[condition_df],
     observable_dfs=[observable_df],
     measurement_dfs=[measurement_df],

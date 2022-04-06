@@ -3,12 +3,13 @@ from inspect import cleandoc
 import pandas as pd
 from petab.C import *
 
-from petabtests import DEFAULT_SBML_FILE, PetabTestCase, analytical_a
+from petabtests import DEFAULT_PYSB_FILE, PetabTestCase, analytical_a
 
 DESCRIPTION = cleandoc("""
 ## Objective
 
-This case tests numeric noise parameter overrides in the measurement table.
+This case features a simple test with two data points and no particular
+features.
 
 ## Model
 
@@ -26,14 +27,13 @@ measurement_df = pd.DataFrame(data={
     OBSERVABLE_ID: ['obs_a', 'obs_a'],
     SIMULATION_CONDITION_ID: ['c0', 'c0'],
     TIME: [0, 10],
-    MEASUREMENT: [0.7, 0.1],
-    NOISE_PARAMETERS: ['0.5;2', '0.5;2']
+    MEASUREMENT: [0.7, 0.1]
 })
 
 observable_df = pd.DataFrame(data={
     OBSERVABLE_ID: ['obs_a'],
     OBSERVABLE_FORMULA: ['A'],
-    NOISE_FORMULA: ['noiseParameter1_obs_a + noiseParameter2_obs_a']
+    NOISE_FORMULA: [0.5]
 }).set_index([OBSERVABLE_ID])
 
 parameter_df = pd.DataFrame(data={
@@ -52,11 +52,12 @@ simulation_df = measurement_df.copy(deep=True).rename(
 simulation_df[SIMULATION] = [analytical_a(t, 1, 0, 0.8, 0.6)
                              for t in simulation_df[TIME]]
 
+
 case = PetabTestCase(
-    id=14,
-    brief="Simulation. Multiple numeric noise parameter overrides.",
+    id=1,
+    brief="Simulation. Nothing special.",
     description=DESCRIPTION,
-    model=DEFAULT_SBML_FILE,
+    model=DEFAULT_PYSB_FILE,
     condition_dfs=[condition_df],
     observable_dfs=[observable_df],
     measurement_dfs=[measurement_df],

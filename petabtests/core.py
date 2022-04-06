@@ -13,33 +13,35 @@ from .file import (PetabTestCase, write_info, write_problem, write_solution,
 logger = logging.getLogger("petab_test_suite")
 
 
+def get_cases(format: str):
+    return sorted(f.name for f in os.scandir(CASES_DIR / format) if f.is_dir()
+                  and re.match(r'^\d+$', f.name))
+
+
 def create():
     """Create all test files."""
-
-    case_list = os.scandir(CASES_DIR)
-    case_list = sorted(f.name for f in case_list
-                       if f.is_dir() and re.match(r'^\d+$', f.name))
-
     formats = ('sbml', 'pysb')
-    toc = {'sbml': "", 'pysb': ""}
 
-    for case_id in case_list:
-        case_dir = os.path.join(CASES_DIR, case_id)
-        logger.info('# ', case_id, case_dir)
+    for format in formats:
+        case_list = get_cases(format=format)
+        toc = ""
 
-        sys.path.append(case_dir)
-        case_module = importlib.import_module(case_id)
+        for case_id in case_list:
+            case_dir = CASES_DIR / format / case_id
+            logger.info('# ', format, case_id, case_dir)
 
-        for format in formats:
+            # load test case module
+            #  directory needs to be removed from path again and the module
+            #  has to be unloaded, as modules from different model format
+            #  suites have the same name
+            sys.path.append(str(case_dir))
+            case_module = importlib.import_module(case_id)
+            sys.path.pop()
             case: PetabTestCase = case_module.case
+            del sys.modules[case_id]
 
             id_str = test_id_str(case.id)
-            toc[format] += f"# [{id_str}]({id_str}/)\n\n{case.brief}\n\n"
-
-            if format == 'sbml':
-                model_file = case.model
-            else:
-                model_file = case.model.replace('.xml', '_pysb.py')
+            toc += f"# [{id_str}]({id_str}/)\n\n{case.brief}\n\n"
 
             write_info(case, format)
 
@@ -48,14 +50,13 @@ def create():
                           condition_dfs=case.condition_dfs,
                           observable_dfs=case.observable_dfs,
                           measurement_dfs=case.measurement_dfs,
-                          model_files=model_file,
+                          model_files=case.model,
                           format_=format)
 
             chi2 = calculate_chi2(
                 case.measurement_dfs, case.simulation_dfs, case.observable_dfs,
                 case.parameter_df
             )
-
             llh = calculate_llh(
                 case.measurement_dfs, case.simulation_dfs, case.observable_dfs,
                 case.parameter_df
@@ -66,10 +67,9 @@ def create():
                            simulation_dfs=case.simulation_dfs,
                            format=format)
 
-    for format in formats:
-        toc_path = os.path.join(CASES_DIR, format, "toc.md")
+        toc_path = CASES_DIR / format / "README.md"
         with open(toc_path, "w") as f:
-            f.write(toc[format])
+            f.write(toc)
 
 
 def clear():

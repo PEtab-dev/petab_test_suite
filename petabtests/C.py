@@ -1,21 +1,16 @@
 """Constants."""
 
-import os
-import re
+from pathlib import Path
 
 # paths
+BASE_DIR = Path(__file__).parent
 
-BASE_DIR = os.path.dirname(__file__)
+CASES_DIR = BASE_DIR / 'cases'
+SBML_DIR = CASES_DIR / 'sbml'
+PYSB_DIR = CASES_DIR / 'pysb'
 
-CASES_DIR = os.path.join(BASE_DIR, 'cases')
-SBML_DIR = os.path.join(CASES_DIR, 'sbml')
-PYSB_DIR = os.path.join(CASES_DIR, 'pysb')
-
-CASES_LIST = sorted(f.name for f in os.scandir(CASES_DIR) if f.is_dir()
-                    and re.match(r'^\d+$', f.name))
-
-DEFAULT_SBML_FILE = os.path.join(BASE_DIR, 'conversion.xml')
-DEFAULT_PYSB_FILE = os.path.join(BASE_DIR, 'conversion_pysb.pysb')
+DEFAULT_SBML_FILE = BASE_DIR / 'conversion.xml'
+DEFAULT_PYSB_FILE = BASE_DIR / 'conversion_pysb.py'
 
 # constants
 
