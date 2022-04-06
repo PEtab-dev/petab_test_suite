@@ -1,12 +1,30 @@
+from inspect import cleandoc
+
 import pandas as pd
-import petab
 from petab.C import *
 from pathlib import Path
-from petabtests import *
+from petabtests import PetabTestCase, analytical_a, analytical_b
 
-test_id = 18
+DESCRIPTION = cleandoc("""
+## Objective
 
-skip_formats = {'pysb'}
+This case tests support for RateRules and partial preequilibration with `NaN`'s
+in the condition file.
+
+The model is to be simulated for a preequilibration condition and a
+simulation condition.
+For preequilibration, species `B` is initialized with `0`. For simulation,
+`B` is set to `NaN`, meaning that it is initialized with the result from
+preequilibration.
+`A` is reinitialized to the value in the condition table after
+preequilibration.
+
+## Model
+
+A simple conversion reaction `A <=> B` in a single compartment, following
+mass action kinetics. Dynamics of are specified as `RateRule`s targeting a
+parameter and a species.
+""")
 
 # problem --------------------------------------------------------------------
 
@@ -79,9 +97,17 @@ simulation_df.iloc[3:, simulation_df.columns.get_loc(SIMULATION)] = [
     analytical_b(t, 1, steady_state_b, 0.8, 0.6)
     for t in simulation_df[TIME]][3:]
 
-chi2 = petab.calculate_chi2(
-    measurement_df, simulation_df, observable_df, parameter_df)
 
-llh = petab.calculate_llh(
-    measurement_df, simulation_df, observable_df, parameter_df)
-print(llh)
+case = PetabTestCase(
+    id=18,
+    brief="Simulation. Preequilibration and RateRules. One state "
+          "reinitialized, one not (NaN in condition table). InitialAssignment "
+          "to species overridden.",
+    description=DESCRIPTION,
+    model=model,
+    condition_dfs=[condition_df],
+    observable_dfs=[observable_df],
+    measurement_dfs=[measurement_df],
+    simulation_dfs=[simulation_df],
+    parameter_df=parameter_df,
+)
