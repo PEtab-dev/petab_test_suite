@@ -1,15 +1,28 @@
-from petabtests import *
-from petab.C import *
-import petab
+from inspect import cleandoc
 
 import pandas as pd
+from petab.C import *
+
+from petabtests import DEFAULT_SBML_FILE, PetabTestCase, analytical_a
 
 
-test_id = 10
+DESCRIPTION = cleandoc("""
+## Objective 
+
+This case tests support for partial preequilibration.
+
+The model is to be simulated for a preequilibration condition and a
+simulation condition.
+Species `B` is to be reinitialized after preequilibration.
+For `A` the preequilibration result is to be used.
+
+## Model
+
+A simple conversion reaction `A <=> B` in a single compartment, following
+mass action kinetics.
+""")
 
 # problem --------------------------------------------------------------------
-
-model = DEFAULT_SBML_FILE
 
 condition_df = pd.DataFrame(data={
     CONDITION_ID: ['preeq_c0', 'c0'],
@@ -52,9 +65,14 @@ simulation_df[SIMULATION] = [
     analytical_a(t, steady_state_a, 1, 0.8, 0.6)
     for t in simulation_df[TIME]]
 
-chi2 = petab.calculate_chi2(
-    measurement_df, simulation_df, observable_df, parameter_df)
 
-llh = petab.calculate_llh(
-    measurement_df, simulation_df, observable_df, parameter_df)
-print(llh)
+case = PetabTestCase(
+    id=10,
+    description=DESCRIPTION,
+    model=DEFAULT_SBML_FILE,
+    condition_dfs=[condition_df],
+    observable_dfs=[observable_df],
+    measurement_dfs=[measurement_df],
+    simulation_dfs=[simulation_df],
+    parameter_df = parameter_df,
+)

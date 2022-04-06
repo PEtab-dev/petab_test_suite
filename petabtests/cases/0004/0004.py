@@ -1,15 +1,30 @@
-from petabtests import *
-from petab.C import *
-import petab
+from inspect import cleandoc
 
 import pandas as pd
+from petab.C import *
+
+from petabtests import DEFAULT_SBML_FILE, PetabTestCase, analytical_a
 
 
-test_id = 4
+DESCRIPTION = cleandoc("""
+## Objective 
+
+This case tests support for parametric observable parameter overrides in
+measurement tables
+
+Simulated data describes measurements with different offset and scaling
+parameters for a single observable. These values of the respective (non-estimated)
+parameters referenced in `observableParameters` need to be looked up in
+the parameter table to replace the placeholders in `observableFormula`.
+
+## Model
+
+A simple conversion reaction `A <=> B` in a single compartment, following
+mass action kinetics.
+""")
+
 
 # problem --------------------------------------------------------------------
-
-model = DEFAULT_SBML_FILE
 
 condition_df = pd.DataFrame(data={
     CONDITION_ID: ['c0'],
@@ -45,9 +60,14 @@ simulation_df = measurement_df.copy(deep=True).rename(
 simulation_df[SIMULATION] = [0.5 * analytical_a(t, 1, 0, 0.8, 0.6) + 2
                              for t in simulation_df[TIME]]
 
-chi2 = petab.calculate_chi2(
-    measurement_df, simulation_df, observable_df, parameter_df)
 
-llh = petab.calculate_llh(
-    measurement_df, simulation_df, observable_df, parameter_df)
-print(llh)
+case = PetabTestCase(
+    id=4,
+    description=DESCRIPTION,
+    model=DEFAULT_SBML_FILE,
+    condition_dfs=[condition_df],
+    observable_dfs=[observable_df],
+    measurement_dfs=[measurement_df],
+    simulation_dfs=[simulation_df],
+    parameter_df = parameter_df,
+)

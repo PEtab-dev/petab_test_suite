@@ -1,15 +1,23 @@
-from petabtests import *
-from petab.C import *
-import petab
+from inspect import cleandoc
 
 import pandas as pd
+from petab.C import *
+
+from petabtests import DEFAULT_SBML_FILE, PetabTestCase, analytical_a
 
 
-test_id = 12
+DESCRIPTION = cleandoc("""
+## Objective
+
+This case tests initial compartment sizes in the condition table.
+
+## Model
+
+A simple conversion reaction `A <=> B` in a single compartment, following
+mass action kinetics.
+""")
 
 # problem --------------------------------------------------------------------
-
-model = DEFAULT_SBML_FILE
 
 condition_df = pd.DataFrame(data={
     CONDITION_ID: ['c0'],
@@ -47,9 +55,14 @@ simulation_df = measurement_df.copy(deep=True).rename(
 simulation_df[SIMULATION] = [analytical_a(t, 1, 1, 0.8, 0.6)
                              for t in simulation_df[TIME]]
 
-chi2 = petab.calculate_chi2(
-    measurement_df, simulation_df, observable_df, parameter_df)
 
-llh = petab.calculate_llh(
-    measurement_df, simulation_df, observable_df, parameter_df)
-print(llh)
+case = PetabTestCase(
+    id=12,
+    description=DESCRIPTION,
+    model=DEFAULT_SBML_FILE,
+    condition_dfs=[condition_df],
+    observable_dfs=[observable_df],
+    measurement_dfs=[measurement_df],
+    simulation_dfs=[simulation_df],
+    parameter_df = parameter_df,
+)
