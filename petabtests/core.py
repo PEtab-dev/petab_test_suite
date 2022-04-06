@@ -7,7 +7,8 @@ import sys
 from petab.calculate import calculate_chi2, calculate_llh
 
 from .C import CASES_DIR
-from .file import PetabTestCase, write_info, write_problem, write_solution
+from .file import (PetabTestCase, write_info, write_problem, write_solution,
+                   test_id_str)
 
 logger = logging.getLogger("petab_test_suite")
 
@@ -19,6 +20,9 @@ def create():
     case_list = sorted(f.name for f in case_list
                        if f.is_dir() and re.match(r'^\d+$', f.name))
 
+    formats = ('sbml', 'pysb')
+    toc = {'sbml': "", 'pysb': ""}
+
     for case_id in case_list:
         case_dir = os.path.join(CASES_DIR, case_id)
         logger.info('# ', case_id, case_dir)
@@ -26,8 +30,12 @@ def create():
         sys.path.append(case_dir)
         case_module = importlib.import_module(case_id)
 
-        for format in ['sbml', 'pysb']:
+        for format in formats:
             case: PetabTestCase = case_module.case
+
+            id_str = test_id_str(case.id)
+            toc[format] += f"# [{id_str}]({id_str}/)\n\n{case.brief}\n\n"
+
             if format == 'sbml':
                 model_file = case.model
             else:
@@ -57,6 +65,11 @@ def create():
                            llh=llh,
                            simulation_dfs=case.simulation_dfs,
                            format=format)
+
+    for format in formats:
+        toc_path = os.path.join(CASES_DIR, format, "toc.md")
+        with open(toc_path, "w") as f:
+            f.write(toc[format])
 
 
 def clear():

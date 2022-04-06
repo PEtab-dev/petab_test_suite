@@ -62,6 +62,8 @@ simulation_df[SIMULATION] = [0.5 * analytical_a(t, 1, 0, 0.8, 0.6) + 2
 
 case = PetabTestCase(
     id=3,
+    brief="Simulation. Numeric observable parameter overrides in measurement "
+          "table.",
     description=DESCRIPTION,
     model=DEFAULT_SBML_FILE,
     condition_dfs=[condition_df],

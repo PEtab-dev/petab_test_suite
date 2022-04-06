@@ -54,6 +54,7 @@ simulation_df[SIMULATION] = [analytical_a(t, 1, 0, 0.8, 0.6)
 
 case = PetabTestCase(
     id=15,
+    brief="Simulation. Single parametric noise parameter override.",
     description=DESCRIPTION,
     model=DEFAULT_SBML_FILE,
     condition_dfs=[condition_df],

@@ -56,6 +56,7 @@ simulation_df[SIMULATION] = [analytical_a(t, 1, 0, 0.8, 0.6)
 
 case = PetabTestCase(
     id=14,
+    brief="Simulation. Multiple numeric noise parameter overrides.",
     description=DESCRIPTION,
     model=DEFAULT_SBML_FILE,
     condition_dfs=[condition_df],

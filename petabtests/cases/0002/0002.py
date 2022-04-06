@@ -59,6 +59,7 @@ simulation_df[SIMULATION] = [*[analytical_a(t, 0.8, 0, 0.8, 0.6)
 
 case = PetabTestCase(
     id=2,
+    brief="Simulation. Two conditions. Numeric parameter override.",
     description=DESCRIPTION,
     model=DEFAULT_SBML_FILE,
     condition_dfs=[condition_df],

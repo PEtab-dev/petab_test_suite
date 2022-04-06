@@ -65,6 +65,8 @@ simulation_df[SIMULATION] = [
 
 case = PetabTestCase(
     id=10,
+    brief="Simulation. Preequilibration. One species reinitialized, one not. "
+          "InitialAssignment to species overridden.",
     description=DESCRIPTION,
     model=DEFAULT_SBML_FILE,
     condition_dfs=[condition_df],

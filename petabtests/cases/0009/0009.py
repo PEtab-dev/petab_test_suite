@@ -64,6 +64,7 @@ simulation_df[SIMULATION] = [
 
 case = PetabTestCase(
     id=9,
+    brief="Simulation. Preequilibration.",
     description=DESCRIPTION,
     model=DEFAULT_SBML_FILE,
     condition_dfs=[condition_df],

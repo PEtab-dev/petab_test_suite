@@ -60,6 +60,7 @@ simulation_df[SIMULATION] = [
 
 case = PetabTestCase(
     id=16,
+    brief="Simulation. Observable transformation log.",
     description=DESCRIPTION,
     model=DEFAULT_SBML_FILE,
     condition_dfs=[condition_df],
