@@ -63,12 +63,12 @@ def absolute_simulations_distance_for_table(
         simulations: pd.DataFrame,
         gt_simulations: pd.DataFrame):
     """Compute absolute normalized distance between simulations."""
-    # gropuing columns
+    # grouping columns
     grouping_cols = [OBSERVABLE_ID, SIMULATION_CONDITION_ID, TIME]
     if PREEQUILIBRATION_CONDITION_ID in simulations:
         grouping_cols.append(PREEQUILIBRATION_CONDITION_ID)
     relevant_cols = grouping_cols.copy()
-    # append simulation columng last for correct sorting
+    # append simulation column last for correct sorting
     relevant_cols.append(SIMULATION)
 
     # restrict tables

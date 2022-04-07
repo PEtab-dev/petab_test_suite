@@ -3,7 +3,7 @@ from inspect import cleandoc
 import pandas as pd
 from petab.C import *
 
-from petabtests import DEFAULT_SBML_FILE, PetabTestCase, analytical_a
+from petabtests import DEFAULT_PYSB_FILE, PetabTestCase, analytical_a
 
 DESCRIPTION = cleandoc("""
 ## Objective
@@ -56,7 +56,7 @@ case = PetabTestCase(
     id=14,
     brief="Simulation. Multiple numeric noise parameter overrides.",
     description=DESCRIPTION,
-    model=DEFAULT_SBML_FILE,
+    model=DEFAULT_PYSB_FILE,
     condition_dfs=[condition_df],
     observable_dfs=[observable_df],
     measurement_dfs=[measurement_df],

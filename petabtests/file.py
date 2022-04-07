@@ -1,4 +1,5 @@
 """File input and output."""
+import os
 from dataclasses import dataclass
 from shutil import copyfile
 from typing import Callable, List, Union
@@ -17,7 +18,7 @@ class PetabTestCase:
     id: int
     brief: str
     description: str
-    model: str
+    model: Path
     condition_dfs: List[pd.DataFrame]
     observable_dfs: List[pd.DataFrame]
     measurement_dfs: List[pd.DataFrame]
@@ -25,13 +26,13 @@ class PetabTestCase:
     parameter_df: pd.DataFrame
 
 
-def case_dir(_id: Union[int, str], format: str) -> str:
+def case_dir(_id: Union[int, str], format: str) -> Path:
     id_str = test_id_str(_id)
     if format == 'sbml':
-        dir_ = os.path.join(CASES_DIR, id_str)
+        dir_ = CASES_DIR / id_str
     else:
-        dir_ = os.path.join(CASES_DIR, format, id_str)
-    os.makedirs(dir_, exist_ok=True)
+        dir_ = CASES_DIR / format / id_str
+    dir_.mkdir(parents=True, exist_ok=True)
     return dir_
 
 
@@ -48,10 +49,11 @@ def test_id_str(_id: Union[int, str]) -> str:
 
 
 def write_info(case: PetabTestCase, format_: str):
+    """Write test info markdown file"""
     # id to string
     dir_ = case_dir(case.id, format_)
     id_str = test_id_str(case.id)
-    filename = os.path.join(dir_, "README.md")
+    filename = dir_ / "README.md"
     with open(filename, "w") as f:
         f.write(f"# PEtab test case {id_str}\n\n")
         f.write(case.description)
@@ -64,7 +66,7 @@ def write_problem(
         condition_dfs: Union[List[pd.DataFrame], pd.DataFrame],
         observable_dfs: Union[List[pd.DataFrame], pd.DataFrame],
         measurement_dfs: Union[List[pd.DataFrame], pd.DataFrame],
-        model_files: Union[List[str], str],
+        model_files: Union[List[Path], Path],
         format_: str = 'sbml'
         ) -> None:
     """Write problem to files.
@@ -87,7 +89,7 @@ def write_problem(
         observable_dfs = [observable_dfs]
     if isinstance(measurement_dfs, pd.DataFrame):
         measurement_dfs = [measurement_dfs]
-    if isinstance(model_files, str):
+    if isinstance(model_files, (str, Path)):
         model_files = [model_files]
 
     # id to string
