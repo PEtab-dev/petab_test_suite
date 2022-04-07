@@ -10,6 +10,8 @@ from .C import CASES_DIR
 from .file import (PetabTestCase, write_info, write_problem, write_solution,
                    test_id_str)
 
+__all__ = ['get_cases', 'create', 'clear']
+
 logger = logging.getLogger("petab_test_suite")
 
 
