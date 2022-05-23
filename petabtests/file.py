@@ -214,14 +214,14 @@ def write_solution(
 
 
 def _write_dfs_to_files(
-        dir_: str, name: str, writer: Callable,
+        dir_: [Path, str], name: str, writer: Callable,
         dfs: List[pd.DataFrame], config_list: List[str] = None):
     """Write data frames to files and add them to config."""
     for idx, df in enumerate(dfs):
         if len(dfs) == 1:
             idx = ''
         fname = f"_{name}{idx}.tsv"
-        writer(df, os.path.join(dir_, fname))
+        writer(df, Path(dir_, fname))
         if config_list is not None:
             config_list.append(fname)
 
