@@ -1,4 +1,5 @@
 from inspect import cleandoc
+from pathlib import Path
 
 import pandas as pd
 from petab.C import *
@@ -62,7 +63,7 @@ case = PetabTestCase(
     brief="Simulation. Condition-specific parameters only defined in "
           "parameter table.",
     description=DESCRIPTION,
-    model='conversion_modified.xml',
+    model=Path('conversion_modified.xml'),
     condition_dfs=[condition_df],
     observable_dfs=[observable_df],
     measurement_dfs=[measurement_df],
