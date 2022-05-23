@@ -214,7 +214,7 @@ def write_solution(
 
 
 def _write_dfs_to_files(
-        dir_: [Path, str], name: str, writer: Callable,
+        dir_: Union[Path, str], name: str, writer: Callable,
         dfs: List[pd.DataFrame], config_list: List[str] = None):
     """Write data frames to files and add them to config."""
     for idx, df in enumerate(dfs):
