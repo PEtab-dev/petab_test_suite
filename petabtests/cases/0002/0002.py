@@ -1,8 +1,8 @@
 from inspect import cleandoc
+from math import nan
 
 import pandas as pd
 from petab.C import *
-
 from petabtests import DEFAULT_SBML_FILE, PetabTestCase, analytical_a
 
 DESCRIPTION = cleandoc("""
@@ -12,6 +12,9 @@ This case tests support for multiple simulation conditions
 
 The model is to be simulated for two different experimental conditions
 (here: different initial concentrations).
+
+For `b0`, `nan` is used in the condition table, indicating that the default
+model values for `b0` should be used for either condition.
 
 ## Model
 
@@ -23,7 +26,8 @@ mass action kinetics.
 
 condition_df = pd.DataFrame(data={
     CONDITION_ID: ['c0', 'c1'],
-    'a0': [0.8, 0.9]
+    'a0': [0.8, 0.9],
+    'b0': [nan, nan],
 }).set_index([CONDITION_ID])
 
 measurement_df = pd.DataFrame(data={
