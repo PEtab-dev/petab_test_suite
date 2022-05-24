@@ -21,9 +21,9 @@
     </listOfCompartments>
 
     <listOfSpecies>
-      <species id="A" name="A" compartment="compartment" initialConcentration="1" boundaryCondition="false" constant="false">
+      <species id="A" name="A" compartment="compartment" initialConcentration="2" boundaryCondition="false" constant="false">
       </species>
-      <species id="B" name="B" compartment="compartment" initialConcentration="1" boundaryCondition="false" constant="false">
+      <species id="B" name="B" compartment="compartment" initialConcentration="2" boundaryCondition="false" constant="false">
       </species>
     </listOfSpecies>
 
