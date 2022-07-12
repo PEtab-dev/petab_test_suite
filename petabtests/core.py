@@ -12,7 +12,7 @@ from .C import CASES_DIR
 from .file import (PetabTestCase, get_case_dir, test_id_str, write_info,
                    write_problem, write_solution)
 
-__all__ = ['get_cases', 'create', 'clear']
+__all__ = ['get_cases', 'create', 'clear', 'get_cases_dir']
 
 logger = logging.getLogger("petab_test_suite")
 
