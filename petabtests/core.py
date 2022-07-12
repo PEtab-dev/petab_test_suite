@@ -14,6 +14,9 @@ from .file import (PetabTestCase, get_case_dir, test_id_str, write_info,
 
 __all__ = ['get_cases', 'create', 'clear', 'get_cases_dir']
 
+test_formats = ('sbml', 'pysb')
+test_versions = ('v1.0.0', "v2.0.0")
+
 logger = logging.getLogger("petab_test_suite")
 
 
@@ -32,9 +35,7 @@ def get_cases(format_: str, version: str):
 
 def create():
     """Create all test files."""
-    formats = ('sbml', 'pysb')
-    versions = ('v1.0.0', "v2.0.0")
-    for version, format_ in itertools.product(versions, formats):
+    for version, format_ in itertools.product(test_versions, test_formats):
         case_list = get_cases(format_=format_, version=version)
         if not case_list:
             continue
@@ -98,10 +99,13 @@ def create():
 
 def clear():
     """Clear all model folders."""
-    case_list = os.scandir(CASES_DIR)
-    # TODO recurse
-    for case in case_list:
-        case_dir = os.path.join(CASES_DIR, case)
-        for file_ in os.scandir(case_dir):
-            if file_.name.startswith('_') and not file_.is_dir():
-                os.remove(file_.path)
+    for version, format_ in itertools.product(test_versions, test_formats):
+        case_list = get_cases(format_=format_, version=version)
+
+        for case_id in case_list:
+            case_dir = get_case_dir(format_=format_, version=version,
+                                    id_=case_id)
+
+            for file_ in os.scandir(case_dir):
+                if file_.name.startswith('_') and not file_.is_dir():
+                    os.remove(file_.path)
