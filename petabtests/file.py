@@ -11,9 +11,11 @@ from petab.C import *  # noqa: F403
 
 from .C import *  # noqa: F403
 
-__all__ = ['get_case_dir', 'load_solution', 'PetabTestCase', 'problem_yaml_name',
-           'solution_yaml_name', 'test_id_str', 'write_info', 'write_problem',
-           'write_solution']
+__all__ = [
+    'get_case_dir', 'load_solution', 'PetabTestCase', 'problem_yaml_name',
+    'solution_yaml_name', 'test_id_str', 'write_info', 'write_problem',
+    'write_solution'
+]
 
 
 @dataclass
@@ -140,7 +142,6 @@ def write_problem(
                 MODEL_LANGUAGE: format_,
                 MODEL_LOCATION: model_file,
             }
-
 
     # write parameters
     parameters_file = '_parameters.tsv'

@@ -32,6 +32,6 @@ jobs:
     - name: Run tests
       run: |
         python -m flake8 \
-          --exclude=build,doc,tmp,petabtests/cases/pysb/*/_model.py,petabtests/cases/pysb/*/conversion_modified_pysb.py,petabtests/conversion_pysb.py \
+          --exclude=build,doc,tmp,_model.py,conversion_modified_pysb.py,conversion_pysb.py \
           --extend-ignore=F403,F405
         pytest test

@@ -91,7 +91,7 @@ def create():
             )
 
         toc_path = get_cases_dir(format_=format_, version=version) \
-                   / "README.md"
+            / "README.md"
         with open(toc_path, "w") as f:
             f.write(toc)
 
