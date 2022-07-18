@@ -174,7 +174,8 @@ def write_problem(
 
     # validate written PEtab files
     problem = petab.Problem.from_yaml(os.path.join(dir_, yaml_file))
-    petab.lint_problem(problem)
+    if petab.lint_problem(problem):
+        raise RuntimeError("Invalid PEtab problem, see messages above.")
 
 
 def write_solution(
@@ -241,8 +242,8 @@ def _write_dfs_to_files(
             config_list.append(fname)
 
 
-def load_solution(test_id: Union[int, str], format: str):
-    dir_ = get_case_dir(test_id, format)
+def load_solution(test_id: Union[int, str], format: str, version: str):
+    dir_ = get_case_dir(test_id, format, version=version)
 
     # load yaml
     yaml_file = solution_yaml_name(test_id)

@@ -4,6 +4,7 @@ import logging
 import os
 import re
 import sys
+import warnings
 from pathlib import Path
 
 from petab.calculate import calculate_chi2, calculate_llh
