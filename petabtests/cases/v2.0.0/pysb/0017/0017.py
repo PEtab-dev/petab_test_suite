@@ -59,6 +59,11 @@ parameter_df = pd.DataFrame(data={
     ESTIMATE: [1],
 }).set_index(PARAMETER_ID)
 
+mapping_df = pd.DataFrame(data={
+    PETAB_ENTITY_ID: ['A', 'B'],
+    MODEL_ENTITY_ID: ['A_() ** compartment', 'B_() ** compartment'],
+}).set_index(PETAB_ENTITY_ID)
+
 # solutions ------------------------------------------------------------------
 
 simulation_df = measurement_df.copy(deep=True).rename(
@@ -81,4 +86,5 @@ case = PetabTestCase(
     measurement_dfs=[measurement_df],
     simulation_dfs=[simulation_df],
     parameter_df=parameter_df,
+    mapping_df=mapping_df,
 )

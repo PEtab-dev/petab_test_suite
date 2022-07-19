@@ -72,7 +72,8 @@ def create():
                 measurement_dfs=case.measurement_dfs,
                 model_files=case.model,
                 format_=format_,
-                version=version
+                version=version,
+                mapping_df=case.mapping_df
             )
 
             chi2 = calculate_chi2(

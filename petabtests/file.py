@@ -30,6 +30,7 @@ class PetabTestCase:
     measurement_dfs: List[pd.DataFrame]
     simulation_dfs: List[pd.DataFrame]
     parameter_df: pd.DataFrame
+    mapping_df: pd.DataFrame = None
 
 
 def get_case_dir(id_: Union[int, str], format_: str, version: str) -> Path:
@@ -71,6 +72,7 @@ def write_problem(
         measurement_dfs: Union[List[pd.DataFrame], pd.DataFrame],
         model_files: Union[List[Path], Path],
         version: str,
+        mapping_df: pd.DataFrame = None,
         format_: str = 'sbml'
 ) -> None:
     """Write problem to files.
@@ -84,8 +86,10 @@ def write_problem(
     measurement_dfs: PEtab measurement tables.
     model_files: PEtab SBML/PySB files.
     format_: Model format (SBML/PySB)
+    mapping_df: PEtab mapping table
+    version: PEtab version
     """
-    print(f"Writing case {test_id} {format_} ...")
+    print(f"Writing case {version} {format_} {test_id}...")
     # convenience
     if isinstance(condition_dfs, pd.DataFrame):
         condition_dfs = [condition_dfs]
@@ -164,6 +168,14 @@ def write_problem(
                         petab.write_measurement_df, measurement_dfs,
                         config[PROBLEMS][0][MEASUREMENT_FILES])
 
+    if format_version != 1 and mapping_df is not None:
+        # write mapping table
+        mappings_file = '_mapping.tsv'
+        petab.write_mapping_df(mapping_df,
+                               os.path.join(dir_, mappings_file))
+        config[PROBLEMS][0][MAPPING_FILE] = mappings_file
+
+
     # validate petab yaml
     petab.validate(config, path_prefix=dir_)
 
@@ -187,7 +199,8 @@ def write_solution(
         format_: str = 'sbml',
         tol_simulations: float = 1e-3,
         tol_chi2: float = 1e-3,
-        tol_llh: float = 1e-3):
+        tol_llh: float = 1e-3
+):
     """Write solution to files.
 
     Parameters
