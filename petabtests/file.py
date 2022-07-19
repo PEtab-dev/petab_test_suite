@@ -175,7 +175,6 @@ def write_problem(
                                os.path.join(dir_, mappings_file))
         config[PROBLEMS][0][MAPPING_FILE] = mappings_file
 
-
     # validate petab yaml
     petab.validate(config, path_prefix=dir_)
 
