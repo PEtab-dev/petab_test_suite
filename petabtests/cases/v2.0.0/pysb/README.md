@@ -66,3 +66,7 @@ Simulation. Observable transformation log.
 
 Simulation. Preequilibration. One species reinitialized, one not (NaN in condition table). InitialAssignment to species overridden.
 
+# [0018](0018/)
+
+Parameters in mapping table.
+

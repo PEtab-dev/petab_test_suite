@@ -10,7 +10,7 @@ DESCRIPTION = cleandoc("""
 ## Objective
 
 This case tests support for partial preequilibration with `NaN`'s in the
-condition file.
+condition file, and usage of the mapping table.
 
 The model is to be simulated for a preequilibration condition and a
 simulation condition.
