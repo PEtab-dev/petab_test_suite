@@ -1,4 +1,5 @@
 from inspect import cleandoc
+from math import nan
 
 import pandas as pd
 from petab.C import *
@@ -13,6 +14,9 @@ This case tests support for multiple simulation conditions
 The model is to be simulated for two different experimental conditions
 (here: different initial concentrations).
 
+For `b0`, `nan` is used in the condition table, indicating that the default
+model values for `b0` should be used for either condition.
+
 ## Model
 
 A simple conversion reaction `A <=> B` in a single compartment, following
@@ -23,7 +27,8 @@ mass action kinetics.
 
 condition_df = pd.DataFrame(data={
     CONDITION_ID: ['c0', 'c1'],
-    'a0': [0.8, 0.9]
+    'a0': [0.8, 0.9],
+    'b0': [nan, nan],
 }).set_index([CONDITION_ID])
 
 measurement_df = pd.DataFrame(data={
@@ -40,21 +45,21 @@ observable_df = pd.DataFrame(data={
 }).set_index([OBSERVABLE_ID])
 
 parameter_df = pd.DataFrame(data={
-    PARAMETER_ID: ['b0', 'k1', 'k2'],
-    PARAMETER_SCALE: [LIN] * 3,
-    LOWER_BOUND: [0] * 3,
-    UPPER_BOUND: [10] * 3,
-    NOMINAL_VALUE: [0, 0.8, 0.6],
-    ESTIMATE: [1] * 3,
+    PARAMETER_ID: ['k1', 'k2'],
+    PARAMETER_SCALE: [LIN] * 2,
+    LOWER_BOUND: [0] * 2,
+    UPPER_BOUND: [10] * 2,
+    NOMINAL_VALUE: [0.8, 0.6],
+    ESTIMATE: [1] * 2,
 }).set_index(PARAMETER_ID)
 
 # solutions ------------------------------------------------------------------
 
 simulation_df = measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION})
-simulation_df[SIMULATION] = [*[analytical_a(t, 0.8, 0, 0.8, 0.6)
+simulation_df[SIMULATION] = [*[analytical_a(t, 0.8, 1, 0.8, 0.6)
                                for t in [0, 10]],
-                             *[analytical_a(t, 0.9, 0, 0.8, 0.6)
+                             *[analytical_a(t, 0.9, 1, 0.8, 0.6)
                                for t in [0, 10]]]
 
 case = PetabTestCase(
