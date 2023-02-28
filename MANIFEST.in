@@ -1,2 +1,3 @@
 include petabtests/conversion.xml
-include petabtests/cases/*/*
+include petabtests/cases/sbml/*/*
+include petabtests/cases/pysb/*/*
