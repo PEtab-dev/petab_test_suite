@@ -11,9 +11,11 @@ from petab.C import *  # noqa: F403
 
 from .C import *  # noqa: F403
 
-__all__ = ['case_dir', 'load_solution', 'PetabTestCase', 'problem_yaml_name',
-           'solution_yaml_name', 'test_id_str', 'write_info', 'write_problem',
-           'write_solution']
+__all__ = [
+    'get_case_dir', 'load_solution', 'PetabTestCase', 'problem_yaml_name',
+    'solution_yaml_name', 'test_id_str', 'write_info', 'write_problem',
+    'write_solution'
+]
 
 
 @dataclass
@@ -28,14 +30,12 @@ class PetabTestCase:
     measurement_dfs: List[pd.DataFrame]
     simulation_dfs: List[pd.DataFrame]
     parameter_df: pd.DataFrame
+    mapping_df: pd.DataFrame = None
 
 
-def case_dir(_id: Union[int, str], format: str) -> Path:
-    id_str = test_id_str(_id)
-    if format == 'sbml':
-        dir_ = CASES_DIR / id_str
-    else:
-        dir_ = CASES_DIR / format / id_str
+def get_case_dir(id_: Union[int, str], format_: str, version: str) -> Path:
+    id_str = test_id_str(id_)
+    dir_ = CASES_DIR / version / format_ / id_str
     dir_.mkdir(parents=True, exist_ok=True)
     return dir_
 
@@ -52,10 +52,10 @@ def test_id_str(_id: Union[int, str]) -> str:
     return f"{_id:0>4}"
 
 
-def write_info(case: PetabTestCase, format_: str):
+def write_info(case: PetabTestCase, format_: str, version: str):
     """Write test info markdown file"""
     # id to string
-    dir_ = case_dir(case.id, format_)
+    dir_ = get_case_dir(id_=case.id, format_=format_, version=version)
     id_str = test_id_str(case.id)
     filename = dir_ / "README.md"
     with open(filename, "w") as f:
@@ -71,8 +71,10 @@ def write_problem(
         observable_dfs: Union[List[pd.DataFrame], pd.DataFrame],
         measurement_dfs: Union[List[pd.DataFrame], pd.DataFrame],
         model_files: Union[List[Path], Path],
+        version: str,
+        mapping_df: pd.DataFrame = None,
         format_: str = 'sbml'
-        ) -> None:
+) -> None:
     """Write problem to files.
 
     Parameters
@@ -84,8 +86,10 @@ def write_problem(
     measurement_dfs: PEtab measurement tables.
     model_files: PEtab SBML/PySB files.
     format_: Model format (SBML/PySB)
+    mapping_df: PEtab mapping table
+    version: PEtab version
     """
-    print(f"Writing case {test_id} {format_} ...")
+    print(f"Writing case {version} {format_} {test_id}...")
     # convenience
     if isinstance(condition_dfs, pd.DataFrame):
         condition_dfs = [condition_dfs]
@@ -97,14 +101,19 @@ def write_problem(
         model_files = [model_files]
 
     # id to string
-    dir_ = case_dir(test_id, format_)
+    dir_ = get_case_dir(id_=test_id, format_=format_, version=version)
+
+    if version == "v1.0.0":
+        format_version = 1
+    else:
+        assert version[0] == "v"
+        format_version = version[1:]
 
     # petab yaml
     config = {
-        FORMAT_VERSION: petab.__format_version__,
+        FORMAT_VERSION: format_version,
         PROBLEMS: [
             {
-                SBML_FILES: [],
                 CONDITION_FILES: [],
                 MEASUREMENT_FILES: [],
                 OBSERVABLE_FILES: [],
@@ -127,7 +136,16 @@ def write_problem(
         copyfile(os.path.join(dir_, model_file),
                  os.path.join(dir_, copied_model_file))
         copied_model_files.append(copied_model_file)
-    config[PROBLEMS][0][SBML_FILES] = copied_model_files
+
+    if version == "v1.0.0":
+        config[PROBLEMS][0][SBML_FILES] = copied_model_files
+    else:
+        config[PROBLEMS][0][MODEL_FILES] = {}
+        for model_idx, model_file in enumerate(copied_model_files):
+            config[PROBLEMS][0][MODEL_FILES][f'model_{model_idx}'] = {
+                MODEL_LANGUAGE: format_,
+                MODEL_LOCATION: model_file,
+            }
 
     # write parameters
     parameters_file = '_parameters.tsv'
@@ -150,6 +168,13 @@ def write_problem(
                         petab.write_measurement_df, measurement_dfs,
                         config[PROBLEMS][0][MEASUREMENT_FILES])
 
+    if format_version != 1 and mapping_df is not None:
+        # write mapping table
+        mappings_file = '_mapping.tsv'
+        petab.write_mapping_df(mapping_df,
+                               os.path.join(dir_, mappings_file))
+        config[PROBLEMS][0][MAPPING_FILE] = mappings_file
+
     # validate petab yaml
     petab.validate(config, path_prefix=dir_)
 
@@ -160,7 +185,8 @@ def write_problem(
 
     # validate written PEtab files
     problem = petab.Problem.from_yaml(os.path.join(dir_, yaml_file))
-    petab.lint_problem(problem)
+    if petab.lint_problem(problem):
+        raise RuntimeError("Invalid PEtab problem, see messages above.")
 
 
 def write_solution(
@@ -168,10 +194,12 @@ def write_solution(
         simulation_dfs: Union[List[pd.DataFrame], pd.DataFrame],
         chi2: float,
         llh: float,
-        format: str = 'sbml',
+        version: str,
+        format_: str = 'sbml',
         tol_simulations: float = 1e-3,
         tol_chi2: float = 1e-3,
-        tol_llh: float = 1e-3):
+        tol_llh: float = 1e-3
+):
     """Write solution to files.
 
     Parameters
@@ -180,14 +208,14 @@ def write_solution(
     simulation_dfs: PEtab simulation tables.
     chi2: True chi square value.
     llh: True log likelihood value.
-    format: Model format (SBML/PySB)
+    format_: Model format (SBML/PySB)
     """
 
     if isinstance(simulation_dfs, pd.DataFrame):
         simulation_dfs = [simulation_dfs]
 
     # id to string
-    dir_ = case_dir(test_id, format)
+    dir_ = get_case_dir(id_=test_id, format_=format_, version=version)
 
     # solution yaml
     config = {
@@ -226,8 +254,8 @@ def _write_dfs_to_files(
             config_list.append(fname)
 
 
-def load_solution(test_id: Union[int, str], format: str):
-    dir_ = case_dir(test_id, format)
+def load_solution(test_id: Union[int, str], format: str, version: str):
+    dir_ = get_case_dir(test_id, format, version=version)
 
     # load yaml
     yaml_file = solution_yaml_name(test_id)

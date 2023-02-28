@@ -6,8 +6,6 @@ from pathlib import Path
 BASE_DIR = Path(__file__).parent
 
 CASES_DIR = BASE_DIR / 'cases'
-SBML_DIR = CASES_DIR / 'sbml'
-PYSB_DIR = CASES_DIR / 'pysb'
 
 DEFAULT_SBML_FILE = BASE_DIR / 'conversion.xml'
 DEFAULT_PYSB_FILE = BASE_DIR / 'conversion_pysb.py'
