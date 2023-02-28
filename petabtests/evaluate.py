@@ -4,6 +4,11 @@ import pandas as pd
 from petab.C import *
 from .C import *  # noqa: F403
 
+__all__ = ['evaluate_llh', 'evaluate_chi2', 'evaluate_simulations',
+           'absolute_simulations_distance_for_tables',
+           'absolute_simulations_distance_for_array',
+           'absolute_simulations_distance_for_table']
+
 
 def evaluate_chi2(chi2: float, gt_chi2: float, tol: float = 1e-3):
     """Evaluate whether chi square values match."""
@@ -63,12 +68,12 @@ def absolute_simulations_distance_for_table(
         simulations: pd.DataFrame,
         gt_simulations: pd.DataFrame):
     """Compute absolute normalized distance between simulations."""
-    # gropuing columns
+    # grouping columns
     grouping_cols = [OBSERVABLE_ID, SIMULATION_CONDITION_ID, TIME]
     if PREEQUILIBRATION_CONDITION_ID in simulations:
         grouping_cols.append(PREEQUILIBRATION_CONDITION_ID)
     relevant_cols = grouping_cols.copy()
-    # append simulation columng last for correct sorting
+    # append simulation column last for correct sorting
     relevant_cols.append(SIMULATION)
 
     # restrict tables
