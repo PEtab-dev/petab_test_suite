@@ -173,7 +173,7 @@ def write_problem(
         mappings_file = '_mapping.tsv'
         petab.write_mapping_df(mapping_df,
                                os.path.join(dir_, mappings_file))
-        config[PROBLEMS][0][MAPPING_FILES] = mappings_file
+        config[PROBLEMS][0][MAPPING_FILES] = [mappings_file]
 
     # validate petab yaml
     petab.validate(config, path_prefix=dir_)
