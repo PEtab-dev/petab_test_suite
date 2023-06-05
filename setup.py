@@ -1,6 +1,6 @@
 """PEtab test suite python package"""
 
-from setuptools import setup, find_packages
+from setuptools import setup, find_namespace_packages
 from os import path
 
 here = path.abspath(path.dirname(__file__))
@@ -39,7 +39,7 @@ setup(
         'Programming Language :: Python :: 3.9',
     ],
     keywords='PEtab testsuite',
-    packages=find_packages(),
+    packages=find_namespace_packages(),
     install_requires=[
         'numpy',
         'pandas',
