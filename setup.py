@@ -47,7 +47,7 @@ setup(
         'pysb',
         'simplesbml',
     ],
-    python_requires='>=3.7',
+    python_requires='>=3.9',
     entry_points={
         'console_scripts': [
             'petabtests_create = petabtests.core:create',
