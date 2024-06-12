@@ -45,7 +45,7 @@ parameter_df = pd.DataFrame(data={
     PARAMETER_SCALE: [LIN, LIN, LOG10, LIN],
     LOWER_BOUND: [0] * 4,
     UPPER_BOUND: [10] * 4,
-    NOMINAL_VALUE: [0.8, 0.6, 1, 2],
+    NOMINAL_VALUE: [0.8, 0.6, 2, 3],
     ESTIMATE: [1] * 3 + [0],
 }).set_index(PARAMETER_ID)
 
@@ -53,7 +53,7 @@ parameter_df = pd.DataFrame(data={
 
 simulation_df = measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION})
-simulation_df[SIMULATION] = [analytical_a(t, 1, 2, 0.8, 0.6)
+simulation_df[SIMULATION] = [analytical_a(t, 2, 3, 0.8, 0.6)
                              for t in simulation_df[TIME]]
 
 case = PetabTestCase(
