@@ -8,9 +8,10 @@ from petabtests import PetabTestCase, analytical_a
 DESCRIPTION = cleandoc("""
 ## Objective
 
-This case tests initial concentrations in the condition table.
-For species `B`, the initial concentration is specified in the condition
-table, while for `A` it is given via an initial assignment in the SBML model.
+This case tests handling of initial concentrations that are specified
+in the conditions table. For species `A`, the initial concentration is
+estimated for species `B` the initial concentration is specified in the
+parameters table.
 
 ## Model
 
@@ -22,7 +23,8 @@ mass action kinetics.
 
 condition_df = pd.DataFrame(data={
     CONDITION_ID: ['c0'],
-    'B': [2]
+    'A': ["initial_A"],
+    'B': ["initial_B"],
 }).set_index([CONDITION_ID])
 
 measurement_df = pd.DataFrame(data={
@@ -39,12 +41,12 @@ observable_df = pd.DataFrame(data={
 }).set_index([OBSERVABLE_ID])
 
 parameter_df = pd.DataFrame(data={
-    PARAMETER_ID: ['k1', 'k2'],
-    PARAMETER_SCALE: [LIN] * 2,
-    LOWER_BOUND: [0] * 2,
-    UPPER_BOUND: [10] * 2,
-    NOMINAL_VALUE: [0.8, 0.6],
-    ESTIMATE: [1] * 2,
+    PARAMETER_ID: ['k1', 'k2', 'initial_A', 'initial_B'],
+    PARAMETER_SCALE: [LIN, LIN, LOG10, LIN],
+    LOWER_BOUND: [0] * 4,
+    UPPER_BOUND: [10] * 4,
+    NOMINAL_VALUE: [0.8, 0.6, 1, 2],
+    ESTIMATE: [1] * 3 + [0],
 }).set_index(PARAMETER_ID)
 
 # solutions ------------------------------------------------------------------
@@ -55,7 +57,7 @@ simulation_df[SIMULATION] = [analytical_a(t, 1, 2, 0.8, 0.6)
                              for t in simulation_df[TIME]]
 
 case = PetabTestCase(
-    id=11,
+    id=19,
     brief="Simulation. InitialAssignment to species overridden.",
     description=DESCRIPTION,
     model='conversion_modified.xml',

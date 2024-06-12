@@ -70,3 +70,7 @@ Simulation. Preequilibration. One species reinitialized, one not (NaN in conditi
 
 Simulation. Preequilibration and RateRules. One state reinitialized, one not (NaN in condition table). InitialAssignment to species overridden.
 
+# [0019](0019/)
+
+Simulation. InitialAssignment to species overridden.
+
