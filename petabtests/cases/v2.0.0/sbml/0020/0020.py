@@ -43,7 +43,7 @@ observable_df = pd.DataFrame(data={
 parameter_df = pd.DataFrame(data={
     PARAMETER_ID: ['k1', 'k2', 'initial_A', 'initial_B'],
     PARAMETER_SCALE: [LIN, LIN, LOG10, LIN],
-    LOWER_BOUND: [0] * 4,
+    LOWER_BOUND: [0, 0, 1, 0],
     UPPER_BOUND: [10] * 4,
     NOMINAL_VALUE: [0.8, 0.6, 2, 3],
     ESTIMATE: [1] * 3 + [0],
