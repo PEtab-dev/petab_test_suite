@@ -20,10 +20,11 @@ generating the tests and evaluating results. This can be installed via
 
 ## Use the test suite
 
-The [cases](cases) subdirectory contains a collection of enumerated tests.
+The [petabtests/cases](petabtests/cases) subdirectory contains a collection
+of enumerated tests.
 Each test contains a descriptive `wxyz.md` file, and a script file `wxyz.py`
 file that can be used to generate all problem and solution files for the test.
-The necessary files are in the same case specific folder, starting with an
+The necessary files are in the same case-specific folder, starting with an
 underscore. 
 In each case folder, there is a file `_wxyz.yaml` containing the parameter
 estimation problem description, and a file `_wxyz_solution.yaml` containing
@@ -45,7 +46,7 @@ employed: Simulations, chi2 value and log-likelihood. A tool can be said to
 cover a test problem if any of those values matches the ground truth values
 up to some tolerance.
 
-The python module provides convenience functions for evaluation in
+The python package provides convenience functions for evaluation in
 [petabtests/evaluate.py](petabtests/evaluate.py).
 
 -> [Overview of passed test cases for different tools supporting PEtab](https://github.com/PEtab-dev/PEtab#petab-features-supported-in-different-tools)
