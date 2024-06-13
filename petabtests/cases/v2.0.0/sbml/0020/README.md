@@ -4,7 +4,7 @@
 
 This case tests handling of initial concentrations that are specified
 in the conditions table. For species `A`, the initial concentration is
-estimated for species `B` the initial concentration is specified in the
+estimated. For species `B`, the initial concentration is specified in the
 parameters table.
 
 ## Model
