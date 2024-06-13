@@ -72,5 +72,5 @@ Simulation. Preequilibration and RateRules. One state reinitialized, one not (Na
 
 # [0019](0019/)
 
-Simulation. InitialAssignment to species overridden.
+Simulation. Estimated initial value via conditions table.
 

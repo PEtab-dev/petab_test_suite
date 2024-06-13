@@ -58,7 +58,7 @@ simulation_df[SIMULATION] = [analytical_a(t, 2, 3, 0.8, 0.6)
 
 case = PetabTestCase(
     id=19,
-    brief="Simulation. InitialAssignment to species overridden.",
+    brief="Simulation. Estimated initial value via conditions table.",
     description=DESCRIPTION,
     model='conversion_modified.xml',
     condition_dfs=[condition_df],

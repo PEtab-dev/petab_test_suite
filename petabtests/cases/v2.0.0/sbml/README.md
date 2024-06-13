@@ -76,5 +76,5 @@ Mapping table.
 
 # [0020](0020/)
 
-Simulation. InitialAssignment to species overridden.
+Simulation. Estimated initial value via conditions table.
 
