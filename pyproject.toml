@@ -29,7 +29,7 @@ dependencies = [
     "numpy>=1.22",
     "pandas>=2.0",
     "petab>=0.1.4",
-    "pysb",
+    "pysb>=1.16.0",
     "simplesbml",
 ]
 
