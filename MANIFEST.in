@@ -1,2 +1,4 @@
 include petabtests/conversion.xml
 recursive-include petabtests/cases *
+recursive-exclude **/__pycache__ *
+exclude cases

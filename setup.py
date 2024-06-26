@@ -18,41 +18,9 @@ long_description = read(path.join(here, 'README.md'))
 exec(read(path.join(here, 'petabtests', 'version.py')))
 
 setup(
-    name='petabtests',
     version=__version__,  # noqa: F821
-    description='PEtab testsuite library',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/PEtab-dev/petab_test_suite',
-    author='PEtab-dev',
-    author_email='yannik.schaelte@gmail.com',
-    maintainer='PEtab-dev',
-    maintainer_email='yannik.schaelte@gmail.com',
-    # author_email='',
-    classifiers=[
-        'Development Status :: 3 - Alpha',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: BSD License',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
-        'Programming Language :: Python :: 3.9',
-    ],
-    keywords='PEtab testsuite',
     packages=find_namespace_packages(),
-    install_requires=[
-        'numpy',
-        'pandas',
-        'petab>=0.1.4',
-        'pysb',
-        'simplesbml',
-    ],
-    python_requires='>=3.10',
-    entry_points={
-        'console_scripts': [
-            'petabtests_create = petabtests.core:create',
-            'petabtests_clear = petabtests.core:clear',
-        ]
-    },
     include_package_data=True,
 )
