@@ -187,3 +187,14 @@ cases:
   expected: a * b
 - expression: "!1"
   expected: 0.0
+- expression: log(0)
+  expected: -inf
+- expression: "!!2"
+  expected: 1.0
+- expression: "-!!2"
+  expected: -1.0
+- expression: "-!0"
+  expected: -1.0
+- expression: "true ^ true"
+  expected: 1.0
+
