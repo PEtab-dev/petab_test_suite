@@ -44,7 +44,7 @@ setup(
         'numpy',
         'pandas',
         'petab>=0.1.4',
-        'pysb',
+        'pysb>=1.16.0',
         'simplesbml',
         'sympy>=1.12.1'
     ],
