@@ -185,3 +185,5 @@ cases:
   expected: 0.0
 - expression: a * b
   expected: a * b
+- expression: "!1"
+  expected: 0.0
