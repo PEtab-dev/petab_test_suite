@@ -46,6 +46,7 @@ setup(
         'petab>=0.1.4',
         'pysb',
         'simplesbml',
+        'sympy>=1.12.1'
     ],
     python_requires='>=3.10',
     entry_points={
