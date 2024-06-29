@@ -8,7 +8,8 @@ import pandas as pd
 import petab
 import yaml
 from petab.C import *  # noqa: F403
-
+from petab.v1.lint import lint_problem as lint_problem_v1
+from petab.v2.lint import lint_problem as lint_problem_v2
 from .C import *  # noqa: F403
 
 __all__ = [
@@ -180,13 +181,22 @@ def write_problem(
 
     # write yaml
     yaml_file = problem_yaml_name(test_id)
-    with open(os.path.join(dir_, yaml_file), 'w') as outfile:
+    yaml_path = os.path.join(dir_, yaml_file)
+    with open(yaml_path, 'w') as outfile:
         yaml.dump(config, outfile, default_flow_style=False)
 
     # validate written PEtab files
-    problem = petab.Problem.from_yaml(os.path.join(dir_, yaml_file))
-    if petab.lint_problem(problem):
-        raise RuntimeError("Invalid PEtab problem, see messages above.")
+    if format_version == 1:
+        # PEtab v1
+        problem = petab.Problem.from_yaml(yaml_path)
+        if lint_problem_v1(problem):
+            raise RuntimeError("Invalid PEtab problem, see messages above.")
+    else:
+        # v2
+        validation_result = lint_problem_v2(yaml_path)
+        if validation_result:
+            print(validation_result)
+            raise RuntimeError("Invalid PEtab problem, see messages above.")
 
 
 def write_solution(

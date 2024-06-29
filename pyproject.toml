@@ -1,3 +1,41 @@
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "petabtests"
+dynamic = ["version"]
+description = "PEtab testsuite library"
+readme = "README.md"
+authors = [
+    { name = "Daniel Weindl", email = "sci@danielweindl.de" },
+    { name = "Yannik Schaelte", email = "yannik.schaelte@gmail.com" },
+]
+maintainers = [
+    { name = "Daniel Weindl", email = "sci@danielweindl.de" },
+]
+requires-python = ">=3.10"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+keywords = ["PEtab", "testsuite"]
+dependencies = [
+    "numpy>=1.22",
+    "pandas>=2.0",
+    "petab>=0.1.4",
+    "pysb>=1.16.0",
+    "simplesbml",
+]
+
+[project.urls]
+homepage = "https://github.com/PEtab-dev/petab_test_suite"
+
+[project.scripts]
+petabtests_create = "petabtests.core:create"
+petabtests_clear = "petabtests.core:clear"

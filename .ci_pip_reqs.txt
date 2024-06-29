@@ -1,3 +1,4 @@
 pytest
 flake8
-https://github.com/petab-dev/libpetab-python/archive/develop.zip
+git+https://github.com/PEtab-dev/libpetab-python@develop
+sympy>=1.12.1
