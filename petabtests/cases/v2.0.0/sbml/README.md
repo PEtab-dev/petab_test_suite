@@ -78,3 +78,7 @@ Mapping table.
 
 Simulation. Estimated initial value via conditions table.
 
+# [0021](0021/)
+
+Simulation. Nothing special.
+
