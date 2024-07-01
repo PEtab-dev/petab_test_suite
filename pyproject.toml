@@ -28,7 +28,7 @@ keywords = ["PEtab", "testsuite"]
 dependencies = [
     "numpy>=1.22",
     "pandas>=2.0",
-    "petab>=0.1.4",
+    "petab>=0.4.0",
     "pysb>=1.16.0",
     "simplesbml",
 ]
