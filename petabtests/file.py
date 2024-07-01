@@ -194,13 +194,17 @@ def write_problem(
             # PEtab v1
             problem = petab.Problem.from_yaml(yaml_path)
             if lint_problem_v1(problem):
-                raise RuntimeError("Invalid PEtab problem, see messages above.")
+                raise RuntimeError(
+                    "Invalid PEtab problem, see messages above."
+                )
         else:
             # v2
             validation_result = lint_problem_v2(yaml_path)
             if validation_result:
                 print(validation_result)
-                raise RuntimeError("Invalid PEtab problem, see messages above.")
+                raise RuntimeError(
+                    "Invalid PEtab problem, see messages above."
+                )
     except ModuleNotFoundError:
         # old petab version (will fail validation for some v2 tests)
         problem = petab.Problem.from_yaml(os.path.join(dir_, yaml_file))
