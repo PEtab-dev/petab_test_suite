@@ -2,7 +2,7 @@ from inspect import cleandoc
 from math import nan
 
 import pandas as pd
-from petab.C import *
+from petab.v1.C import *
 from petabtests import DEFAULT_SBML_FILE, PetabTestCase, analytical_a
 
 DESCRIPTION = cleandoc("""
