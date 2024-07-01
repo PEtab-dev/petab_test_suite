@@ -1,4 +1,4 @@
 pytest
-flake8
+ruff
 git+https://github.com/PEtab-dev/libpetab-python@develop
 sympy>=1.12.1

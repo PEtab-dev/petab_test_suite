@@ -32,7 +32,5 @@ jobs:
         pip install -r .ci_pip_reqs.txt
     - name: Run tests
       run: |
-        python -m flake8 \
-          --exclude=build,doc,tmp,_model.py,conversion_modified_pysb.py,conversion_pysb.py \
-          --extend-ignore=F403,F405
+        ruff
         pytest test
