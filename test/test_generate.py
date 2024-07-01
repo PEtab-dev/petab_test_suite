@@ -8,7 +8,8 @@ import subprocess
 def test_check_cases_up_to_date():
     sys.path.insert(0, CASES_DIR)
     create()
-    res = subprocess.run(['git', 'diff', '--exit-code', CASES_DIR],
-                         capture_output=True)
+    res = subprocess.run(
+        ["git", "diff", "--exit-code", CASES_DIR], capture_output=True
+    )
     has_changes = res.returncode
     assert not has_changes, res.stdout.decode()
