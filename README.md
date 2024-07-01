@@ -11,7 +11,7 @@ The PEtab test suite can be downloaded from GitHub via
 
     git clone https://github.com/petab-dev/petab_test_suite
 
-The test suite comes with all necessary files pregenerated. 
+The test suite comes with all necessary files pregenerated.
 In the [petabtests](petabtests) subdirectory, it contains a python module for
 generating the tests and evaluating results. This can be installed via
 
@@ -25,7 +25,7 @@ of enumerated tests.
 Each test contains a descriptive `wxyz.md` file, and a script file `wxyz.py`
 file that can be used to generate all problem and solution files for the test.
 The necessary files are in the same case-specific folder, starting with an
-underscore. 
+underscore.
 In each case folder, there is a file `_wxyz.yaml` containing the parameter
 estimation problem description, and a file `_wxyz_solution.yaml` containing
 information on the expected results: chi2 value, log-likelihood, simulation

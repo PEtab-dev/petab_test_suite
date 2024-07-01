@@ -18,44 +18,61 @@ mass action kinetics.
 
 # problem --------------------------------------------------------------------
 
-condition_df = pd.DataFrame(data={
-    CONDITION_ID: ['c0'],
-}).set_index([CONDITION_ID])
+condition_df = pd.DataFrame(
+    data={
+        CONDITION_ID: ["c0"],
+    }
+).set_index([CONDITION_ID])
 
-measurement_df = pd.DataFrame(data={
-    OBSERVABLE_ID: ['obs_a', 'obs_a'],
-    SIMULATION_CONDITION_ID: ['c0', 'c0'],
-    TIME: [0, 10],
-    MEASUREMENT: [0.7, 0.1]
-})
+measurement_df = pd.DataFrame(
+    data={
+        OBSERVABLE_ID: ["obs_a", "obs_a"],
+        SIMULATION_CONDITION_ID: ["c0", "c0"],
+        TIME: [0, 10],
+        MEASUREMENT: [0.7, 0.1],
+    }
+)
 
-observable_df = pd.DataFrame(data={
-    OBSERVABLE_ID: ['obs_a'],
-    OBSERVABLE_FORMULA: ['A'],
-    NOISE_FORMULA: [0.5]
-}).set_index([OBSERVABLE_ID])
+observable_df = pd.DataFrame(
+    data={
+        OBSERVABLE_ID: ["obs_a"],
+        OBSERVABLE_FORMULA: ["A"],
+        NOISE_FORMULA: [0.5],
+    }
+).set_index([OBSERVABLE_ID])
 
-parameter_df = pd.DataFrame(data={
-    PARAMETER_ID: ['maps_to_a0', 'b0', 'maps_to_k1', 'k2'],
-    PARAMETER_SCALE: [LIN] * 4,
-    LOWER_BOUND: [0] * 4,
-    UPPER_BOUND: [10] * 4,
-    NOMINAL_VALUE: [1, 0, 0.8, 0.6],
-    ESTIMATE: [1] * 4,
-}).set_index(PARAMETER_ID)
+parameter_df = pd.DataFrame(
+    data={
+        PARAMETER_ID: ["maps_to_a0", "b0", "maps_to_k1", "k2"],
+        PARAMETER_SCALE: [LIN] * 4,
+        LOWER_BOUND: [0] * 4,
+        UPPER_BOUND: [10] * 4,
+        NOMINAL_VALUE: [1, 0, 0.8, 0.6],
+        ESTIMATE: [1] * 4,
+    }
+).set_index(PARAMETER_ID)
 
-mapping_df = pd.DataFrame(data={
-    PETAB_ENTITY_ID: ['maps_to_a0', 'maps_to_b0', 'maps_to_k1', 'maps_to_k2'],
-    MODEL_ENTITY_ID: ['a0', 'b0', 'k1', 'k2'],
-}).set_index(PETAB_ENTITY_ID)
+mapping_df = pd.DataFrame(
+    data={
+        PETAB_ENTITY_ID: [
+            "maps_to_a0",
+            "maps_to_b0",
+            "maps_to_k1",
+            "maps_to_k2",
+        ],
+        MODEL_ENTITY_ID: ["a0", "b0", "k1", "k2"],
+    }
+).set_index(PETAB_ENTITY_ID)
 
 
 # solutions ------------------------------------------------------------------
 
 simulation_df = measurement_df.copy(deep=True).rename(
-    columns={MEASUREMENT: SIMULATION})
-simulation_df[SIMULATION] = [analytical_a(t, 1, 0, 0.8, 0.6)
-                             for t in simulation_df[TIME]]
+    columns={MEASUREMENT: SIMULATION}
+)
+simulation_df[SIMULATION] = [
+    analytical_a(t, 1, 0, 0.8, 0.6) for t in simulation_df[TIME]
+]
 
 
 case = PetabTestCase(

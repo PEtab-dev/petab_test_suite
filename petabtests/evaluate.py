@@ -1,13 +1,16 @@
-from typing import List, Union
 import numpy as np
 import pandas as pd
 from petab.C import *
 from .C import *  # noqa: F403
 
-__all__ = ['evaluate_llh', 'evaluate_chi2', 'evaluate_simulations',
-           'absolute_simulations_distance_for_tables',
-           'absolute_simulations_distance_for_array',
-           'absolute_simulations_distance_for_table']
+__all__ = [
+    "evaluate_llh",
+    "evaluate_chi2",
+    "evaluate_simulations",
+    "absolute_simulations_distance_for_tables",
+    "absolute_simulations_distance_for_array",
+    "absolute_simulations_distance_for_table",
+]
 
 
 def evaluate_chi2(chi2: float, gt_chi2: float, tol: float = 1e-3):
@@ -25,17 +28,23 @@ def evaluate_llh(llh: float, gt_llh: float, tol: float = 1e-3):
 
 
 def evaluate_simulations(
-        simulation_dfs: Union[List[pd.DataFrame], pd.DataFrame],
-        gt_simulation_dfs: Union[List[pd.DataFrame], pd.DataFrame],
-        tol: float = 1e-3):
+    simulation_dfs: list[pd.DataFrame] | pd.DataFrame,
+    gt_simulation_dfs: list[pd.DataFrame] | pd.DataFrame,
+    tol: float = 1e-3,
+):
     """Evaluate whether simulations match."""
-    return absolute_simulations_distance_for_tables(
-        simulation_dfs, gt_simulation_dfs) < tol
+    return (
+        absolute_simulations_distance_for_tables(
+            simulation_dfs, gt_simulation_dfs
+        )
+        < tol
+    )
 
 
 def absolute_simulations_distance_for_tables(
-        simulation_dfs: Union[List[pd.DataFrame], pd.DataFrame],
-        gt_simulation_dfs: Union[List[pd.DataFrame], pd.DataFrame]):
+    simulation_dfs: list[pd.DataFrame] | pd.DataFrame,
+    gt_simulation_dfs: list[pd.DataFrame] | pd.DataFrame,
+):
     """Compute absolute normalized distance between simulations.
 
     Parameters
@@ -55,9 +64,11 @@ def absolute_simulations_distance_for_tables(
 
     distances = []
     for simulation_df, gt_simulation_df in zip(
-            simulation_dfs, gt_simulation_dfs):
+        simulation_dfs, gt_simulation_dfs
+    ):
         distance = absolute_simulations_distance_for_table(
-            simulation_df, gt_simulation_df)
+            simulation_df, gt_simulation_df
+        )
         distances.append(distance)
 
     distance = sum(distances) / len(distances)
@@ -65,8 +76,8 @@ def absolute_simulations_distance_for_tables(
 
 
 def absolute_simulations_distance_for_table(
-        simulations: pd.DataFrame,
-        gt_simulations: pd.DataFrame):
+    simulations: pd.DataFrame, gt_simulations: pd.DataFrame
+):
     """Compute absolute normalized distance between simulations."""
     # grouping columns
     grouping_cols = [OBSERVABLE_ID, SIMULATION_CONDITION_ID, TIME]
@@ -95,17 +106,16 @@ def absolute_simulations_distance_for_table(
             vals, gt_vals = vals.astype(str), gt_vals.astype(str)
             matches = (vals == gt_vals).all()
         if not matches:
-            raise AssertionError(
-                "Simulation dataframes do not match.")
+            raise AssertionError("Simulation dataframes do not match.")
 
     # compute distance
     return absolute_simulations_distance_for_array(
-        np.array(simulations[SIMULATION]),
-        np.array(gt_simulations[SIMULATION]))
+        np.array(simulations[SIMULATION]), np.array(gt_simulations[SIMULATION])
+    )
 
 
 def absolute_simulations_distance_for_array(
-        simulations: np.ndarray,
-        gt_simulations: np.ndarray):
+    simulations: np.ndarray, gt_simulations: np.ndarray
+):
     """Compute absolute normalized distance between simulations."""
     return np.abs(simulations - gt_simulations).sum() / len(simulations)
