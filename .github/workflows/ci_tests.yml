@@ -32,5 +32,5 @@ jobs:
         pip install -r .ci_pip_reqs.txt
     - name: Run tests
       run: |
-        ruff
+        ruff check
         pytest test
