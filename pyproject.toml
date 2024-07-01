@@ -44,7 +44,10 @@ petabtests_clear = "petabtests.core:clear"
 [tool.ruff]
 line-length = 79
 extend-include = ["*.ipynb"]
-
+extend-select = [
+    # pyupgrade
+    "UP"
+]
 [tool.ruff.lint]
 extend-select = ["B028"]
 ignore = ["E402", "F403", "F405", "E741"]
