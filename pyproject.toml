@@ -39,3 +39,17 @@ homepage = "https://github.com/PEtab-dev/petab_test_suite"
 [project.scripts]
 petabtests_create = "petabtests.core:create"
 petabtests_clear = "petabtests.core:clear"
+
+
+[tool.ruff]
+line-length = 79
+extend-include = ["*.ipynb"]
+
+[tool.ruff.lint]
+extend-select = ["B028"]
+ignore = ["E402", "F403", "F405", "E741"]
+exclude = ["cases/**/*.md"]
+
+[tool.ruff.lint.per-file-ignores]
+"petabtests/cases/v2.0.0/pysb/*/_model.py" = ["F821"]
+"petabtests/conversion_*pysb.py" = ["F821"]
