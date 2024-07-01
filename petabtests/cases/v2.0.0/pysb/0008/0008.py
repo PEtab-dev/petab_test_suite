@@ -1,7 +1,7 @@
 from inspect import cleandoc
 
 import pandas as pd
-from petab.C import *
+from petab.v1.C import *
 
 from petabtests import DEFAULT_PYSB_FILE, PetabTestCase, analytical_a
 

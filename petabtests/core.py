@@ -6,7 +6,7 @@ import re
 import sys
 from pathlib import Path
 
-from petab.calculate import calculate_chi2, calculate_llh
+from petab.v1.calculate import calculate_chi2, calculate_llh
 
 from .C import CASES_DIR
 from .file import (

@@ -1,7 +1,12 @@
 import numpy as np
 import pandas as pd
-from petab.C import *
-from .C import *  # noqa: F403
+from petab.v1.C import (
+    OBSERVABLE_ID,
+    SIMULATION_CONDITION_ID,
+    TIME,
+    PREEQUILIBRATION_CONDITION_ID,
+    SIMULATION,
+)
 
 __all__ = [
     "evaluate_llh",

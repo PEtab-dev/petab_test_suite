@@ -4,11 +4,11 @@ import os
 from dataclasses import dataclass
 from shutil import copyfile
 from collections.abc import Callable
-
+from pathlib import Path
 import pandas as pd
-import petab
+import petab.v1 as petab
 import yaml
-from petab.C import *  # noqa: F403
+from petab.v1.C import *  # noqa: F403
 from .C import *  # noqa: F403
 
 __all__ = [
