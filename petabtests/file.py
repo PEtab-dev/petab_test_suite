@@ -104,7 +104,7 @@ def write_problem(
         observable_dfs = [observable_dfs]
     if isinstance(measurement_dfs, pd.DataFrame):
         measurement_dfs = [measurement_dfs]
-    if isinstance(model_files, (str, Path)):
+    if isinstance(model_files, str | Path):
         model_files = [model_files]
 
     # id to string

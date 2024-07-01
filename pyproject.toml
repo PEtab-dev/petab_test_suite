@@ -44,12 +44,12 @@ petabtests_clear = "petabtests.core:clear"
 [tool.ruff]
 line-length = 79
 extend-include = ["*.ipynb"]
-extend-select = [
-    # pyupgrade
-    "UP"
-]
+
 [tool.ruff.lint]
-extend-select = ["B028"]
+extend-select = [
+    "B028",
+    "UP",  # pyupgrade
+]
 ignore = ["E402", "F403", "F405", "E741"]
 exclude = ["petabtests/cases/**/*.md", "cases/**"]
 
@@ -57,3 +57,5 @@ exclude = ["petabtests/cases/**/*.md", "cases/**"]
 "petabtests/cases/v2.0.0/pysb/*/_model.py" = ["F821"]
 "petabtests/cases/v2.0.0/pysb/*/conversion_modified_pysb.py" = ["F821"]
 "petabtests/conversion_*pysb.py" = ["F821"]
+
+# add UP rules for ruff via extend-select
