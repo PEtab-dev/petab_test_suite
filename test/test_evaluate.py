@@ -1,5 +1,5 @@
 from petabtests import evaluate_simulations, evaluate_chi2, evaluate_llh
-from petab.C import *
+from petab.v1.C import *
 import pandas as pd
 
 
