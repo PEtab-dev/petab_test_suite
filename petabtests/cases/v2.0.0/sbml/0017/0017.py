@@ -1,7 +1,7 @@
 from inspect import cleandoc
 
 import pandas as pd
-from petab.v2.C import *
+from petab.v1.C import *
 
 from petabtests import (
     DEFAULT_SBML_FILE,

@@ -1,7 +1,7 @@
 from inspect import cleandoc
 
 import pandas as pd
-from petab.v2.C import *
+from petab.v1.C import *
 from pathlib import Path
 from petabtests import PetabTestCase, analytical_a, analytical_b
 
