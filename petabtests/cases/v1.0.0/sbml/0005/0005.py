@@ -33,7 +33,6 @@ model *petab_test_0011()
 
   A = a0;
   B = b0;
-  B = 1;
   a0 = 1;
   b0 = 1;
   k1 = 0;
@@ -53,10 +52,10 @@ condition_df = pd.DataFrame(
 
 measurement_df = pd.DataFrame(
     data={
-        OBSERVABLE_ID: ["obs_a", "obs_a"],
-        SIMULATION_CONDITION_ID: ["c0", "c1"],
-        TIME: [10, 10],
-        MEASUREMENT: [2.1, 3.2],
+        OBSERVABLE_ID: ["obs_a", "obs_a", "obs_a", "obs_a"],
+        SIMULATION_CONDITION_ID: ["c0", "c1", "c0", "c1"],
+        TIME: [0, 0, 10, 10],
+        MEASUREMENT: [2.0, 2.0, 2.1, 3.2],
     }
 )
 
@@ -85,7 +84,8 @@ simulation_df = measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION}
 )
 simulation_df[SIMULATION] = [
-    analytical_a(10, 1, 0, 0.8, 0.6) + offset for offset in [2, 3]
+    *(analytical_a(0, 1, 0, 0.8, 0.6) + offset for offset in [2, 3]),
+    *(analytical_a(10, 1, 0, 0.8, 0.6) + offset for offset in [2, 3]),
 ]
 
 case = PetabTestCase(

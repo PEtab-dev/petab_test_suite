@@ -7,7 +7,7 @@
     </listOfCompartments>
     <listOfSpecies>
       <species id="A" compartment="compartment_" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="B" compartment="compartment_" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="B" compartment="compartment_" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
     </listOfSpecies>
     <listOfParameters>
       <parameter id="k1" value="0" constant="true"/>
@@ -20,6 +20,11 @@
       <initialAssignment symbol="A">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <ci> a0 </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="B">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> b0 </ci>
         </math>
       </initialAssignment>
     </listOfInitialAssignments>
