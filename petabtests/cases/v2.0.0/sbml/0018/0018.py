@@ -38,9 +38,7 @@ model petab_test_0018
     k1 = 0
     k2 = 0
     compartment default_compartment
-    species A in default_compartment = 0
-    B = 0
-    A = a0
+    species A in default_compartment = a0
     B = b0
     A' = k2 * B - k1 * A
     B' = - default_compartment * k2 * B + default_compartment * k1 * A
