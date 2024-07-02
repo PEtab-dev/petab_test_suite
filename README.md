@@ -18,7 +18,7 @@ The test suite comes with all necessary files pregenerated.
 
 The PEtab test suite comes with a Python package named
 [petabtests](petabtests) in the homonymous subdirectory.
-It contains a Python functions for generating the tests and evaluating results.
+It contains Python functions for generating the tests and evaluating results.
 This can be installed via
 
     cd petab_test_suite
