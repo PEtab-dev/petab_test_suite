@@ -2,7 +2,7 @@
 
 import os
 from dataclasses import dataclass
-from shutil import copyfile
+from shutil import copyfile, SameFileError
 from collections.abc import Callable
 from pathlib import Path
 import pandas as pd
@@ -140,10 +140,13 @@ def write_problem(
             copied_model_file = f"_model{suffix}"
         else:
             copied_model_file = f"_model{i_sbml}{suffix}"
-        copyfile(
-            os.path.join(dir_, model_file),
-            os.path.join(dir_, copied_model_file),
-        )
+        try:
+            copyfile(
+                dir_ / model_file,
+                dir_ / copied_model_file,
+            )
+        except SameFileError:
+            pass
         copied_model_files.append(copied_model_file)
 
     if version == "v1.0.0":
