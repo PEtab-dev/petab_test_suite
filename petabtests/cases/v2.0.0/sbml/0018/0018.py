@@ -3,8 +3,12 @@ from inspect import cleandoc
 import pandas as pd
 from petab.v1.C import *
 from pathlib import Path
-from petabtests import PetabTestCase, analytical_a, analytical_b
-from petabtests.antimony import antimony_to_sbml_str
+from petabtests import (
+    PetabTestCase,
+    analytical_a,
+    analytical_b,
+    antimony_to_sbml_str,
+)
 
 DESCRIPTION = cleandoc("""
 ## Objective

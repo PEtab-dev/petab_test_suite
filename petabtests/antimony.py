@@ -3,6 +3,8 @@
 import antimony as ant
 from pathlib import Path
 
+__all__ = ["antimony_to_sbml_str"]
+
 
 def antimony_to_sbml_str(ant_model: str | Path) -> str:
     """Convert Antimony string to SBML model.
