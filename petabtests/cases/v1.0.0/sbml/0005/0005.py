@@ -41,7 +41,7 @@ model *petab_test_0011()
   offset_A = 0;
 end
 """
-model_file = sbml_file = Path(__file__).parent / "_model.xml"
+model_file = Path(__file__).parent / "_model.xml"
 model_file.write_text(antimony_to_sbml_str(ant_model))
 
 condition_df = pd.DataFrame(
