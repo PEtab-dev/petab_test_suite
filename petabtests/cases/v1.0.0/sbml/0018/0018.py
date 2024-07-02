@@ -3,7 +3,12 @@ from inspect import cleandoc
 import pandas as pd
 from petab.v1.C import *
 from pathlib import Path
-from petabtests import PetabTestCase, analytical_a, analytical_b
+from petabtests import (
+    PetabTestCase,
+    analytical_a,
+    analytical_b,
+    antimony_to_sbml_str,
+)
 
 DESCRIPTION = cleandoc("""
 ## Objective
@@ -28,30 +33,23 @@ parameter and a species.
 
 # problem --------------------------------------------------------------------
 
-model = str(Path(__file__).parent / "model.xml")
+sbml_file = Path(__file__).parent / "model.xml"
 
 
-def get_model():
-    import simplesbml
-
-    model = simplesbml.SbmlModel()
-    model.addParameter("a0", 1)
-    model.addParameter("b0", 1)
-    model.addParameter("k1", 0)
-    model.addParameter("k2", 0)
-    model.addCompartment(comp_id="compartment")
-    model.addSpecies("[A]", 0, comp="compartment")
-    model.addParameter("B", 0)
-    model.addInitialAssignment("A", "a0")
-    model.addInitialAssignment("B", "b0")
-    model.addRateRule("A", "k2 * B - k1 * A")
-    model.addRateRule("B", "- compartment * k2 * B + compartment * k1 * A")
-    return model
-
-
-with open(model, "w") as f:
-    f.write(get_model().toSBML())
-
+ant_model = """
+model petab_test_0018
+    a0 = 1
+    b0 = 1
+    k1 = 0
+    k2 = 0
+    compartment default_compartment
+    species A in default_compartment = a0
+    B = b0
+    A' = k2 * B - k1 * A
+    B' = - default_compartment * k2 * B + default_compartment * k1 * A
+end
+"""
+sbml_file.write_text(antimony_to_sbml_str(ant_model))
 
 condition_df = pd.DataFrame(
     data={
@@ -114,7 +112,7 @@ case = PetabTestCase(
     "reinitialized, one not (NaN in condition table). InitialAssignment "
     "to species overridden.",
     description=DESCRIPTION,
-    model=model,
+    model=sbml_file,
     condition_dfs=[condition_df],
     observable_dfs=[observable_df],
     measurement_dfs=[measurement_df],
