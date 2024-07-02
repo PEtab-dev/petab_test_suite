@@ -4,7 +4,7 @@ from pathlib import Path
 import pandas as pd
 from petab.v1.C import *
 
-from petabtests import PetabTestCase, analytical_a
+from petabtests import PetabTestCase, analytical_a, antimony_to_sbml_str
 
 DESCRIPTION = cleandoc("""
 ## Objective
@@ -23,6 +23,26 @@ mass action kinetics.
 """)
 
 # problem --------------------------------------------------------------------
+ant_model = """
+model *petab_test_0011()
+  compartment compartment_ = 1;
+  species A in compartment_, B in compartment_;
+
+  fwd: A => B; compartment_ * k1 * A;
+  rev: B => A; compartment_ * k2 * B;
+
+  A = a0;
+  B = b0;
+  B = 1;
+  a0 = 1;
+  b0 = 1;
+  k1 = 0;
+  k2 = 0;
+  offset_A = 0;
+end
+"""
+model_file = Path(__file__).parent / "_model.xml"
+model_file.write_text(antimony_to_sbml_str(ant_model))
 
 condition_df = pd.DataFrame(
     data={
@@ -73,7 +93,7 @@ case = PetabTestCase(
     brief="Simulation. Condition-specific parameters only defined in "
     "parameter table.",
     description=DESCRIPTION,
-    model=Path("conversion_modified.xml"),
+    model=model_file,
     condition_dfs=[condition_df],
     observable_dfs=[observable_df],
     measurement_dfs=[measurement_df],
