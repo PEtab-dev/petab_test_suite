@@ -5,9 +5,10 @@ problems:
   - _conditions.tsv
   measurement_files:
   - _measurements.tsv
-  model_files:
-    model_0:
-      language: sbml
-      location: _model.xml
   observable_files:
   - _observables.tsv
+  model_files:
+    _model:
+      language: sbml
+      location: _model.xml
+extensions: []

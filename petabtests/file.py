@@ -6,7 +6,8 @@ from shutil import copyfile, SameFileError
 from collections.abc import Callable
 from pathlib import Path
 import pandas as pd
-import petab.v1 as petab
+from petab import v1
+from petab import v2
 import yaml
 from petab.v1.C import *  # noqa: F403
 from .C import *  # noqa: F403
@@ -109,8 +110,11 @@ def write_problem(
 
     # id to string
     dir_ = get_case_dir(id_=test_id, format_=format_, version=version)
-
-    if version == "v1.0.0":
+    if (
+        version == "v1.0.0"
+        or SIMULATION_CONDITION_ID in measurement_dfs[0]
+        and not (version == "v2.0.0" and test_id == 19)
+    ):
         format_version = 1
     else:
         assert version[0] == "v"
@@ -149,9 +153,15 @@ def write_problem(
             pass
         copied_model_files.append(copied_model_file)
 
-    if version == "v1.0.0":
+    if (
+        version == "v1.0.0"
+        or SIMULATION_CONDITION_ID in measurement_dfs[0]
+        and not (version == "v2.0.0" and test_id == 19)
+    ):
+        petab = v1
         config[PROBLEMS][0][SBML_FILES] = copied_model_files
     else:
+        petab = v2
         config[PROBLEMS][0][MODEL_FILES] = {}
         for model_idx, model_file in enumerate(copied_model_files):
             config[PROBLEMS][0][MODEL_FILES][f"model_{model_idx}"] = {
@@ -198,13 +208,25 @@ def write_problem(
         config[PROBLEMS][0][MAPPING_FILES] = [mappings_file]
 
     # validate petab yaml
-    petab.validate(config, path_prefix=dir_)
+    v1.validate(config, path_prefix=dir_)
 
     # write yaml
     yaml_file = problem_yaml_name(test_id)
     yaml_path = os.path.join(dir_, yaml_file)
     with open(yaml_path, "w") as outfile:
         yaml.dump(config, outfile, default_flow_style=False)
+
+    # FIXME: Until the tests are proper v2 problems, we just auto-upgrade
+    #  to a temp directory and copy the files back
+    if (
+        version == "v2.0.0"
+        and SIMULATION_CONDITION_ID in measurement_dfs[0]
+        and not (version == "v2.0.0" and test_id == 19)
+    ):
+        from petab.v2.petab1to2 import petab1to2
+
+        petab1to2(yaml_path, dir_)
+        format_version = 2
 
     # FIXME Until a first libpetab with petab.v1 subpackage is released
     try:
@@ -230,8 +252,8 @@ def write_problem(
                 )
     except ModuleNotFoundError:
         # old petab version (will fail validation for some v2 tests)
-        problem = petab.Problem.from_yaml(os.path.join(dir_, yaml_file))
-        if petab.lint_problem(problem):
+        problem = v1.Problem.from_yaml(os.path.join(dir_, yaml_file))
+        if v1.lint_problem(problem):
             raise RuntimeError("Invalid PEtab problem, see messages above.")
 
 
@@ -280,7 +302,8 @@ def write_solution(
     _write_dfs_to_files(
         dir_,
         "simulations",
-        petab.write_measurement_df,
+        # TODO v2
+        v1.write_measurement_df,
         simulation_dfs,
         config[SIMULATION_FILES],
     )
