@@ -49,6 +49,7 @@ class PetabTestCase:
 
 
 def get_case_dir(id_: int | str, format_: str, version: str) -> Path:
+    """Get the directory of a test case."""
     id_str = test_id_str(id_)
     dir_ = CASES_DIR / version / format_ / id_str
     dir_.mkdir(parents=True, exist_ok=True)
@@ -56,18 +57,21 @@ def get_case_dir(id_: int | str, format_: str, version: str) -> Path:
 
 
 def problem_yaml_name(_id: int | str) -> str:
+    """Get the name of the problem yaml file."""
     return "_" + test_id_str(_id) + ".yaml"
 
 
 def solution_yaml_name(_id: int | str) -> str:
+    """Get the name of the solution yaml file."""
     return "_" + test_id_str(_id) + "_solution.yaml"
 
 
 def test_id_str(_id: int | str) -> str:
+    """Get the test id as a string."""
     return f"{_id:0>4}"
 
 
-def write_info(case: PetabTestCase, format_: str, version: str):
+def write_info(case: PetabTestCase, format_: str, version: str) -> None:
     """Write test info markdown file"""
     # id to string
     dir_ = get_case_dir(id_=case.id, format_=format_, version=version)
@@ -91,7 +95,7 @@ def write_problem(
     mapping_df: pd.DataFrame = None,
     format_: str = "sbml",
 ) -> None:
-    """Write problem to files.
+    """Write the PEtab problem for a given test to files.
 
     Parameters
     ----------
