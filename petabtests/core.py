@@ -149,6 +149,15 @@ def clear() -> None:
 
 def _cli_create():
     """`petabtests_create` entry point."""
-    # initialize logging
-    logging.basicConfig(level=logging.INFO)
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Create PEtab test cases.")
+    parser.add_argument(
+        "--verbose", "-v", action="store_true", help="Verbose output."
+    )
+    args = parser.parse_args()
+
+    if args.verbose:
+        logging.basicConfig(level=logging.INFO)
+
     create_all()
