@@ -1,2 +1,2 @@
-conditionId	B
-c0	2
+conditionId	targetId	valueType	targetValue
+c0	B	initial	2

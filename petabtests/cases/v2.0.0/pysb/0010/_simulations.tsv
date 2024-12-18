@@ -1,3 +1,3 @@
-observableId	preequilibrationConditionId	simulationConditionId	time	simulation
-obs_a	preeq_c0	c0	1	0.7025430017170664
-obs_a	preeq_c0	c0	10	0.7142856746891086
+observableId	experimentId	time	simulation
+obs_a	e0	1	0.7025430017170664
+obs_a	e0	10	0.7142856746891086
