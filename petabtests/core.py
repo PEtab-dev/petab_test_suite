@@ -54,7 +54,9 @@ def create():
             case_dir = get_case_dir(
                 format_=format_, version=version, id_=case_id
             )
-            logger.info("# ", format_, version, case_id, case_dir)
+            logger.info(
+                f"Processing {version}/{format_} #{case_id} at {case_dir}"
+            )
 
             # load test case module
             #  directory needs to be removed from path again and the module
@@ -76,6 +78,7 @@ def create():
                 test_id=case.id,
                 parameter_df=case.parameter_df,
                 condition_dfs=case.condition_dfs,
+                experiment_dfs=case.experiment_dfs,
                 observable_dfs=case.observable_dfs,
                 measurement_dfs=case.measurement_dfs,
                 model_files=case.model,
@@ -125,3 +128,10 @@ def clear():
             for file_ in os.scandir(case_dir):
                 if file_.name.startswith("_") and not file_.is_dir():
                     os.remove(file_.path)
+
+
+def _cli_create():
+    """`petabtests_create` entry point."""
+    # initialize logging
+    logging.basicConfig(level=logging.INFO)
+    create()

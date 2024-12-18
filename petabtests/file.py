@@ -11,6 +11,12 @@ from petab import v2
 import yaml
 from petab.v1.C import *  # noqa: F403
 from .C import *  # noqa: F403
+from pprint import pprint
+import logging
+from petab.v2.C import EXPERIMENT_FILES
+
+logger = logging.getLogger("petab_test_suite")
+
 
 __all__ = [
     "get_case_dir",
@@ -39,6 +45,7 @@ class PetabTestCase:
     simulation_dfs: list[pd.DataFrame]
     parameter_df: pd.DataFrame
     mapping_df: pd.DataFrame = None
+    experiment_dfs: list[pd.DataFrame] = None
 
 
 def get_case_dir(id_: int | str, format_: str, version: str) -> Path:
@@ -76,6 +83,7 @@ def write_problem(
     test_id: int,
     parameter_df: pd.DataFrame,
     condition_dfs: list[pd.DataFrame] | pd.DataFrame,
+    experiment_dfs: list[pd.DataFrame] | pd.DataFrame,
     observable_dfs: list[pd.DataFrame] | pd.DataFrame,
     measurement_dfs: list[pd.DataFrame] | pd.DataFrame,
     model_files: list[Path] | Path,
@@ -90,6 +98,7 @@ def write_problem(
     test_id: Identifier of the test.
     parameter_df: PEtab parameter table.
     condition_dfs: PEtab condition tables.
+    experiment_dfs: PEtab experiment tables.
     observable_dfs: PEtab observable tables.
     measurement_dfs: PEtab measurement tables.
     model_files: PEtab SBML/PySB files.
@@ -163,6 +172,7 @@ def write_problem(
     else:
         petab = v2
         config[PROBLEMS][0][MODEL_FILES] = {}
+        config[PROBLEMS][0][EXPERIMENT_FILES] = []
         for model_idx, model_file in enumerate(copied_model_files):
             config[PROBLEMS][0][MODEL_FILES][f"model_{model_idx}"] = {
                 MODEL_LANGUAGE: format_,
@@ -201,6 +211,16 @@ def write_problem(
         config[PROBLEMS][0][MEASUREMENT_FILES],
     )
 
+    # write experiments
+    if experiment_dfs is not None:
+        _write_dfs_to_files(
+            dir_,
+            "experiments",
+            v2.write_experiment_df,
+            experiment_dfs,
+            config[PROBLEMS][0][EXPERIMENT_FILES],
+        )
+
     if format_version != 1 and mapping_df is not None:
         # write mapping table
         mappings_file = "_mapping.tsv"
@@ -225,7 +245,15 @@ def write_problem(
     ):
         from petab.v2.petab1to2 import petab1to2
 
+        # delete previously auto-generated experiments.tsv
+        exp_file = Path(dir_, "_experiments.tsv")
+        if exp_file.exists():
+            exp_file.unlink()
         petab1to2(yaml_path, dir_)
+        # rename auto-generated experiments.tsv
+        tmp_exp_file = Path(dir_, "experiments.tsv")
+        if tmp_exp_file.exists():
+            tmp_exp_file.rename(exp_file)
         format_version = 2
 
     # FIXME Until a first libpetab with petab.v1 subpackage is released
@@ -244,9 +272,11 @@ def write_problem(
                 )
         else:
             # v2
-            validation_result = lint_problem_v2(yaml_path)
-            if validation_result:
-                print(validation_result)
+            validation_results = lint_problem_v2(yaml_path)
+            if validation_results:
+                logger.error(f"Validation failed for {dir_}:")
+                for issue in validation_results:
+                    pprint(issue)
                 raise RuntimeError(
                     "Invalid PEtab problem, see messages above."
                 )
@@ -322,6 +352,7 @@ def _write_dfs_to_files(
     config_list: list[str] = None,
 ):
     """Write data frames to files and add them to config."""
+    dfs = [df for df in dfs if df is not None]
     for idx, df in enumerate(dfs):
         if len(dfs) == 1:
             idx = ""
