@@ -1,2 +1,2 @@
-conditionId	B
-c0	par
+conditionId	targetId	valueType	targetValue
+c0	B	initial	par

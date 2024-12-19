@@ -1,2 +1,2 @@
-conditionId	compartment
-c0	3
+conditionId	targetId	valueType	targetValue
+c0	compartment	initial	3
