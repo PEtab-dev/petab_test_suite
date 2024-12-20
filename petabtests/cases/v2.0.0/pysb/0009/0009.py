@@ -72,4 +72,5 @@ case = PetabTestCase(
     measurement_dfs=[problem.measurement_df],
     simulation_dfs=[simulation_df],
     parameter_df=problem.parameter_df,
+    experiment_dfs=[problem.experiment_df],
 )

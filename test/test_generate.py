@@ -22,7 +22,7 @@ def test_create_case():
 
     Mostly for debugging purposes.
     """
-    format_ = "pysb"
+    format_ = "sbml"
     version = "v2.0.0"
-    id_ = "0002"
+    id_ = "0019"
     create_case(format_=format_, version=version, id_=id_)

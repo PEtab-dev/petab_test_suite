@@ -18,9 +18,8 @@ mass action kinetics.
 # problem --------------------------------------------------------------------
 problem = Problem()
 # TODO use mapping here
-problem.add_condition("c0")
-problem.add_measurement("obs_a", "c0", 0, 0.7)
-problem.add_measurement("obs_a", "c0", 10, 0.1)
+problem.add_measurement("obs_a", "", 0, 0.7)
+problem.add_measurement("obs_a", "", 10, 0.1)
 problem.add_observable("obs_a", "maps_to_A", 0.5)
 problem.add_parameter("a0", lb=0, ub=10, nominal_value=1, scale=LIN)
 problem.add_parameter("maps_to_b0", lb=0, ub=10, nominal_value=0, scale=LIN)

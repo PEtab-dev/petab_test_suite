@@ -29,10 +29,10 @@ problem.add_observable(
 )
 
 problem.add_measurement(
-    "obs_a", "c0", time=0, measurement=0.7, observable_parameters=(10,)
+    "obs_a", "", time=0, measurement=0.7, observable_parameters=(10,)
 )
 problem.add_measurement(
-    "obs_a", "c0", time=10, measurement=0.1, observable_parameters=(15,)
+    "obs_a", "", time=10, measurement=0.1, observable_parameters=(15,)
 )
 
 problem.add_parameter(

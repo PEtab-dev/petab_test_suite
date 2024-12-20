@@ -258,6 +258,12 @@ def write_problem(
         tmp_exp_file = Path(dir_, "experiments.tsv")
         if tmp_exp_file.exists():
             tmp_exp_file.rename(exp_file)
+            # update in yaml
+            with open(yaml_path) as f:
+                config = yaml.safe_load(f)
+            config[PROBLEMS][0][EXPERIMENT_FILES] = ["_experiments.tsv"]
+            with open(yaml_path, "w") as f:
+                yaml.dump(config, f, default_flow_style=False)
         format_version = 2
 
     # FIXME Until a first libpetab with petab.v1 subpackage is released
