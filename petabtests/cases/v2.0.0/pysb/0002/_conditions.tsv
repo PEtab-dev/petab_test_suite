@@ -1,3 +1,3 @@
-conditionId	targetId	valueType	targetValue
-c0	a0	initial	0.8
-c1	a0	initial	0.9
+conditionId	targetId	operationType	targetValue
+c0	a0	setCurrentValue	0.8
+c1	a0	setCurrentValue	0.9

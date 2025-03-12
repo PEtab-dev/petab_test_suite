@@ -1,3 +1,3 @@
-conditionId	targetId	valueType	targetValue
-preeq_c0	k1	initial	0.3
-c0	k1	initial	0.8
+conditionId	targetId	operationType	targetValue
+preeq_c0	k1	setCurrentValue	0.3
+c0	k1	setCurrentValue	0.8

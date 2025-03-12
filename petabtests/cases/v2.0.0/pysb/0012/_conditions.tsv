@@ -1,2 +1,2 @@
-conditionId	targetId	valueType	targetValue
-c0	compartment	initial	3
+conditionId	targetId	operationType	targetValue
+c0	compartment	setCurrentValue	3

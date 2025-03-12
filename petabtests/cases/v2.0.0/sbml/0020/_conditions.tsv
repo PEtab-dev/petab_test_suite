@@ -1,3 +1,3 @@
-conditionId	targetId	targetValue	valueType
-c0	A	initial_A	initial
-c0	B	initial_B	initial
+conditionId	targetId	targetValue	operationType
+c0	A	initial_A	setCurrentValue
+c0	B	initial_B	setCurrentValue

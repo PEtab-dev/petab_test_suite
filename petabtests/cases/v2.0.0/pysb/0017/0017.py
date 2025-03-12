@@ -33,9 +33,9 @@ mass action kinetics.
 # problem --------------------------------------------------------------------
 problem = Problem()
 problem.add_condition(
-    "preeq_c0", k1=(VT_INITIAL, 0.3), B=(VT_INITIAL, 2.0), A=(VT_INITIAL, 0)
+    "preeq_c0", k1=(OT_CUR_VAL, 0.3), B=(OT_CUR_VAL, 2.0), A=(OT_CUR_VAL, 0)
 )
-problem.add_condition("c0", k1=(VT_INITIAL, 0.8), A=(VT_INITIAL, 1))
+problem.add_condition("c0", k1=(OT_CUR_VAL, 0.8), A=(OT_CUR_VAL, 1))
 problem.add_experiment("e0", TIME_PREEQUILIBRATION, "preeq_c0", 0, "c0")
 problem.add_observable("obs_a", "A", noise_formula=0.5)
 problem.add_measurement("obs_a", "e0", time=1, measurement=0.7)

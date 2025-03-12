@@ -1,2 +1,2 @@
-conditionId	targetId	valueType	targetValue
-c0	B	initial	2
+conditionId	targetId	operationType	targetValue
+c0	B	setCurrentValue	2

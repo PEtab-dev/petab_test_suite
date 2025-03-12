@@ -6,6 +6,7 @@ problems:
   - _conditions.tsv
   experiment_files:
   - _experiments.tsv
+  mapping_files: []
   measurement_files:
   - _measurements.tsv
   model_files:
@@ -14,3 +15,4 @@ problems:
       location: _model.xml
   observable_files:
   - _observables.tsv
+  visualization_files: []

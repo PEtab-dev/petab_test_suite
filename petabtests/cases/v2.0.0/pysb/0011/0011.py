@@ -21,7 +21,7 @@ mass action kinetics.
 # problem --------------------------------------------------------------------
 problem = Problem()
 
-problem.add_condition("c0", B=(VT_INITIAL, 2))
+problem.add_condition("c0", B=(OT_CUR_VAL, 2))
 
 problem.add_experiment("e0", 0, "c0")
 

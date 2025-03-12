@@ -19,7 +19,7 @@ mass action kinetics.
 # problem --------------------------------------------------------------------
 problem = Problem()
 
-problem.add_condition("c0", B=(VT_INITIAL, "par"))
+problem.add_condition("c0", B=(OT_CUR_VAL, "par"))
 problem.add_experiment("e0", 0, "c0")
 problem.add_observable("obs_a", "A", noise_formula=0.5)
 

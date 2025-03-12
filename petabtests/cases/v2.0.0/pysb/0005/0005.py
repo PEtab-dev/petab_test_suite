@@ -25,8 +25,8 @@ mass action kinetics.
 
 problem = Problem()
 
-problem.add_condition("c0", offset_A=(VT_CONSTANT, "offset_A_c0"))
-problem.add_condition("c1", offset_A=(VT_CONSTANT, "offset_A_c1"))
+problem.add_condition("c0", offset_A=(OT_CUR_VAL, "offset_A_c0"))
+problem.add_condition("c1", offset_A=(OT_CUR_VAL, "offset_A_c1"))
 
 problem.add_experiment("e0", 0, "c0")
 problem.add_experiment("e1", 0, "c1")

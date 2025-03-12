@@ -1,3 +1,3 @@
-conditionId	targetId	targetValue	valueType
-c0	offset_A	offset_A_c0	constant
-c1	offset_A	offset_A_c1	constant
+conditionId	targetId	targetValue	operationType
+c0	offset_A	offset_A_c0	setCurrentValue
+c1	offset_A	offset_A_c1	setCurrentValue
