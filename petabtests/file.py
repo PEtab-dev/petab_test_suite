@@ -14,6 +14,8 @@ from .C import *  # noqa: F403
 from pprint import pprint
 import logging
 from petab.v2.C import EXPERIMENT_FILES
+from petab.v1.lint import lint_problem as lint_problem_v1
+from petab.v2.lint import lint_problem as lint_problem_v2
 
 logger = logging.getLogger("petab_test_suite")
 
@@ -266,34 +268,19 @@ def write_problem(
                 yaml.dump(config, f, default_flow_style=False)
         format_version = 2
 
-    # FIXME Until a first libpetab with petab.v1 subpackage is released
-    try:
-        # new petab version
-        from petab.v1.lint import lint_problem as lint_problem_v1
-        from petab.v2.lint import lint_problem as lint_problem_v2
-
-        # validate written PEtab files
-        if format_version == 1:
-            # PEtab v1
-            problem = petab.Problem.from_yaml(yaml_path)
-            if lint_problem_v1(problem):
-                raise RuntimeError(
-                    "Invalid PEtab problem, see messages above."
-                )
-        else:
-            # v2
-            validation_results = lint_problem_v2(yaml_path)
-            if validation_results:
-                logger.error(f"Validation failed for {dir_}:")
-                for issue in validation_results:
-                    pprint(issue)
-                raise RuntimeError(
-                    "Invalid PEtab problem, see messages above."
-                )
-    except ModuleNotFoundError:
-        # old petab version (will fail validation for some v2 tests)
-        problem = v1.Problem.from_yaml(os.path.join(dir_, yaml_file))
-        if v1.lint_problem(problem):
+    # validate written PEtab files
+    if format_version == 1:
+        # PEtab v1
+        problem = petab.Problem.from_yaml(yaml_path)
+        if lint_problem_v1(problem):
+            raise RuntimeError("Invalid PEtab problem, see messages above.")
+    else:
+        # v2
+        validation_results = lint_problem_v2(yaml_path)
+        if validation_results:
+            logger.error(f"Validation failed for {dir_}:")
+            for issue in validation_results:
+                pprint(issue)
             raise RuntimeError("Invalid PEtab problem, see messages above.")
 
 
@@ -333,6 +320,7 @@ def write_solution(
         #  unrelated test cases
         CHI2: round(float(chi2), 14),
         LLH: round(float(llh), 14),
+        # TODO: add log-prior, log-posterior
         TOL_SIMULATIONS: float(tol_simulations),
         TOL_CHI2: float(tol_chi2),
         TOL_LLH: float(tol_llh),
