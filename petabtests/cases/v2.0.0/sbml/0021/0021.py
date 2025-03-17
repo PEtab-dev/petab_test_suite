@@ -43,7 +43,7 @@ simulation_df[SIMULATION] = [
 
 case = PetabTestCase(
     id=21,
-    brief="Simulation. Nothing special.",
+    brief="Observable-dependent noise formula.",
     description=DESCRIPTION,
     model=DEFAULT_SBML_FILE,
     condition_dfs=[],

@@ -1,0 +1,4 @@
+conditionId	targetId	operationType	targetValue	conditionName
+condition2	a	setCurrentValue	10	['condition2']
+condition2	A	setCurrentValue	5	['condition2']
+condition2	default_compartment	setCurrentValue	4	['condition2']
