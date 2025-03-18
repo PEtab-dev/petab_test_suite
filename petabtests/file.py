@@ -24,6 +24,7 @@ __all__ = [
     "get_case_dir",
     "load_solution",
     "PetabTestCase",
+    "PetabV2TestCase",
     "problem_yaml_name",
     "solution_yaml_name",
     "test_id_str",
@@ -48,6 +49,47 @@ class PetabTestCase:
     parameter_df: pd.DataFrame
     mapping_df: pd.DataFrame = None
     experiment_dfs: list[pd.DataFrame] = None
+
+
+@dataclass
+class PetabV2TestCase:
+    """A PEtab test case"""
+
+    id: int
+    brief: str
+    description: str
+    model: Path
+    condition_dfs: list[pd.DataFrame]
+    observable_dfs: list[pd.DataFrame]
+    measurement_dfs: list[pd.DataFrame]
+    simulation_dfs: list[pd.DataFrame]
+    parameter_df: pd.DataFrame
+    mapping_df: pd.DataFrame = None
+    experiment_dfs: list[pd.DataFrame] = None
+
+    @staticmethod
+    def from_problem(
+        id: int,
+        problem: v1.Problem,
+        model: Path,
+        brief: str,
+        description: str,
+        simulation_df: pd.DataFrame,
+    ) -> PetabTestCase:
+        """Create a PEtab test case from a PEtab problem."""
+        return PetabTestCase(
+            id=id,
+            brief=brief,
+            description=description,
+            model=model,
+            experiment_dfs=[problem.experiment_df],
+            condition_dfs=[problem.condition_df],
+            observable_dfs=[problem.observable_df],
+            measurement_dfs=[problem.measurement_df],
+            simulation_dfs=[simulation_df],
+            mapping_df=problem.mapping_df,
+            parameter_df=problem.parameter_df,
+        )
 
 
 def get_case_dir(id_: int | str, format_: str, version: str) -> Path:

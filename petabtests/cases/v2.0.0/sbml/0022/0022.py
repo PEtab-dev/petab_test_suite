@@ -3,7 +3,7 @@ from inspect import cleandoc
 from petab.v2.C import *
 from petab.v2 import Problem
 from petabtests import (
-    PetabTestCase,
+    PetabV2TestCase,
     analytical_a,
     antimony_to_sbml_str,
     analytical_b,
@@ -146,15 +146,11 @@ simulation_df[SIMULATION] = [
     analytical_b(5, a_c10, b_c10, k1, k2),
 ]
 
-case = PetabTestCase(
+case = PetabV2TestCase.from_problem(
     id=22,
     brief="Simultaneous re-initialization of compartment size and contained species.",
     description=DESCRIPTION,
     model=sbml_file,
-    experiment_dfs=[problem.experiment_df],
-    condition_dfs=[problem.condition_df],
-    observable_dfs=[problem.observable_df],
-    measurement_dfs=[problem.measurement_df],
-    simulation_dfs=[simulation_df],
-    parameter_df=problem.parameter_df,
+    problem=problem,
+    simulation_df=simulation_df,
 )
