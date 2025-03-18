@@ -1,0 +1,4 @@
+observableId	observableFormula	noiseFormula
+obs_C	C	1
+obs_amount_S	S * C	1
+obs_conc_S	S	1

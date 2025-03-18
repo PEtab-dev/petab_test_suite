@@ -1,0 +1,4 @@
+conditionId	targetId	operationType	targetValue	conditionName
+condition1	S	setCurrentValue	S - 1	['condition1']
+condition2	S	setCurrentValue	S + C	['condition2']
+condition2	C	setCurrentValue	8	['condition2']
