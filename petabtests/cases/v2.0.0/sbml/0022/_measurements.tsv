@@ -1,17 +1,17 @@
-observableId	experimentId	time	measurement
-obs_a		0	2
-obs_A		0	2
-obs_b		0	1
-obs_B		0	1
-obs_a		5	2
-obs_A		5	2
-obs_b		5	1
-obs_B		5	1
-obs_a		10	2
-obs_A		10	2
-obs_b		10	1
-obs_B		10	1
-obs_a		15	2
-obs_A		15	2
-obs_b		15	1
-obs_B		15	1
+observableId	experimentId	time	measurement	observableParameters	noiseParameters
+obs_a		0.0	2.0		
+obs_A		0.0	2.0		
+obs_b		0.0	1.0		
+obs_B		0.0	1.0		
+obs_a		5.0	2.0		
+obs_A		5.0	2.0		
+obs_b		5.0	1.0		
+obs_B		5.0	1.0		
+obs_a		10.0	2.0		
+obs_A		10.0	2.0		
+obs_b		10.0	1.0		
+obs_B		10.0	1.0		
+obs_a		15.0	2.0		
+obs_A		15.0	2.0		
+obs_b		15.0	1.0		
+obs_B		15.0	1.0		

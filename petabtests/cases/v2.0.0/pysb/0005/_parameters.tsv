@@ -1,7 +1,7 @@
-parameterId	estimate	nominalValue	parameterScale	lowerBound	upperBound
-a0	1	1.0	lin	0	10
-b0	1	0.0	lin	0	10
-k1	1	0.8	lin	0	10
-k2	1	0.6	lin	0	10
-offset_A_c0	0	2.0	lin	0	10
-offset_A_c1	0	3.0	lin	0	10
+parameterId	lowerBound	upperBound	nominalValue	parameterScale	estimate
+a0	0.0	10.0	1.0	lin	True
+b0	0.0	10.0	0.0	lin	True
+k1	0.0	10.0	0.8	lin	True
+k2	0.0	10.0	0.6	lin	True
+offset_A_c0	0.0	10.0	2.0	lin	False
+offset_A_c1	0.0	10.0	3.0	lin	False

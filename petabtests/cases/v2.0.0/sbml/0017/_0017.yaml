@@ -1,18 +1,14 @@
-extensions: []
 format_version: 2.0.0
 parameter_file: _parameters.tsv
 problems:
 - condition_files:
   - _conditions.tsv
-  experiment_files:
-  - _experiments.tsv
-  mapping_files: []
+  experiment_files: []
   measurement_files:
   - _measurements.tsv
   model_files:
-    _model:
+    model_0:
       language: sbml
       location: _model.xml
   observable_files:
   - _observables.tsv
-  visualization_files: []

@@ -4,7 +4,7 @@ from math import nan
 import pandas as pd
 from petab.v1.C import *
 
-from petabtests import DEFAULT_SBML_FILE, PetabTestCase, analytical_a
+from petabtests import DEFAULT_SBML_FILE, PetabV1TestCase, analytical_a
 
 DESCRIPTION = cleandoc("""
 ## Objective
@@ -71,7 +71,7 @@ simulation_df[SIMULATION] = [
     *[analytical_a(t, 0.9, 1, 0.8, 0.6) for t in [0, 10]],
 ]
 
-case = PetabTestCase(
+case = PetabV1TestCase(
     id=2,
     brief="Simulation. Two conditions. Numeric parameter override.",
     description=DESCRIPTION,

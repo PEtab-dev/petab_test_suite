@@ -2,10 +2,11 @@ from inspect import cleandoc
 
 import pandas as pd
 from petab.v1.C import *
+from petab.v2.C import *
 
 from petabtests import (
     DEFAULT_SBML_FILE,
-    PetabTestCase,
+    PetabV2TestCase,
     analytical_a,
     analytical_b,
 )
@@ -29,9 +30,10 @@ mass action kinetics.
 condition_df = pd.DataFrame(
     data={
         CONDITION_ID: ["preeq_c0", "c0"],
-        "k1": [0.3, 0.8],
+        TARGET_ID: ["k1", "k1"],
+        TARGET_VALUE: [0.3, 0.8],
     }
-).set_index([CONDITION_ID])
+)
 
 measurement_df = pd.DataFrame(
     data={
@@ -76,7 +78,7 @@ simulation_df[SIMULATION] = [
     for t in simulation_df[TIME]
 ]
 
-case = PetabTestCase(
+case = PetabV2TestCase(
     id=9,
     brief="Simulation. Preequilibration.",
     description=DESCRIPTION,

@@ -2,8 +2,9 @@ from inspect import cleandoc
 
 import pandas as pd
 from petab.v1.C import *
+from petab.v2.C import *
 
-from petabtests import DEFAULT_SBML_FILE, PetabTestCase, analytical_a
+from petabtests import DEFAULT_SBML_FILE, PetabV2TestCase, analytical_a
 
 DESCRIPTION = cleandoc("""
 ## Objective
@@ -21,9 +22,10 @@ mass action kinetics.
 condition_df = pd.DataFrame(
     data={
         CONDITION_ID: ["c0"],
-        "compartment": [3],
+        TARGET_ID: ["compartment"],
+        TARGET_VALUE: [3],
     }
-).set_index([CONDITION_ID])
+)
 
 measurement_df = pd.DataFrame(
     data={
@@ -64,7 +66,7 @@ simulation_df[SIMULATION] = [
     analytical_a(t, 1, 1, 0.8, 0.6) for t in simulation_df[TIME]
 ]
 
-case = PetabTestCase(
+case = PetabV2TestCase(
     id=12,
     brief="Simulation. Initial compartment size in condition table.",
     description=DESCRIPTION,

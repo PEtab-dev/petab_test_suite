@@ -5,7 +5,7 @@ from petab.v2.C import *
 
 from petabtests import (
     DEFAULT_PYSB_FILE,
-    PetabTestCase,
+    PetabV2TestCase,
     analytical_a,
     analytical_b,
 )
@@ -27,8 +27,8 @@ mass action kinetics.
 # problem --------------------------------------------------------------------
 problem = Problem()
 
-problem.add_condition("preeq_c0", k1=(OT_CUR_VAL, 0.3))
-problem.add_condition("c0", k1=(OT_CUR_VAL, 0.8))
+problem.add_condition("preeq_c0", k1=0.3)
+problem.add_condition("c0", k1=0.8)
 
 problem.add_experiment("e0", TIME_PREEQUILIBRATION, "preeq_c0", 0, "c0")
 
@@ -62,7 +62,7 @@ simulation_df[SIMULATION] = [
     for t in simulation_df[TIME]
 ]
 
-case = PetabTestCase(
+case = PetabV2TestCase(
     id=9,
     brief="Simulation. Preequilibration.",
     description=DESCRIPTION,

@@ -3,7 +3,7 @@ from inspect import cleandoc
 import pandas as pd
 from petab.v1.C import *
 from pathlib import Path
-from petabtests import PetabTestCase, analytical_a, antimony_to_sbml_str
+from petabtests import PetabV1TestCase, analytical_a, antimony_to_sbml_str
 
 DESCRIPTION = cleandoc("""
 ## Objective
@@ -79,7 +79,7 @@ simulation_df[SIMULATION] = [
     analytical_a(t, 1, 2, 0.8, 0.6) for t in simulation_df[TIME]
 ]
 
-case = PetabTestCase(
+case = PetabV1TestCase(
     id=11,
     brief="Simulation. InitialAssignment to species overridden.",
     description=DESCRIPTION,

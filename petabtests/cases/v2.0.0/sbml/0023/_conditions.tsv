@@ -1,4 +1,4 @@
-conditionId	targetId	operationType	targetValue	conditionName
-condition1	S	setCurrentValue	S - 1	['condition1']
-condition2	S	setCurrentValue	S + C	['condition2']
-condition2	C	setCurrentValue	8	['condition2']
+conditionId	targetId	targetValue
+condition1	S	S - 1.0
+condition2	S	C + S
+condition2	C	8.0

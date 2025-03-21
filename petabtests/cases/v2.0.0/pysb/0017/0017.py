@@ -5,7 +5,7 @@ from petab.v2.C import *
 
 from petabtests import (
     DEFAULT_PYSB_FILE,
-    PetabTestCase,
+    PetabV2TestCase,
     analytical_a,
     analytical_b,
 )
@@ -32,10 +32,8 @@ mass action kinetics.
 
 # problem --------------------------------------------------------------------
 problem = Problem()
-problem.add_condition(
-    "preeq_c0", k1=(OT_CUR_VAL, 0.3), B=(OT_CUR_VAL, 2.0), A=(OT_CUR_VAL, 0)
-)
-problem.add_condition("c0", k1=(OT_CUR_VAL, 0.8), A=(OT_CUR_VAL, 1))
+problem.add_condition("preeq_c0", k1=0.3, B=2.0, A=0)
+problem.add_condition("c0", k1=0.8, A=1)
 problem.add_experiment("e0", TIME_PREEQUILIBRATION, "preeq_c0", 0, "c0")
 problem.add_observable("obs_a", "A", noise_formula=0.5)
 problem.add_measurement("obs_a", "e0", time=1, measurement=0.7)
@@ -58,7 +56,7 @@ simulation_df[SIMULATION] = [
     analytical_a(t, 1, steady_state_b, 0.8, 0.6) for t in simulation_df[TIME]
 ]
 
-case = PetabTestCase(
+case = PetabV2TestCase(
     id=17,
     brief="Simulation. Preequilibration. One species reinitialized, one not "
     "(NaN in condition table). InitialAssignment to species overridden.",

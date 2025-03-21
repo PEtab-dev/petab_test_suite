@@ -5,7 +5,7 @@ from petab.v1.C import *
 
 from petabtests import (
     DEFAULT_SBML_FILE,
-    PetabTestCase,
+    PetabV1TestCase,
     analytical_a,
     analytical_b,
 )
@@ -72,7 +72,7 @@ simulation_df[SIMULATION] = [
     analytical_b(10, 1, 0, 0.8, 0.6),
 ]
 
-case = PetabTestCase(
+case = PetabV1TestCase(
     id=7,
     brief="Simulation. Observable transformation log10.",
     description=DESCRIPTION,

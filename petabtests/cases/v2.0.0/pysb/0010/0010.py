@@ -3,7 +3,7 @@ from inspect import cleandoc
 from petab.v2 import Problem
 from petab.v2.C import *
 
-from petabtests import DEFAULT_PYSB_FILE, PetabTestCase, analytical_a
+from petabtests import DEFAULT_PYSB_FILE, PetabV2TestCase, analytical_a
 
 DESCRIPTION = cleandoc("""
 ## Objective
@@ -24,8 +24,8 @@ mass action kinetics.
 # problem --------------------------------------------------------------------
 problem = Problem()
 
-problem.add_condition("preeq_c0", k1=(OT_CUR_VAL, 0.3), B=(OT_CUR_VAL, 0))
-problem.add_condition("c0", k1=(OT_CUR_VAL, 0.8), B=(OT_CUR_VAL, 1))
+problem.add_condition("preeq_c0", k1=0.3, B=0)
+problem.add_condition("c0", k1=0.8, B=1)
 
 problem.add_experiment("e0", TIME_PREEQUILIBRATION, "preeq_c0", 0, "c0")
 
@@ -53,7 +53,7 @@ simulation_df[SIMULATION] = [
     analytical_a(t, steady_state_a, 1, 0.8, 0.6) for t in simulation_df[TIME]
 ]
 
-case = PetabTestCase(
+case = PetabV2TestCase(
     id=10,
     brief="Simulation. Preequilibration. One species reinitialized, one not. "
     "InitialAssignment to species overridden.",

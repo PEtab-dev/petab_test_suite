@@ -1,6 +1,6 @@
 from inspect import cleandoc
 
-from petabtests import DEFAULT_PYSB_FILE, PetabTestCase, analytical_a
+from petabtests import DEFAULT_PYSB_FILE, PetabV2TestCase, analytical_a
 from petab.v2 import Problem
 from petab.v2.C import *
 
@@ -40,7 +40,7 @@ simulation_df[SIMULATION] = [
 ]
 
 
-case = PetabTestCase(
+case = PetabV2TestCase(
     id=1,
     brief="Simulation. Nothing special.",
     description=DESCRIPTION,

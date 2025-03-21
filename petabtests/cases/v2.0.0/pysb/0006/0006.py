@@ -1,8 +1,6 @@
 from inspect import cleandoc
 
-from petab.v1.C import *
-
-from petabtests import DEFAULT_PYSB_FILE, PetabTestCase, analytical_a
+from petabtests import DEFAULT_PYSB_FILE, PetabV2TestCase, analytical_a
 from petab.v2 import Problem
 from petab.v2.C import *
 
@@ -57,7 +55,7 @@ simulation_df[SIMULATION] = [
     15 * analytical_a(10, 1, 0, 0.8, 0.6),
 ]
 
-case = PetabTestCase(
+case = PetabV2TestCase(
     id=6,
     brief="Simulation. Time-point specific numeric observable parameter "
     "overrides.",

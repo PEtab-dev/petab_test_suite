@@ -5,6 +5,8 @@ problems:
   - _conditions.tsv
   experiment_files:
   - _experiments.tsv
+  mapping_files:
+  - _mapping.tsv
   measurement_files:
   - _measurements.tsv
   model_files:

@@ -1,9 +1,8 @@
 from inspect import cleandoc
-from math import nan
 
 import pandas as pd
-from petab.v1.C import *
-from petabtests import DEFAULT_SBML_FILE, PetabTestCase, analytical_a
+from petab.v2.C import *
+from petabtests import DEFAULT_SBML_FILE, PetabV2TestCase, analytical_a
 
 DESCRIPTION = cleandoc("""
 ## Objective
@@ -13,8 +12,7 @@ This case tests support for multiple simulation conditions
 The model is to be simulated for two different experimental conditions
 (here: different initial concentrations).
 
-For `b0`, `nan` is used in the condition table, indicating that the default
-model values for `b0` should be used for either condition.
+Some values are overridden in the parameter table by numeric values.
 
 ## Model
 
@@ -27,14 +25,17 @@ mass action kinetics.
 condition_df = pd.DataFrame(
     data={
         CONDITION_ID: ["c0", "c1"],
-        "a0": [0.8, 0.9],
-        "b0": [nan, nan],
+        TARGET_ID: ["a0", "a0"],
+        TARGET_VALUE: [0.8, 0.9],
     }
-).set_index([CONDITION_ID])
+)
+
+from petab.v1.C import SIMULATION_CONDITION_ID
 
 measurement_df = pd.DataFrame(
     data={
         OBSERVABLE_ID: ["obs_a"] * 4,
+        # TODO not caught by validator
         SIMULATION_CONDITION_ID: ["c0", "c0", "c1", "c1"],
         TIME: [0, 10, 0, 10],
         MEASUREMENT: [0.7, 0.1, 0.8, 0.2],
@@ -70,7 +71,7 @@ simulation_df[SIMULATION] = [
     *[analytical_a(t, 0.9, 1, 0.8, 0.6) for t in [0, 10]],
 ]
 
-case = PetabTestCase(
+case = PetabV2TestCase(
     id=2,
     brief="Simulation. Two conditions. Numeric parameter override.",
     description=DESCRIPTION,

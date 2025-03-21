@@ -3,8 +3,9 @@ from pathlib import Path
 
 import pandas as pd
 from petab.v1.C import *
+from petab.v2.C import *
 
-from petabtests import PetabTestCase, analytical_a, antimony_to_sbml_str
+from petabtests import PetabV2TestCase, analytical_a, antimony_to_sbml_str
 
 DESCRIPTION = cleandoc("""
 ## Objective
@@ -46,9 +47,10 @@ model_file.write_text(antimony_to_sbml_str(ant_model))
 condition_df = pd.DataFrame(
     data={
         CONDITION_ID: ["c0", "c1"],
-        "offset_A": ["offset_A_c0", "offset_A_c1"],
+        TARGET_ID: ["offset_A"] * 2,
+        TARGET_VALUE: ["offset_A_c0", "offset_A_c1"],
     }
-).set_index([CONDITION_ID])
+)
 
 measurement_df = pd.DataFrame(
     data={
@@ -87,7 +89,7 @@ simulation_df[SIMULATION] = [
     analytical_a(10, 1, 0, 0.8, 0.6) + offset for offset in [2, 3]
 ]
 
-case = PetabTestCase(
+case = PetabV2TestCase(
     id=5,
     brief="Simulation. Condition-specific parameters only defined in "
     "parameter table.",

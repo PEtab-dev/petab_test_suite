@@ -1,9 +1,7 @@
-import importlib
 import itertools
 import logging
 import os
 import re
-import sys
 from pathlib import Path
 from collections.abc import Iterable
 
@@ -11,12 +9,12 @@ from petab.v1.calculate import calculate_chi2, calculate_llh
 
 from .C import CASES_DIR
 from .file import (
-    PetabTestCase,
+    PetabV1TestCase,
     get_case_dir,
     test_id_str,
     write_info,
-    write_problem,
     write_solution,
+    PetabV2TestCase,
 )
 
 __all__ = ["get_cases", "create_all", "clear", "get_cases_dir"]
@@ -65,7 +63,12 @@ def create_all():
                 f"Processing {version}/{format_} #{case_id} at {case_dir}"
             )
 
-            case = load_case(case_dir, case_id)
+            if version == "v1.0.0":
+                case = PetabV1TestCase.load(case_dir, case_id)
+            elif version == "v2.0.0":
+                case = PetabV2TestCase.load(case_dir, case_id)
+            else:
+                raise NotImplementedError(f"Unknown PEtab version {version}")
 
             id_str = test_id_str(case.id)
             toc += f"# [{id_str}]({id_str}/)\n\n{case.brief}\n\n"
@@ -79,35 +82,21 @@ def create_all():
             f.write(toc)
 
 
-def load_case(case_dir: Path, case_id: str) -> PetabTestCase:
-    """Load a test case definition module."""
-    sys.path.append(str(case_dir))
-    case_module = importlib.import_module(case_id)
-    sys.path.pop()
-    # noinspection PyUnresolvedReferences
-    case: PetabTestCase = case_module.case
-    del sys.modules[case_id]
-    return case
-
-
 def create_case(format_: str, version: str, id_: str) -> None:
     """Create a single test case."""
     case_dir = get_case_dir(format_=format_, version=version, id_=id_)
-    case = load_case(case_dir, id_)
+
+    if version == "v1.0.0":
+        case = PetabV1TestCase.load(case_dir, id_)
+    elif version == "v2.0.0":
+        case = PetabV2TestCase.load(case_dir, id_)
+    else:
+        raise NotImplementedError(f"Unknown PEtab version {version}")
 
     write_info(case, format_, version=version)
 
-    write_problem(
-        test_id=case.id,
-        parameter_df=case.parameter_df,
-        condition_dfs=case.condition_dfs,
-        experiment_dfs=case.experiment_dfs,
-        observable_dfs=case.observable_dfs,
-        measurement_dfs=case.measurement_dfs,
-        model_files=case.model,
+    case.write_problem(
         format_=format_,
-        version=version,
-        mapping_df=case.mapping_df,
     )
 
     chi2 = calculate_chi2(

@@ -2,8 +2,8 @@ from inspect import cleandoc
 
 from petab.v2 import Problem
 from petab.v2.C import *
-
-from petabtests import PetabTestCase, analytical_a
+from pathlib import Path
+from petabtests import PetabV2TestCase, analytical_a
 
 DESCRIPTION = cleandoc("""
 ## Objective
@@ -25,8 +25,8 @@ mass action kinetics.
 
 problem = Problem()
 
-problem.add_condition("c0", offset_A=(OT_CUR_VAL, "offset_A_c0"))
-problem.add_condition("c1", offset_A=(OT_CUR_VAL, "offset_A_c1"))
+problem.add_condition("c0", offset_A="offset_A_c0")
+problem.add_condition("c1", offset_A="offset_A_c1")
 
 problem.add_experiment("e0", 0, "c0")
 problem.add_experiment("e1", 0, "c1")
@@ -108,12 +108,12 @@ simulation_df[SIMULATION] = [
     analytical_a(10, 1, 0, 0.8, 0.6) + offset for offset in [2, 3]
 ]
 
-case = PetabTestCase(
+case = PetabV2TestCase(
     id=5,
     brief="Simulation. Condition-specific parameters only defined in "
     "parameter table.",
     description=DESCRIPTION,
-    model="conversion_modified_pysb.py",
+    model=Path("conversion_modified_pysb.py"),
     condition_dfs=[problem.condition_df],
     observable_dfs=[problem.observable_df],
     measurement_dfs=[problem.measurement_df],

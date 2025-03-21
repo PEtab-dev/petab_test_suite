@@ -3,7 +3,7 @@ from inspect import cleandoc
 from petab.v2 import Problem
 from petab.v2.C import *
 
-from petabtests import DEFAULT_PYSB_FILE, PetabTestCase, analytical_a
+from petabtests import DEFAULT_PYSB_FILE, PetabV2TestCase, analytical_a
 
 DESCRIPTION = cleandoc("""
 ## Objective
@@ -104,7 +104,7 @@ simulation_df[SIMULATION] = [
     0.5 * analytical_a(t, 1, 0, 0.8, 0.6) + 2 for t in simulation_df[TIME]
 ]
 
-case = PetabTestCase(
+case = PetabV2TestCase(
     id=4,
     brief="Simulation. Observable parameters only defined in parameter table.",
     description=DESCRIPTION,

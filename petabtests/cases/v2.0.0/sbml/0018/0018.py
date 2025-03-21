@@ -2,9 +2,10 @@ from inspect import cleandoc
 
 import pandas as pd
 from petab.v1.C import *
+from petab.v2.C import *
 from pathlib import Path
 from petabtests import (
-    PetabTestCase,
+    PetabV2TestCase,
     analytical_a,
     analytical_b,
     antimony_to_sbml_str,
@@ -52,12 +53,11 @@ sbml_file.write_text(antimony_to_sbml_str(ant_model))
 
 condition_df = pd.DataFrame(
     data={
-        CONDITION_ID: ["preeq_c0", "c0"],
-        "k1": [0.3, 0.8],
-        "B": [2.0, "NaN"],
-        "A": [0, 1],
+        CONDITION_ID: ["preeq_c0", "preeq_c0", "preeq_c0", "c0", "c0"],
+        TARGET_ID: ["k1", "B", "A", "k1", "A"],
+        TARGET_VALUE: [0.3, 2.0, 0, 0.8, 1],
     }
-).set_index([CONDITION_ID])
+)
 
 measurement_df = pd.DataFrame(
     data={
@@ -105,7 +105,7 @@ simulation_df.iloc[3:, simulation_df.columns.get_loc(SIMULATION)] = [
 ][3:]
 
 
-case = PetabTestCase(
+case = PetabV2TestCase(
     id=18,
     brief="Simulation. Preequilibration and RateRules. One state "
     "reinitialized, one not (NaN in condition table). InitialAssignment "

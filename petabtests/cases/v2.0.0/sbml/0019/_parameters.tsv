@@ -1,5 +1,5 @@
-parameterId	estimate	nominalValue	parameterScale	lowerBound	upperBound
-a0	1	1.0	lin	0	10
-maps_to_b0	1	0.0	lin	0	10
-k1	1	0.8	lin	0	10
-maps_to_k2	1	0.6	lin	0	10
+parameterId	lowerBound	upperBound	nominalValue	parameterScale	estimate
+a0	0.0	10.0	1.0	lin	True
+maps_to_b0	0.0	10.0	0.0	lin	True
+k1	0.0	10.0	0.8	lin	True
+maps_to_k2	0.0	10.0	0.6	lin	True

@@ -3,7 +3,7 @@ from inspect import cleandoc
 from petab.v2 import Problem
 from petab.v2.C import *
 
-from petabtests import DEFAULT_PYSB_FILE, PetabTestCase, analytical_a
+from petabtests import DEFAULT_PYSB_FILE, PetabV2TestCase, analytical_a
 
 DESCRIPTION = cleandoc("""
 ## Objective
@@ -25,8 +25,8 @@ mass action kinetics.
 # problem --------------------------------------------------------------------
 problem = Problem()
 
-problem.add_condition("c0", a0=(OT_CUR_VAL, 0.8))
-problem.add_condition("c1", a0=(OT_CUR_VAL, 0.9))
+problem.add_condition("c0", a0=0.8)
+problem.add_condition("c1", a0=0.9)
 
 problem.add_experiment("e0", 0, "c0")
 problem.add_experiment("e1", 0, "c1")
@@ -54,7 +54,7 @@ simulation_df[SIMULATION] = [
     *[analytical_a(t, 0.8, 1, 0.8, 0.6) for t in [0, 10]],
     *[analytical_a(t, 0.9, 1, 0.8, 0.6) for t in [0, 10]],
 ]
-case = PetabTestCase(
+case = PetabV2TestCase(
     id=2,
     brief="Simulation. Two conditions. Numeric parameter override.",
     description=DESCRIPTION,

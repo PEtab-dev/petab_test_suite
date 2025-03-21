@@ -4,7 +4,7 @@ import pandas as pd
 from petab.v1.C import *
 from pathlib import Path
 from petabtests import (
-    PetabTestCase,
+    PetabV1TestCase,
     analytical_a,
     analytical_b,
     antimony_to_sbml_str,
@@ -106,7 +106,7 @@ simulation_df.iloc[3:, simulation_df.columns.get_loc(SIMULATION)] = [
 ][3:]
 
 
-case = PetabTestCase(
+case = PetabV1TestCase(
     id=18,
     brief="Simulation. Preequilibration and RateRules. One state "
     "reinitialized, one not (NaN in condition table). InitialAssignment "

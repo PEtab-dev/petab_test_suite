@@ -1,13 +1,13 @@
-observableId	experimentId	time	simulation
-obs_C		0	4
-obs_amount_S		0	8
-obs_conc_S		0	2
-obs_C		5	4
-obs_amount_S		5	28
-obs_conc_S		5	7
-obs_C		10	16
-obs_amount_S		10	64
-obs_conc_S		10	4
-obs_C		15	16
-obs_amount_S		15	144
-obs_conc_S		15	9
+observableId	experimentId	time	simulation	observableParameters	noiseParameters
+obs_C		0.0	4		
+obs_amount_S		0.0	8		
+obs_conc_S		0.0	2		
+obs_C		5.0	4		
+obs_amount_S		5.0	28		
+obs_conc_S		5.0	7		
+obs_C		10.0	16		
+obs_amount_S		10.0	64		
+obs_conc_S		10.0	4		
+obs_C		15.0	16		
+obs_amount_S		15.0	144		
+obs_conc_S		15.0	9		

@@ -2,8 +2,9 @@ from inspect import cleandoc
 
 import pandas as pd
 from petab.v1.C import *
+from petab.v2.C import *
 
-from petabtests import PetabTestCase, analytical_a, antimony_to_sbml_str
+from petabtests import PetabV2TestCase, analytical_a, antimony_to_sbml_str
 from pathlib import Path
 
 DESCRIPTION = cleandoc("""
@@ -38,8 +39,8 @@ end
 model_file = Path(__file__).parent / "_model.xml"
 model_file.write_text(antimony_to_sbml_str(ant_model))
 
-condition_df = pd.DataFrame(data={CONDITION_ID: ["c0"], "B": [2]}).set_index(
-    [CONDITION_ID]
+condition_df = pd.DataFrame(
+    data={CONDITION_ID: ["c0"], TARGET_ID: ["B"], TARGET_VALUE: [2]}
 )
 
 measurement_df = pd.DataFrame(
@@ -79,7 +80,7 @@ simulation_df[SIMULATION] = [
     analytical_a(t, 1, 2, 0.8, 0.6) for t in simulation_df[TIME]
 ]
 
-case = PetabTestCase(
+case = PetabV2TestCase(
     id=11,
     brief="Simulation. InitialAssignment to species overridden.",
     description=DESCRIPTION,

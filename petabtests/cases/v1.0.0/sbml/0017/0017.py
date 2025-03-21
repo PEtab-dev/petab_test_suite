@@ -5,7 +5,7 @@ from petab.v1.C import *
 
 from petabtests import (
     DEFAULT_SBML_FILE,
-    PetabTestCase,
+    PetabV1TestCase,
     analytical_a,
     analytical_b,
 )
@@ -83,7 +83,7 @@ simulation_df[SIMULATION] = [
     analytical_a(t, 1, steady_state_b, 0.8, 0.6) for t in simulation_df[TIME]
 ]
 
-case = PetabTestCase(
+case = PetabV1TestCase(
     id=17,
     brief="Simulation. Preequilibration. One species reinitialized, one not "
     "(NaN in condition table). InitialAssignment to species overridden.",

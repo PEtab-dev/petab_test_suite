@@ -2,8 +2,8 @@ from inspect import cleandoc
 
 from petab.v2 import Problem
 from petab.v2.C import *
-
-from petabtests import PetabTestCase, analytical_a
+from pathlib import Path
+from petabtests import PetabV2TestCase, analytical_a
 
 DESCRIPTION = cleandoc("""
 ## Objective
@@ -21,7 +21,7 @@ mass action kinetics.
 # problem --------------------------------------------------------------------
 problem = Problem()
 
-problem.add_condition("c0", B=(OT_CUR_VAL, 2))
+problem.add_condition("c0", B=2)
 
 problem.add_experiment("e0", 0, "c0")
 
@@ -49,11 +49,11 @@ simulation_df[SIMULATION] = [
     analytical_a(t, 1, 2, 0.8, 0.6) for t in simulation_df[TIME]
 ]
 
-case = PetabTestCase(
+case = PetabV2TestCase(
     id=11,
     brief="Simulation. InitialAssignment to species overridden.",
     description=DESCRIPTION,
-    model="conversion_modified_pysb.py",
+    model=Path("conversion_modified_pysb.py"),
     condition_dfs=[problem.condition_df],
     observable_dfs=[problem.observable_df],
     measurement_dfs=[problem.measurement_df],

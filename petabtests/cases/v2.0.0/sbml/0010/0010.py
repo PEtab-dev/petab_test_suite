@@ -2,8 +2,9 @@ from inspect import cleandoc
 
 import pandas as pd
 from petab.v1.C import *
+from petab.v2.C import *
 
-from petabtests import DEFAULT_SBML_FILE, PetabTestCase, analytical_a
+from petabtests import DEFAULT_SBML_FILE, PetabV2TestCase, analytical_a
 
 DESCRIPTION = cleandoc("""
 ## Objective
@@ -25,11 +26,11 @@ mass action kinetics.
 
 condition_df = pd.DataFrame(
     data={
-        CONDITION_ID: ["preeq_c0", "c0"],
-        "k1": [0.3, 0.8],
-        "B": [0, 1],
+        CONDITION_ID: ["preeq_c0", "preeq_c0", "c0", "c0"],
+        TARGET_ID: ["k1", "B", "k1", "B"],
+        TARGET_VALUE: [0.3, 0, 0.8, 1],
     }
-).set_index([CONDITION_ID])
+)
 
 measurement_df = pd.DataFrame(
     data={
@@ -72,7 +73,7 @@ simulation_df[SIMULATION] = [
     analytical_a(t, steady_state_a, 1, 0.8, 0.6) for t in simulation_df[TIME]
 ]
 
-case = PetabTestCase(
+case = PetabV2TestCase(
     id=10,
     brief="Simulation. Preequilibration. One species reinitialized, one not. "
     "InitialAssignment to species overridden.",

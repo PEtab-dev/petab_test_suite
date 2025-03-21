@@ -5,7 +5,7 @@ from petab.v1.C import *
 
 from petabtests import (
     DEFAULT_SBML_FILE,
-    PetabTestCase,
+    PetabV2TestCase,
     analytical_a,
     analytical_b,
 )
@@ -26,12 +26,6 @@ mass action kinetics.
 """)
 
 # problem --------------------------------------------------------------------
-
-condition_df = pd.DataFrame(
-    data={
-        CONDITION_ID: ["c0"],
-    }
-).set_index([CONDITION_ID])
 
 measurement_df = pd.DataFrame(
     data={
@@ -72,12 +66,12 @@ simulation_df[SIMULATION] = [
     analytical_b(10, 1, 0, 0.8, 0.6),
 ]
 
-case = PetabTestCase(
+case = PetabV2TestCase(
     id=7,
     brief="Simulation. Observable transformation log10.",
     description=DESCRIPTION,
     model=DEFAULT_SBML_FILE,
-    condition_dfs=[condition_df],
+    condition_dfs=[],
     observable_dfs=[observable_df],
     measurement_dfs=[measurement_df],
     simulation_dfs=[simulation_df],

@@ -2,7 +2,7 @@ from inspect import cleandoc
 
 from petab.v2.C import *
 from petab.v2 import Problem
-from petabtests import DEFAULT_SBML_FILE, PetabTestCase, analytical_a
+from petabtests import DEFAULT_SBML_FILE, PetabV2TestCase, analytical_a
 
 DESCRIPTION = cleandoc("""
 ## Objective
@@ -41,7 +41,7 @@ simulation_df[SIMULATION] = [
 ]
 
 
-case = PetabTestCase(
+case = PetabV2TestCase(
     id=21,
     brief="Observable-dependent noise formula.",
     description=DESCRIPTION,

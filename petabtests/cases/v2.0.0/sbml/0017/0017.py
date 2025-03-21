@@ -2,10 +2,11 @@ from inspect import cleandoc
 
 import pandas as pd
 from petab.v1.C import *
+from petab.v2.C import *
 
 from petabtests import (
     DEFAULT_SBML_FILE,
-    PetabTestCase,
+    PetabV2TestCase,
     analytical_a,
     analytical_b,
 )
@@ -32,15 +33,13 @@ mass action kinetics.
 
 # problem --------------------------------------------------------------------
 
-
 condition_df = pd.DataFrame(
     data={
-        CONDITION_ID: ["preeq_c0", "c0"],
-        "k1": [0.3, 0.8],
-        "B": [2.0, "NaN"],
-        "A": [0, 1],
+        CONDITION_ID: ["preeq_c0", "preeq_c0", "preeq_c0", "c0", "c0"],
+        TARGET_ID: ["k1", "B", "A", "k1", "A"],
+        TARGET_VALUE: [0.3, 2.0, 0, 0.8, 1],
     }
-).set_index([CONDITION_ID])
+)
 
 measurement_df = pd.DataFrame(
     data={
@@ -83,7 +82,7 @@ simulation_df[SIMULATION] = [
     analytical_a(t, 1, steady_state_b, 0.8, 0.6) for t in simulation_df[TIME]
 ]
 
-case = PetabTestCase(
+case = PetabV2TestCase(
     id=17,
     brief="Simulation. Preequilibration. One species reinitialized, one not "
     "(NaN in condition table). InitialAssignment to species overridden.",
