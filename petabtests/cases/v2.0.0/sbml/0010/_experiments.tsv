@@ -1,3 +1,3 @@
-experimentId	conditionId	time
-experiment__preeq_c0___c0	preeq_c0	-inf
-experiment__preeq_c0___c0	c0	0.0
+experimentId	time	conditionId
+e0	-inf	preeq_c0
+e0	0.0	c0

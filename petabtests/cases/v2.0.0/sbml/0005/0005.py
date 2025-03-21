@@ -1,10 +1,8 @@
 from inspect import cleandoc
 from pathlib import Path
 
-import pandas as pd
-from petab.v1.C import *
 from petab.v2.C import *
-
+from petab.v2 import Problem
 from petabtests import PetabV2TestCase, analytical_a, antimony_to_sbml_str
 
 DESCRIPTION = cleandoc("""
@@ -44,60 +42,53 @@ end
 model_file = Path(__file__).parent / "_model.xml"
 model_file.write_text(antimony_to_sbml_str(ant_model))
 
-condition_df = pd.DataFrame(
-    data={
-        CONDITION_ID: ["c0", "c1"],
-        TARGET_ID: ["offset_A"] * 2,
-        TARGET_VALUE: ["offset_A_c0", "offset_A_c1"],
-    }
+problem = Problem()
+problem.add_condition("c0", offset_A="offset_A_c0")
+problem.add_condition("c1", offset_A="offset_A_c1")
+
+problem.add_experiment("e1", 0, "c0")
+problem.add_experiment("e2", 0, "c1")
+
+problem.add_observable("obs_a", "A + offset_A", noise_formula="1")
+
+problem.add_measurement("obs_a", "e1", 10, 2.1)
+problem.add_measurement("obs_a", "e2", 10, 3.2)
+
+problem.add_parameter(
+    "a0", lb=0, ub=10, nominal_value=1, estimate=1, scale=LIN
+)
+problem.add_parameter(
+    "b0", lb=0, ub=10, nominal_value=0, estimate=1, scale=LIN
+)
+problem.add_parameter(
+    "k1", lb=0, ub=10, nominal_value=0.8, estimate=1, scale=LIN
+)
+problem.add_parameter(
+    "k2", lb=0, ub=10, nominal_value=0.6, estimate=1, scale=LIN
+)
+problem.add_parameter(
+    "offset_A_c0", lb=0, ub=10, nominal_value=2, estimate=1, scale=LIN
+)
+problem.add_parameter(
+    "offset_A_c1", lb=0, ub=10, nominal_value=3, estimate=1, scale=LIN
 )
 
-measurement_df = pd.DataFrame(
-    data={
-        OBSERVABLE_ID: ["obs_a", "obs_a"],
-        SIMULATION_CONDITION_ID: ["c0", "c1"],
-        TIME: [10, 10],
-        MEASUREMENT: [2.1, 3.2],
-    }
-)
-
-observable_df = pd.DataFrame(
-    data={
-        OBSERVABLE_ID: ["obs_a"],
-        OBSERVABLE_FORMULA: ["A + offset_A"],
-        NOISE_FORMULA: [1],
-    }
-).set_index([OBSERVABLE_ID])
-
-parameter_df = pd.DataFrame(
-    data={
-        PARAMETER_ID: ["a0", "b0", "k1", "k2", "offset_A_c0", "offset_A_c1"],
-        PARAMETER_SCALE: [LIN] * 6,
-        LOWER_BOUND: [0] * 6,
-        UPPER_BOUND: [10] * 6,
-        NOMINAL_VALUE: [1, 0, 0.8, 0.6, 2, 3],
-        ESTIMATE: [1] * 6,
-    }
-).set_index(PARAMETER_ID)
 
 # solutions ------------------------------------------------------------------
 
-simulation_df = measurement_df.copy(deep=True).rename(
+simulation_df = problem.measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION}
 )
 simulation_df[SIMULATION] = [
     analytical_a(10, 1, 0, 0.8, 0.6) + offset for offset in [2, 3]
 ]
 
-case = PetabV2TestCase(
+case = PetabV2TestCase.from_problem(
     id=5,
     brief="Simulation. Condition-specific parameters only defined in "
     "parameter table.",
     description=DESCRIPTION,
     model=model_file,
-    condition_dfs=[condition_df],
-    observable_dfs=[observable_df],
-    measurement_dfs=[measurement_df],
-    simulation_dfs=[simulation_df],
-    parameter_df=parameter_df,
+    problem=problem,
+    simulation_df=simulation_df,
 )

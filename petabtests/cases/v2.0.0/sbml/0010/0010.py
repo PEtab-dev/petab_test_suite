@@ -1,8 +1,7 @@
 from inspect import cleandoc
 
-import pandas as pd
-from petab.v1.C import *
 from petab.v2.C import *
+from petab.v2 import Problem
 
 from petabtests import DEFAULT_SBML_FILE, PetabV2TestCase, analytical_a
 
@@ -23,47 +22,25 @@ mass action kinetics.
 """)
 
 # problem --------------------------------------------------------------------
+problem = Problem()
 
-condition_df = pd.DataFrame(
-    data={
-        CONDITION_ID: ["preeq_c0", "preeq_c0", "c0", "c0"],
-        TARGET_ID: ["k1", "B", "k1", "B"],
-        TARGET_VALUE: [0.3, 0, 0.8, 1],
-    }
+problem.add_condition("preeq_c0", k1=0.3, B=0)
+problem.add_condition("c0", k1=0.8, B=1)
+
+problem.add_experiment("e0", "-inf", "preeq_c0", 0, "c0")
+
+problem.add_observable("obs_a", "A", noise_formula="0.5")
+
+problem.add_measurement("obs_a", "e0", 1, 0.7)
+problem.add_measurement("obs_a", "e0", 10, 0.1)
+
+problem.add_parameter(
+    "k2", lb=0, ub=10, nominal_value=0.6, estimate=1, scale=LIN
 )
-
-measurement_df = pd.DataFrame(
-    data={
-        OBSERVABLE_ID: ["obs_a", "obs_a"],
-        PREEQUILIBRATION_CONDITION_ID: ["preeq_c0", "preeq_c0"],
-        SIMULATION_CONDITION_ID: ["c0", "c0"],
-        TIME: [1, 10],
-        MEASUREMENT: [0.7, 0.1],
-    }
-)
-
-observable_df = pd.DataFrame(
-    data={
-        OBSERVABLE_ID: ["obs_a"],
-        OBSERVABLE_FORMULA: ["A"],
-        NOISE_FORMULA: [0.5],
-    }
-).set_index([OBSERVABLE_ID])
-
-parameter_df = pd.DataFrame(
-    data={
-        PARAMETER_ID: ["k2"],
-        PARAMETER_SCALE: [LIN],
-        LOWER_BOUND: [0],
-        UPPER_BOUND: [10],
-        NOMINAL_VALUE: [0.6],
-        ESTIMATE: [1],
-    }
-).set_index(PARAMETER_ID)
 
 # solutions ------------------------------------------------------------------
 
-simulation_df = measurement_df.copy(deep=True).rename(
+simulation_df = problem.measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION}
 )
 # simulate for far time point as steady state
@@ -73,15 +50,12 @@ simulation_df[SIMULATION] = [
     analytical_a(t, steady_state_a, 1, 0.8, 0.6) for t in simulation_df[TIME]
 ]
 
-case = PetabV2TestCase(
+case = PetabV2TestCase.from_problem(
     id=10,
     brief="Simulation. Preequilibration. One species reinitialized, one not. "
     "InitialAssignment to species overridden.",
     description=DESCRIPTION,
     model=DEFAULT_SBML_FILE,
-    condition_dfs=[condition_df],
-    observable_dfs=[observable_df],
-    measurement_dfs=[measurement_df],
-    simulation_dfs=[simulation_df],
-    parameter_df=parameter_df,
+    problem=problem,
+    simulation_df=simulation_df,
 )

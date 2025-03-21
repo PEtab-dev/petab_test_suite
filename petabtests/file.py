@@ -65,7 +65,6 @@ class PetabV1TestCase:
         """Write the test case to files."""
         self.write_problem(
             format_=format_,
-            version=version,
         )
         write_solution(
             test_id=self.id,
@@ -227,12 +226,20 @@ class PetabV2TestCase:
             brief=brief,
             description=description,
             model=model,
-            experiment_dfs=[problem.experiment_df],
-            condition_dfs=[problem.condition_df],
-            observable_dfs=[problem.observable_df],
-            measurement_dfs=[problem.measurement_df],
+            experiment_dfs=[df]
+            if not (df := problem.experiment_df).empty
+            else [],
+            condition_dfs=[df]
+            if not (df := problem.condition_df).empty
+            else [],
+            observable_dfs=[df]
+            if not (df := problem.observable_df).empty
+            else [],
+            measurement_dfs=[df]
+            if not (df := problem.measurement_df).empty
+            else [],
             simulation_dfs=[simulation_df],
-            mapping_df=problem.mapping_df,
+            mapping_df=df if not (df := problem.mapping_df).empty else None,
             parameter_df=problem.parameter_df,
         )
 
@@ -402,7 +409,7 @@ class PetabV2TestCase:
             config[PROBLEMS][0][MAPPING_FILES] = [mappings_file]
 
         # validate petab yaml
-        v1.validate(config, path_prefix=dir_)
+        v2.validate(config, path_prefix=dir_)
 
         # write yaml
         yaml_file = problem_yaml_name(test_id)

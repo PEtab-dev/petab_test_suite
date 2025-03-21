@@ -68,7 +68,7 @@ problem.add_condition(
 ts = [0, 5, 10, 15]
 for t in ts:
     for obs in ["obs_C", "obs_amount_S", "obs_conc_S"]:
-        problem.add_measurement(obs, "", t, t)
+        problem.add_measurement(obs, "experiment1", t, t)
 
 # solutions ------------------------------------------------------------------
 

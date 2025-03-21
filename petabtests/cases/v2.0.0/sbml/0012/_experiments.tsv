@@ -1,2 +1,2 @@
-experimentId	conditionId	time
-experiment____c0	c0	0
+experimentId	time	conditionId
+e0	0.0	c0

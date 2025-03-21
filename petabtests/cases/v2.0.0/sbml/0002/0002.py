@@ -1,7 +1,7 @@
 from inspect import cleandoc
 
-import pandas as pd
 from petab.v2.C import *
+from petab.v2 import Problem
 from petabtests import DEFAULT_SBML_FILE, PetabV2TestCase, analytical_a
 
 DESCRIPTION = cleandoc("""
@@ -22,48 +22,31 @@ mass action kinetics.
 
 # problem --------------------------------------------------------------------
 
-condition_df = pd.DataFrame(
-    data={
-        CONDITION_ID: ["c0", "c1"],
-        TARGET_ID: ["a0", "a0"],
-        TARGET_VALUE: [0.8, 0.9],
-    }
+problem = Problem()
+problem.add_condition("c0", a0=0.8)
+problem.add_condition("c1", a0=0.9)
+
+problem.add_experiment("e1", 0, "c0")
+problem.add_experiment("e2", 0, "c1")
+
+problem.add_observable("obs_a", "A", noise_formula="1")
+
+problem.add_measurement("obs_a", "e1", 0, 0.7)
+problem.add_measurement("obs_a", "e1", 10, 0.1)
+problem.add_measurement("obs_a", "e2", 0, 0.8)
+problem.add_measurement("obs_a", "e2", 10, 0.2)
+
+problem.add_parameter(
+    "k1", lb=0, ub=10, nominal_value=0.8, estimate=1, scale=LIN
+)
+problem.add_parameter(
+    "k2", lb=0, ub=10, nominal_value=0.6, estimate=1, scale=LIN
 )
 
-from petab.v1.C import SIMULATION_CONDITION_ID
-
-measurement_df = pd.DataFrame(
-    data={
-        OBSERVABLE_ID: ["obs_a"] * 4,
-        # TODO not caught by validator
-        SIMULATION_CONDITION_ID: ["c0", "c0", "c1", "c1"],
-        TIME: [0, 10, 0, 10],
-        MEASUREMENT: [0.7, 0.1, 0.8, 0.2],
-    }
-)
-
-observable_df = pd.DataFrame(
-    data={
-        OBSERVABLE_ID: ["obs_a"],
-        OBSERVABLE_FORMULA: ["A"],
-        NOISE_FORMULA: [1],
-    }
-).set_index([OBSERVABLE_ID])
-
-parameter_df = pd.DataFrame(
-    data={
-        PARAMETER_ID: ["k1", "k2"],
-        PARAMETER_SCALE: [LIN] * 2,
-        LOWER_BOUND: [0] * 2,
-        UPPER_BOUND: [10] * 2,
-        NOMINAL_VALUE: [0.8, 0.6],
-        ESTIMATE: [1] * 2,
-    }
-).set_index(PARAMETER_ID)
 
 # solutions ------------------------------------------------------------------
 
-simulation_df = measurement_df.copy(deep=True).rename(
+simulation_df = problem.measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION}
 )
 simulation_df[SIMULATION] = [
@@ -71,14 +54,11 @@ simulation_df[SIMULATION] = [
     *[analytical_a(t, 0.9, 1, 0.8, 0.6) for t in [0, 10]],
 ]
 
-case = PetabV2TestCase(
+case = PetabV2TestCase.from_problem(
     id=2,
     brief="Simulation. Two conditions. Numeric parameter override.",
     description=DESCRIPTION,
     model=DEFAULT_SBML_FILE,
-    condition_dfs=[condition_df],
-    observable_dfs=[observable_df],
-    measurement_dfs=[measurement_df],
-    simulation_dfs=[simulation_df],
-    parameter_df=parameter_df,
+    problem=problem,
+    simulation_df=simulation_df,
 )
