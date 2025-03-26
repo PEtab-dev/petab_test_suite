@@ -12,7 +12,6 @@ from petab import v2
 import yaml
 from petab.v1.C import *  # noqa: F403
 from .C import *  # noqa: F403
-from pprint import pprint
 import logging
 from petab.v2.C import EXPERIMENT_FILES
 from petab.v1.lint import lint_problem as lint_problem_v1
@@ -409,7 +408,8 @@ class PetabV2TestCase:
             config[PROBLEMS][0][MAPPING_FILES] = [mappings_file]
 
         # validate petab yaml
-        v2.validate(config, path_prefix=dir_)
+        # TODO move to v2 or replace by ProblemConfig validator
+        v1.validate(config, path_prefix=dir_)
 
         # write yaml
         yaml_file = problem_yaml_name(test_id)
@@ -419,10 +419,8 @@ class PetabV2TestCase:
 
         # validate written PEtab files
         if validation_results := lint_problem_v2(yaml_path):
-            logger.error(f"Validation failed for {dir_}:")
-            for issue in validation_results:
-                pprint(issue)
-            raise RuntimeError("Invalid PEtab problem, see messages above.")
+            logger.critical(f"Invalid PEtab problem generated for {dir_}.")
+            validation_results.log(logger=logger)
 
 
 def get_case_dir(id_: int | str, format_: str, version: str) -> Path:
