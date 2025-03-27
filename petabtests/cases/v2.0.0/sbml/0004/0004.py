@@ -49,7 +49,7 @@ parameter_df = pd.DataFrame(
         LOWER_BOUND: [0] * 6,
         UPPER_BOUND: [10] * 6,
         NOMINAL_VALUE: [1, 0, 0.8, 0.6, 0.5, 2],
-        ESTIMATE: [1] * 6,
+        ESTIMATE: ["true"] * 6,
     }
 ).set_index(PARAMETER_ID)
 

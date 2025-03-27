@@ -1,4 +1,4 @@
 observableId	observableName	observableFormula	observableTransformation	noiseFormula	noiseDistribution
-obs_C		C	lin	1.00000000000000	normal
-obs_amount_S		C*S	lin	1.00000000000000	normal
-obs_conc_S		S	lin	1.00000000000000	normal
+obs_C		C	lin	1.0	normal
+obs_amount_S		C*S	lin	1.0	normal
+obs_conc_S		S	lin	1.0	normal

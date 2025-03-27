@@ -44,7 +44,7 @@ parameter_df = pd.DataFrame(
         LOWER_BOUND: [0] * 5,
         UPPER_BOUND: [10] * 5,
         NOMINAL_VALUE: [1, 0, 0.8, 0.6, 5],
-        ESTIMATE: [1] * 5,
+        ESTIMATE: ["true"] * 5,
     }
 ).set_index(PARAMETER_ID)
 
