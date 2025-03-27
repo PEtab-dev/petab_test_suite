@@ -1,2 +1,2 @@
 parameterId	lowerBound	upperBound	nominalValue	parameterScale	estimate
-p	0.0	10.0	1.0	lin	True
+p	0.0	10.0	1.0	lin	true

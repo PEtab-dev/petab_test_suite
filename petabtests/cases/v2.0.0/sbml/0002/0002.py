@@ -37,10 +37,10 @@ problem.add_measurement("obs_a", "e2", 0, 0.8)
 problem.add_measurement("obs_a", "e2", 10, 0.2)
 
 problem.add_parameter(
-    "k1", lb=0, ub=10, nominal_value=0.8, estimate=1, scale=LIN
+    "k1", lb=0, ub=10, nominal_value=0.8, estimate=True, scale=LIN
 )
 problem.add_parameter(
-    "k2", lb=0, ub=10, nominal_value=0.6, estimate=1, scale=LIN
+    "k2", lb=0, ub=10, nominal_value=0.6, estimate=True, scale=LIN
 )
 
 
