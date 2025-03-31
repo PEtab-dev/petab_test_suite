@@ -7,6 +7,7 @@ from petab.v1.C import (
     PREEQUILIBRATION_CONDITION_ID,
     SIMULATION,
 )
+from petab.v2.C import EXPERIMENT_ID
 
 __all__ = [
     "evaluate_llh",
@@ -84,10 +85,27 @@ def absolute_simulations_distance_for_table(
     simulations: pd.DataFrame, gt_simulations: pd.DataFrame
 ):
     """Compute absolute normalized distance between simulations."""
-    # grouping columns
-    grouping_cols = [OBSERVABLE_ID, SIMULATION_CONDITION_ID, TIME]
-    if PREEQUILIBRATION_CONDITION_ID in simulations:
-        grouping_cols.append(PREEQUILIBRATION_CONDITION_ID)
+
+    # check if we have a petab v1 or v2 file
+    if (
+        SIMULATION_CONDITION_ID in simulations
+        and EXPERIMENT_ID not in simulations
+    ):
+        # v1
+        # grouping columns
+        grouping_cols = [OBSERVABLE_ID, SIMULATION_CONDITION_ID, TIME]
+        if PREEQUILIBRATION_CONDITION_ID in simulations:
+            grouping_cols.append(PREEQUILIBRATION_CONDITION_ID)
+    elif (
+        EXPERIMENT_ID in simulations
+        and SIMULATION_CONDITION_ID not in simulations
+    ):
+        # v2
+        # grouping columns
+        grouping_cols = [OBSERVABLE_ID, EXPERIMENT_ID, TIME]
+    else:
+        raise AssertionError("Unable to determine PEtab version.")
+
     relevant_cols = grouping_cols.copy()
     # append simulation column last for correct sorting
     relevant_cols.append(SIMULATION)
