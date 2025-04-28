@@ -23,10 +23,10 @@ problem = Problem()
 problem += Observable(id="obs_a", formula="A", noise_formula=0.5)
 problem += Measurement(observable_id="obs_a", time=0, measurement=0.7)
 problem += Measurement(observable_id="obs_a", time=10, measurement=0.1)
-problem += Parameter(id="a0", lb=0, ub=10, nominal_value=1, scale=LIN)
-problem += Parameter(id="b0", lb=0, ub=10, nominal_value=0, scale=LIN)
-problem += Parameter(id="k1", lb=0, ub=10, nominal_value=0.8, scale=LIN)
-problem += Parameter(id="k2", lb=0, ub=10, nominal_value=0.6, scale=LIN)
+problem += Parameter(id="a0", lb=0, ub=10, nominal_value=1)
+problem += Parameter(id="b0", lb=0, ub=10, nominal_value=0)
+problem += Parameter(id="k1", lb=0, ub=10, nominal_value=0.8)
+problem += Parameter(id="k2", lb=0, ub=10, nominal_value=0.6)
 
 # solutions ------------------------------------------------------------------
 

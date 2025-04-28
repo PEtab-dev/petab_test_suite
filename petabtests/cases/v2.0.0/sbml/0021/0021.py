@@ -24,11 +24,11 @@ problem.add_measurement("obs_a", "", 10, 0.1, noise_parameters=["noise"])
 problem.add_observable(
     "obs_a", "A", noise_formula="noiseParameter1_obs_a * obs_a"
 )
-problem.add_parameter("a0", lb=0, ub=10, nominal_value=1, scale=LIN)
-problem.add_parameter("b0", lb=0, ub=10, nominal_value=0, scale=LIN)
-problem.add_parameter("k1", lb=0, ub=10, nominal_value=0.8, scale=LIN)
-problem.add_parameter("k2", lb=0, ub=10, nominal_value=0.6, scale=LIN)
-problem.add_parameter("noise", lb=0, ub=10, nominal_value=5, scale=LIN)
+problem.add_parameter("a0", lb=0, ub=10, nominal_value=1)
+problem.add_parameter("b0", lb=0, ub=10, nominal_value=0)
+problem.add_parameter("k1", lb=0, ub=10, nominal_value=0.8)
+problem.add_parameter("k2", lb=0, ub=10, nominal_value=0.6)
+problem.add_parameter("noise", lb=0, ub=10, nominal_value=5)
 
 
 # solutions ------------------------------------------------------------------

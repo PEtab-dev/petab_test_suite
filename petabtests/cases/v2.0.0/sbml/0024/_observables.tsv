@@ -1,2 +1,2 @@
-observableId	observableName	observableFormula	observableTransformation	noiseFormula	noiseDistribution
-obs_p		p	lin	1.00000000000000	normal
+observableId	observableName	observableFormula	noiseFormula	noiseDistribution
+obs_p		p	1.00000000000000	normal

@@ -1,2 +1,2 @@
-observableId	observableName	observableFormula	observableTransformation	noiseFormula	noiseDistribution
-obs_a		A	lin	1	normal
+observableId	observableName	observableFormula	noiseFormula	noiseDistribution
+obs_a		A	1	normal

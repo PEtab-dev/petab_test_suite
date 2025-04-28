@@ -99,7 +99,7 @@ problem.add_observable("obs_A", "A", noise_formula="1")
 problem.add_observable("obs_b", "b", noise_formula="1")
 problem.add_observable("obs_B", "B", noise_formula="1")
 
-problem.add_parameter("k1", lb=0, ub=10, nominal_value=k1, scale=LIN)
+problem.add_parameter("k1", lb=0, ub=10, nominal_value=k1)
 problem.add_experiment("experiment1", 0, "", 10, "condition2")
 problem.add_condition(
     "condition2",

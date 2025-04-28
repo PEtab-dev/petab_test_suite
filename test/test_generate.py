@@ -23,6 +23,6 @@ def test_create_case():
     Mostly for debugging purposes.
     """
     format_ = "sbml"
-    version = "v1.0.0"
-    id_ = "0010"
+    version = "v2.0.0"
+    id_ = "0022"
     create_case(format_=format_, version=version, id_=id_)

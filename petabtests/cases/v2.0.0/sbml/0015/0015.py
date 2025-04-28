@@ -40,7 +40,6 @@ observable_df = pd.DataFrame(
 parameter_df = pd.DataFrame(
     data={
         PARAMETER_ID: ["a0", "b0", "k1", "k2", "noise"],
-        PARAMETER_SCALE: [LIN] * 5,
         LOWER_BOUND: [0] * 5,
         UPPER_BOUND: [10] * 5,
         NOMINAL_VALUE: [1, 0, 0.8, 0.6, 5],

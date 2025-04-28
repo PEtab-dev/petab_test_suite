@@ -48,7 +48,7 @@ problem.add_observable("obs_C", "C", noise_formula="1")
 problem.add_observable("obs_amount_S", "S * C", noise_formula="1")
 problem.add_observable("obs_conc_S", "S", noise_formula="1")
 
-problem.add_parameter("p", lb=0, ub=10, nominal_value=1, scale=LIN)
+problem.add_parameter("p", lb=0, ub=10, nominal_value=1)
 
 problem.add_experiment("experiment1", 0, "condition1", 10, "condition2")
 # t=0

@@ -26,15 +26,9 @@ problem.add_observable("obs_a", "A", noise_formula=0.5)
 problem.add_measurement("obs_a", "e0", time=0, measurement=0.7)
 problem.add_measurement("obs_a", "e0", time=10, measurement=0.1)
 
-problem.add_parameter(
-    "k1", lb=0, ub=10, nominal_value=0.8, scale=LIN, estimate=True
-)
-problem.add_parameter(
-    "k2", lb=0, ub=10, nominal_value=0.6, scale=LIN, estimate=True
-)
-problem.add_parameter(
-    "par", lb=0, ub=10, nominal_value=7, scale=LIN, estimate=True
-)
+problem.add_parameter("k1", lb=0, ub=10, nominal_value=0.8, estimate=True)
+problem.add_parameter("k2", lb=0, ub=10, nominal_value=0.6, estimate=True)
+problem.add_parameter("par", lb=0, ub=10, nominal_value=7, estimate=True)
 
 problem.add_mapping("A", "A_() ** compartment")
 problem.add_mapping("B", "B_() ** compartment")

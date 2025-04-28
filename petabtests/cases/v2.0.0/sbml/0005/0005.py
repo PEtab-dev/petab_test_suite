@@ -54,23 +54,15 @@ problem.add_observable("obs_a", "A + offset_A", noise_formula="1")
 problem.add_measurement("obs_a", "e1", 10, 2.1)
 problem.add_measurement("obs_a", "e2", 10, 3.2)
 
+problem.add_parameter("a0", lb=0, ub=10, nominal_value=1, estimate=True)
+problem.add_parameter("b0", lb=0, ub=10, nominal_value=0, estimate=True)
+problem.add_parameter("k1", lb=0, ub=10, nominal_value=0.8, estimate=True)
+problem.add_parameter("k2", lb=0, ub=10, nominal_value=0.6, estimate=True)
 problem.add_parameter(
-    "a0", lb=0, ub=10, nominal_value=1, estimate=True, scale=LIN
+    "offset_A_c0", lb=0, ub=10, nominal_value=2, estimate=True
 )
 problem.add_parameter(
-    "b0", lb=0, ub=10, nominal_value=0, estimate=True, scale=LIN
-)
-problem.add_parameter(
-    "k1", lb=0, ub=10, nominal_value=0.8, estimate=True, scale=LIN
-)
-problem.add_parameter(
-    "k2", lb=0, ub=10, nominal_value=0.6, estimate=True, scale=LIN
-)
-problem.add_parameter(
-    "offset_A_c0", lb=0, ub=10, nominal_value=2, estimate=True, scale=LIN
-)
-problem.add_parameter(
-    "offset_A_c1", lb=0, ub=10, nominal_value=3, estimate=True, scale=LIN
+    "offset_A_c1", lb=0, ub=10, nominal_value=3, estimate=True
 )
 
 

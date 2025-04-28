@@ -37,15 +37,9 @@ problem.add_observable("obs_a", "A", noise_formula=0.5)
 problem.add_measurement("obs_a", "e0", time=1, measurement=0.7)
 problem.add_measurement("obs_a", "e0", time=10, measurement=0.1)
 
-problem.add_parameter(
-    "a0", lb=0, ub=10, nominal_value=1, scale=LIN, estimate=True
-)
-problem.add_parameter(
-    "b0", lb=0, ub=10, nominal_value=0, scale=LIN, estimate=True
-)
-problem.add_parameter(
-    "k2", lb=0, ub=10, nominal_value=0.6, scale=LIN, estimate=True
-)
+problem.add_parameter("a0", lb=0, ub=10, nominal_value=1, estimate=True)
+problem.add_parameter("b0", lb=0, ub=10, nominal_value=0, estimate=True)
+problem.add_parameter("k2", lb=0, ub=10, nominal_value=0.6, estimate=True)
 
 
 # solutions ------------------------------------------------------------------

@@ -55,7 +55,6 @@ problem.add_parameter(
     lb=0,
     ub=10,
     nominal_value=1,
-    scale=LIN,
     estimate=True,
 )
 problem.add_parameter(
@@ -63,7 +62,6 @@ problem.add_parameter(
     lb=0,
     ub=10,
     nominal_value=0,
-    scale=LIN,
     estimate=True,
 )
 problem.add_parameter(
@@ -71,7 +69,6 @@ problem.add_parameter(
     lb=0,
     ub=10,
     nominal_value=0.8,
-    scale=LIN,
     estimate=True,
 )
 problem.add_parameter(
@@ -79,7 +76,6 @@ problem.add_parameter(
     lb=0,
     ub=10,
     nominal_value=0.6,
-    scale=LIN,
     estimate=True,
 )
 problem.add_parameter(
@@ -87,7 +83,6 @@ problem.add_parameter(
     lb=0,
     ub=10,
     nominal_value=2,
-    scale=LIN,
     estimate=False,
 )
 problem.add_parameter(
@@ -95,7 +90,6 @@ problem.add_parameter(
     lb=0,
     ub=10,
     nominal_value=3,
-    scale=LIN,
     estimate=False,
 )
 
