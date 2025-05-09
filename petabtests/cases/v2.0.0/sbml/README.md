@@ -80,5 +80,17 @@ Simulation. Estimated initial value via conditions table.
 
 # [0021](0021/)
 
-Simulation. Nothing special.
+Observable-dependent noise formula.
+
+# [0022](0022/)
+
+Simultaneous re-initialization of compartment size and contained species.
+
+# [0023](0023/)
+
+Simultaneous state-dependent re-initialization of compartment size and contained species followed by event.
+
+# [0024](0024/)
+
+Events during steady-state simulations.
 

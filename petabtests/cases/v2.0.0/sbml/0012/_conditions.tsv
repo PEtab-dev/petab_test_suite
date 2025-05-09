@@ -1,2 +1,2 @@
-conditionId	compartment
-c0	3
+conditionId	targetId	targetValue
+c0	compartment	3.0

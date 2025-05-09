@@ -5,7 +5,7 @@ from petab.v1.C import *
 
 from petabtests import (
     DEFAULT_SBML_FILE,
-    PetabTestCase,
+    PetabV1TestCase,
     analytical_a,
     analytical_b,
 )
@@ -76,7 +76,7 @@ simulation_df[SIMULATION] = [
     for t in simulation_df[TIME]
 ]
 
-case = PetabTestCase(
+case = PetabV1TestCase(
     id=9,
     brief="Simulation. Preequilibration.",
     description=DESCRIPTION,
