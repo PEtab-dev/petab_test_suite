@@ -23,8 +23,8 @@ mass action kinetics.
 # problem --------------------------------------------------------------------
 
 problem = Problem()
-problem.add_condition("c0", a0=0.8)
-problem.add_condition("c1", a0=0.9)
+problem.add_condition("c0", A=0.8)
+problem.add_condition("c1", A=0.9)
 
 problem.add_experiment("e1", 0, "c0")
 problem.add_experiment("e2", 0, "c1")
