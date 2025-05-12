@@ -3,7 +3,7 @@ from inspect import cleandoc
 import pandas as pd
 from petab.v1.C import *
 
-from petabtests import DEFAULT_SBML_FILE, PetabTestCase, analytical_a
+from petabtests import DEFAULT_SBML_FILE, PetabV1TestCase, analytical_a
 
 DESCRIPTION = cleandoc("""
 ## Objective
@@ -64,7 +64,7 @@ simulation_df[SIMULATION] = [
     analytical_a(t, 1, 1, 0.8, 0.6) for t in simulation_df[TIME]
 ]
 
-case = PetabTestCase(
+case = PetabV1TestCase(
     id=12,
     brief="Simulation. Initial compartment size in condition table.",
     description=DESCRIPTION,

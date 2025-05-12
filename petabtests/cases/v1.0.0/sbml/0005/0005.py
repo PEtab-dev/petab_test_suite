@@ -4,7 +4,7 @@ from pathlib import Path
 import pandas as pd
 from petab.v1.C import *
 
-from petabtests import PetabTestCase, analytical_a, antimony_to_sbml_str
+from petabtests import PetabV1TestCase, analytical_a, antimony_to_sbml_str
 
 DESCRIPTION = cleandoc("""
 ## Objective
@@ -88,7 +88,7 @@ simulation_df[SIMULATION] = [
     *(analytical_a(10, 1, 0, 0.8, 0.6) + offset for offset in [2, 3]),
 ]
 
-case = PetabTestCase(
+case = PetabV1TestCase(
     id=5,
     brief="Simulation. Condition-specific parameters only defined in "
     "parameter table.",
