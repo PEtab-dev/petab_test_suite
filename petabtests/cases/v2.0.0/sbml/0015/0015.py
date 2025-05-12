@@ -1,7 +1,7 @@
 from inspect import cleandoc
 
 import pandas as pd
-from petab.v1.C import *
+from petab.v2.C import *
 
 from petabtests import DEFAULT_SBML_FILE, PetabV2TestCase, analytical_a
 
@@ -22,7 +22,7 @@ mass action kinetics.
 measurement_df = pd.DataFrame(
     data={
         OBSERVABLE_ID: ["obs_a", "obs_a"],
-        SIMULATION_CONDITION_ID: ["c0", "c0"],
+        EXPERIMENT_ID: ["", ""],
         TIME: [0, 10],
         MEASUREMENT: [0.7, 0.1],
         NOISE_PARAMETERS: ["noise", "noise"],

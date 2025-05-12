@@ -39,7 +39,7 @@ observable_df = pd.DataFrame(
     data={
         OBSERVABLE_ID: ["obs_a"],
         OBSERVABLE_FORMULA: [
-            "observableParameter1_obs_a * A + " "observableParameter2_obs_a"
+            "observableParameter1_obs_a * A + observableParameter2_obs_a"
         ],
         NOISE_FORMULA: [0.5],
     }
