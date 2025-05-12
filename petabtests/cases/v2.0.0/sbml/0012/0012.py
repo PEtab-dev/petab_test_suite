@@ -10,6 +10,10 @@ DESCRIPTION = cleandoc("""
 
 This case tests initial compartment sizes in the condition table.
 
+Note that this change will preserve the initial state of the model in terms
+of amounts. I.e., the change of the compartment size via the conditions table,
+will change the concentrations of all contained species.
+
 ## Model
 
 A simple conversion reaction `A <=> B` in a single compartment, following
@@ -20,7 +24,7 @@ mass action kinetics.
 
 problem = Problem()
 
-problem.add_condition("c0", compartment=3)
+problem.add_condition("c0", compartment=4)
 
 problem.add_experiment("e0", 0, "c0")
 
@@ -37,10 +41,10 @@ problem.add_parameter("k2", lb=0, ub=10, nominal_value=0.6, estimate=True)
 simulation_df = problem.measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION}
 )
-# in the model, concentrations are used, which do not depend on the
-#  compartment size, so that the species values should stay the same
+# changing the compartent volume from 1 to 4 will change the initial
+#  concentration to 1 * (1/4)
 simulation_df[SIMULATION] = [
-    analytical_a(t, 1, 1, 0.8, 0.6) for t in simulation_df[TIME]
+    analytical_a(t, 0.25, 0.25, 0.8, 0.6) for t in simulation_df[TIME]
 ]
 
 case = PetabV2TestCase.from_problem(
