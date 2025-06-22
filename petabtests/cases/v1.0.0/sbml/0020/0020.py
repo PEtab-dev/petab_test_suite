@@ -44,7 +44,7 @@ condition_df = pd.DataFrame(
     data={
         CONDITION_ID: ["c0"],
         "A": ["initial_A"],
-        "B": ["initial_B"],
+        "B": ["NaN"],
     }
 ).set_index([CONDITION_ID])
 
