@@ -48,7 +48,7 @@ up to some tolerance.
 The Python package provides convenience functions for evaluation in
 [petabtests/evaluate.py](petabtests/evaluate.py).
 
--> [Overview of passed test cases for different tools supporting PEtab](https://github.com/PEtab-dev/PEtab#petab-features-supported-in-different-tools)
+-> [Overview of passed test cases for different tools supporting PEtab](https://petab.readthedocs.io/en/latest/software_support.html#petab-features-supported-in-different-tools)
 
 ## Contributing
 
