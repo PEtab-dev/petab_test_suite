@@ -74,3 +74,6 @@ Simulation. Preequilibration and RateRules. One state reinitialized, one not (Na
 
 Simulation. Estimated initial value via conditions table.
 
+# [0020](0020/)
+
+Simulation. NaN for initial value in condition table.
