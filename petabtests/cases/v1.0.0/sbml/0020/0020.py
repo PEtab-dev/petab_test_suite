@@ -12,7 +12,7 @@ DESCRIPTION = cleandoc("""
 This case tests handling of initial concentrations that are specified
 in the conditions table. For species `A`, the initial concentration is
 estimated. For species `B`, the initial concentration is specified as
-`NaN` in the condition table, thus the SBML model initial value should 
+`NaN` in the condition table, thus the SBML model initial value should
 be used.
 
 ## Model
@@ -23,7 +23,7 @@ mass action kinetics.
 
 # problem --------------------------------------------------------------------
 ant_model = """
-model *petab_test_0011()
+model *petab_test_0020()
   compartment compartment_ = 1;
   species A in compartment_, B in compartment_;
 
