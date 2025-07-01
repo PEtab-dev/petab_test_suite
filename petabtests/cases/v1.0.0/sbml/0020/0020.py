@@ -3,7 +3,7 @@ from inspect import cleandoc
 import pandas as pd
 from petab.v1.C import *
 
-from petabtests import PetabV1TestCase, analytical_a, antimony_to_sbml_str
+from petabtests import PetabTestCase, analytical_a, antimony_to_sbml_str
 from pathlib import Path
 
 DESCRIPTION = cleandoc("""
@@ -11,8 +11,9 @@ DESCRIPTION = cleandoc("""
 
 This case tests handling of initial concentrations that are specified
 in the conditions table. For species `A`, the initial concentration is
-estimated. For species `B`, the initial concentration is specified in the
-parameters table.
+estimated. For species `B`, the initial concentration is specified as
+`NaN` in the condition table, thus the SBML model initial value should
+be used.
 
 ## Model
 
@@ -22,7 +23,7 @@ mass action kinetics.
 
 # problem --------------------------------------------------------------------
 ant_model = """
-model *petab_test_0019()
+model *petab_test_0020()
   compartment compartment_ = 1;
   species A in compartment_, B in compartment_;
 
@@ -30,7 +31,7 @@ model *petab_test_0019()
   rev: B => A; compartment_ * k2 * B;
 
   A = a0;
-  B = 1;
+  B = 3;
   a0 = 1;
   k1 = 0;
   k2 = 0;
@@ -43,7 +44,7 @@ condition_df = pd.DataFrame(
     data={
         CONDITION_ID: ["c0"],
         "A": ["initial_A"],
-        "B": ["initial_B"],
+        "B": ["NaN"],
     }
 ).set_index([CONDITION_ID])
 
@@ -66,12 +67,12 @@ observable_df = pd.DataFrame(
 
 parameter_df = pd.DataFrame(
     data={
-        PARAMETER_ID: ["k1", "k2", "initial_A", "initial_B"],
-        PARAMETER_SCALE: [LIN, LIN, LOG10, LIN],
-        LOWER_BOUND: [0, 0, 1, 0],
-        UPPER_BOUND: [10] * 4,
-        NOMINAL_VALUE: [0.8, 0.6, 2, 3],
-        ESTIMATE: [1] * 3 + [0],
+        PARAMETER_ID: ["k1", "k2", "initial_A"],
+        PARAMETER_SCALE: [LIN, LIN, LOG10],
+        LOWER_BOUND: [0, 0, 1],
+        UPPER_BOUND: [10] * 3,
+        NOMINAL_VALUE: [0.8, 0.6, 2],
+        ESTIMATE: [1] * 3,
     }
 ).set_index(PARAMETER_ID)
 
@@ -84,9 +85,9 @@ simulation_df[SIMULATION] = [
     analytical_a(t, 2, 3, 0.8, 0.6) for t in simulation_df[TIME]
 ]
 
-case = PetabV1TestCase(
-    id=19,
-    brief="Simulation. Estimated initial value via conditions table.",
+case = PetabTestCase(
+    id=20,
+    brief="Simulation. NaN in condition table for model without preequilibration.",
     description=DESCRIPTION,
     model=model_file,
     condition_dfs=[condition_df],
