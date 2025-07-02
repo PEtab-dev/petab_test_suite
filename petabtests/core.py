@@ -5,8 +5,6 @@ import re
 from pathlib import Path
 from collections.abc import Iterable
 
-from petab.v1.calculate import calculate_chi2, calculate_llh
-
 from .C import CASES_DIR
 from .file import (
     PetabV1TestCase,
@@ -87,8 +85,12 @@ def create_case(format_: str, version: str, id_: str) -> None:
     case_dir = get_case_dir(format_=format_, version=version, id_=id_)
 
     if version == "v1.0.0":
+        from petab.v1.calculate import calculate_chi2, calculate_llh
+
         case = PetabV1TestCase.load(case_dir, id_)
     elif version == "v2.0.0":
+        from petab.v2.calculate import calculate_chi2, calculate_llh
+
         case = PetabV2TestCase.load(case_dir, id_)
     else:
         raise NotImplementedError(f"Unknown PEtab version {version}")

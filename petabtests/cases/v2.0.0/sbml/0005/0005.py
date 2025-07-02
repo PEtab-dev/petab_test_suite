@@ -23,7 +23,7 @@ mass action kinetics.
 
 # problem --------------------------------------------------------------------
 ant_model = """
-model *petab_test_0011()
+model *petab_test_0005()
   compartment compartment_ = 1;
   species A in compartment_, B in compartment_;
 

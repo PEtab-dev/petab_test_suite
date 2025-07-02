@@ -34,9 +34,9 @@ observable_df = pd.DataFrame(
         OBSERVABLE_ID: ["obs_a"],
         OBSERVABLE_FORMULA: ["A"],
         NOISE_FORMULA: ["noiseParameter1_obs_a"],
+        NOISE_PLACEHOLDERS: ["noiseParameter1_obs_a"],
     }
 ).set_index([OBSERVABLE_ID])
-
 parameter_df = pd.DataFrame(
     data={
         PARAMETER_ID: ["a0", "b0", "k1", "k2", "noise"],

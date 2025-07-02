@@ -28,8 +28,9 @@ problem = Problem()
 
 problem.add_observable(
     "obs_a",
-    "observableParameter1_obs_a * A + observableParameter2_obs_a",
+    "obs_a_scale * A + obs_a_offset",
     noise_formula=0.5,
+    observable_placeholders=["obs_a_scale", "obs_a_offset"],
 )
 
 problem.add_measurement(

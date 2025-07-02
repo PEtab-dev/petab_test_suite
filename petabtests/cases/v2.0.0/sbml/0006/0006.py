@@ -35,8 +35,9 @@ measurement_df = pd.DataFrame(
 observable_df = pd.DataFrame(
     data={
         OBSERVABLE_ID: ["obs_a"],
-        OBSERVABLE_FORMULA: ["observableParameter1_obs_a * A"],
+        OBSERVABLE_FORMULA: ["obs_a_scale * A"],
         NOISE_FORMULA: [1],
+        OBSERVABLE_PLACEHOLDERS: ["obs_a_scale"],
     }
 ).set_index([OBSERVABLE_ID])
 

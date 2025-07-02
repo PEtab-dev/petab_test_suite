@@ -22,7 +22,10 @@ problem = Problem()
 problem.add_measurement("obs_a", "", 0, 0.7, noise_parameters=["noise"])
 problem.add_measurement("obs_a", "", 10, 0.1, noise_parameters=["noise"])
 problem.add_observable(
-    "obs_a", "A", noise_formula="noiseParameter1_obs_a * obs_a"
+    "obs_a",
+    "A",
+    noise_formula="obs_a_noise_scale * obs_a",
+    noise_placeholders=["obs_a_noise_scale"],
 )
 problem.add_parameter("a0", lb=0, ub=10, nominal_value=1)
 problem.add_parameter("b0", lb=0, ub=10, nominal_value=0)

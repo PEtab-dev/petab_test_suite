@@ -1,2 +1,2 @@
-observableId	observableName	observableFormula	noiseFormula	noiseDistribution
-obs_a		A	noiseParameter1_obs_a*obs_a	normal
+observableId	observableName	observableFormula	noiseFormula	noiseDistribution	observablePlaceholders	noisePlaceholders
+obs_a		A	obs_a*obs_a_noise_scale	normal		obs_a_noise_scale
