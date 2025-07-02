@@ -1,8 +1,8 @@
 format_version: 2.0.0
 parameter_file: _parameters.tsv
 problems:
-- condition_files:
-  - _conditions.tsv
+- condition_files: []
+  experiment_files: []
   mapping_files:
   - _mapping.tsv
   measurement_files:

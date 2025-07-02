@@ -1,9 +1,9 @@
 from inspect import cleandoc
 
-import pandas as pd
-from petab.v1.C import *
+from petab.v2.C import *
+from petab.v2 import Problem
 
-from petabtests import PetabTestCase, analytical_a, antimony_to_sbml_str
+from petabtests import PetabV2TestCase, analytical_a, antimony_to_sbml_str
 from pathlib import Path
 
 DESCRIPTION = cleandoc("""
@@ -22,7 +22,7 @@ mass action kinetics.
 
 # problem --------------------------------------------------------------------
 ant_model = """
-model *petab_test_0011()
+model *petab_test_0020()
   compartment compartment_ = 1;
   species A in compartment_, B in compartment_;
 
@@ -39,59 +39,37 @@ end
 model_file = Path(__file__).parent / "_model.xml"
 model_file.write_text(antimony_to_sbml_str(ant_model))
 
-condition_df = pd.DataFrame(
-    data={
-        CONDITION_ID: ["c0"],
-        "A": ["initial_A"],
-        "B": ["initial_B"],
-    }
-).set_index([CONDITION_ID])
+problem = Problem()
 
-measurement_df = pd.DataFrame(
-    data={
-        OBSERVABLE_ID: ["obs_a", "obs_a"],
-        SIMULATION_CONDITION_ID: ["c0", "c0"],
-        TIME: [0, 10],
-        MEASUREMENT: [0.7, 0.1],
-    }
+problem.add_condition("c0", A="initial_A", B="initial_B")
+problem.add_experiment("e1", 0, "c0")
+
+problem.add_observable("obs_a", "A", noise_formula="0.5")
+problem.add_measurement("obs_a", "e1", 0, 0.7)
+problem.add_measurement("obs_a", "e1", 10, 0.1)
+
+problem.add_parameter("k1", lb=0, ub=10, nominal_value=0.8, estimate=True)
+problem.add_parameter("k2", lb=0, ub=10, nominal_value=0.6, estimate=True)
+problem.add_parameter("initial_A", lb=1, ub=10, nominal_value=2, estimate=True)
+problem.add_parameter(
+    "initial_B", lb=0, ub=10, nominal_value=3, estimate=False
 )
 
-observable_df = pd.DataFrame(
-    data={
-        OBSERVABLE_ID: ["obs_a"],
-        OBSERVABLE_FORMULA: ["A"],
-        NOISE_FORMULA: [0.5],
-    }
-).set_index([OBSERVABLE_ID])
-
-parameter_df = pd.DataFrame(
-    data={
-        PARAMETER_ID: ["k1", "k2", "initial_A", "initial_B"],
-        PARAMETER_SCALE: [LIN, LIN, LOG10, LIN],
-        LOWER_BOUND: [0, 0, 1, 0],
-        UPPER_BOUND: [10] * 4,
-        NOMINAL_VALUE: [0.8, 0.6, 2, 3],
-        ESTIMATE: [1] * 3 + [0],
-    }
-).set_index(PARAMETER_ID)
 
 # solutions ------------------------------------------------------------------
 
-simulation_df = measurement_df.copy(deep=True).rename(
+simulation_df = problem.measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION}
 )
 simulation_df[SIMULATION] = [
     analytical_a(t, 2, 3, 0.8, 0.6) for t in simulation_df[TIME]
 ]
 
-case = PetabTestCase(
+case = PetabV2TestCase.from_problem(
     id=20,
     brief="Simulation. Estimated initial value via conditions table.",
     description=DESCRIPTION,
     model=model_file,
-    condition_dfs=[condition_df],
-    observable_dfs=[observable_df],
-    measurement_dfs=[measurement_df],
-    simulation_dfs=[simulation_df],
-    parameter_df=parameter_df,
+    problem=problem,
+    simulation_df=simulation_df,
 )

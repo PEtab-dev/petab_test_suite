@@ -3,7 +3,7 @@ from inspect import cleandoc
 import pandas as pd
 from petab.v1.C import *
 
-from petabtests import PetabTestCase, analytical_a, antimony_to_sbml_str
+from petabtests import PetabV1TestCase, analytical_a, antimony_to_sbml_str
 from pathlib import Path
 
 DESCRIPTION = cleandoc("""
@@ -85,7 +85,7 @@ simulation_df[SIMULATION] = [
     analytical_a(t, 2, 3, 0.8, 0.6) for t in simulation_df[TIME]
 ]
 
-case = PetabTestCase(
+case = PetabV1TestCase(
     id=20,
     brief="Simulation. NaN in condition table for model without preequilibration.",
     description=DESCRIPTION,

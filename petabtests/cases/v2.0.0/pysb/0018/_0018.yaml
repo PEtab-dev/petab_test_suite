@@ -3,6 +3,7 @@ parameter_file: _parameters.tsv
 problems:
 - condition_files:
   - _conditions.tsv
+  experiment_files: []
   mapping_files:
   - _mapping.tsv
   measurement_files:

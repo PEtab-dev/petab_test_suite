@@ -3,7 +3,7 @@ from inspect import cleandoc
 import pandas as pd
 from petab.v1.C import *
 
-from petabtests import DEFAULT_SBML_FILE, PetabTestCase, analytical_a
+from petabtests import DEFAULT_SBML_FILE, PetabV1TestCase, analytical_a
 
 DESCRIPTION = cleandoc("""
 ## Objective
@@ -67,7 +67,7 @@ simulation_df[SIMULATION] = [
     15 * analytical_a(10, 1, 0, 0.8, 0.6),
 ]
 
-case = PetabTestCase(
+case = PetabV1TestCase(
     id=6,
     brief="Simulation. Time-point specific numeric observable parameter "
     "overrides.",
