@@ -13,16 +13,14 @@ from petabtests import (
 DESCRIPTION = cleandoc("""
 ## Objective
 
-This case tests support for RateRules and partial preequilibration with `NaN`'s
-in the condition file.
+This case tests support for non-zero simulation start time after
+pre-equilibration.
 
 The model is to be simulated for a preequilibration condition and a
 simulation condition.
 For preequilibration, species `B` is initialized with `0`. For simulation,
-`B` is set to `NaN`, meaning that it is initialized with the result from
-preequilibration.
 `A` is reinitialized to the value in the condition table after
-preequilibration.
+preequilibration, `B` is not updated.
 
 ## Model
 
@@ -55,15 +53,15 @@ problem = Problem()
 problem.add_condition("preeq_c0", k1=0.3, B=2.0, A=0)
 problem.add_condition("c0", k1=0.8, A=1)
 
-problem.add_experiment("e0", "-inf", "preeq_c0", 0, "c0")
+problem.add_experiment("e0", "-inf", "preeq_c0", 10, "c0")
 
 problem.add_observable("obs_a", "A", noise_formula="0.5")
 problem.add_observable("obs_b", "B", noise_formula="0.2")
 
-problem.add_measurement("obs_a", "e0", 0, 0.1)
-problem.add_measurement("obs_a", "e0", 1, 0.7)
 problem.add_measurement("obs_a", "e0", 10, 0.1)
-problem.add_measurement("obs_b", "e0", 0, 0.1)
+problem.add_measurement("obs_a", "e0", 11, 0.7)
+problem.add_measurement("obs_a", "e0", 20, 0.1)
+problem.add_measurement("obs_b", "e0", 10, 0.1)
 
 problem.add_parameter("k2", lb=0, ub=10, nominal_value=0.6, estimate=True)
 
@@ -77,18 +75,22 @@ simulation_df = problem.measurement_df.copy(deep=True).rename(
 steady_state_b = analytical_b(1000, 0, 2.0, 0.3, 0.6)
 # use steady state as initial state
 simulation_df.iloc[:3, simulation_df.columns.get_loc(SIMULATION)] = [
-    analytical_a(t, 1, steady_state_b, 0.8, 0.6) for t in simulation_df[TIME]
+    analytical_a(t - 10, 1, steady_state_b, 0.8, 0.6)
+    for t in simulation_df[TIME]
 ][:3]
 simulation_df.iloc[3:, simulation_df.columns.get_loc(SIMULATION)] = [
-    analytical_b(t, 1, steady_state_b, 0.8, 0.6) for t in simulation_df[TIME]
+    analytical_b(t - 10, 1, steady_state_b, 0.8, 0.6)
+    for t in simulation_df[TIME]
 ][3:]
 
 
 case = PetabV2TestCase.from_problem(
     id=18,
-    brief="Simulation. Preequilibration and RateRules. One state "
-    "reinitialized, one not (NaN in condition table). InitialAssignment "
-    "to species overridden.",
+    brief=(
+        "Simulation. Preequilibration and RateRules. "
+        "Non-zero simulation start time. "
+        "InitialAssignment to species overridden."
+    ),
     description=DESCRIPTION,
     model=sbml_file,
     problem=problem,

@@ -64,11 +64,11 @@ Simulation. Observable transformation log.
 
 # [0017](0017/)
 
-Simulation. Preequilibration. One species reinitialized, one not (NaN in condition table). InitialAssignment to species overridden.
+Simulation. Pre-equilibration. One species reinitialized, one not.InitialAssignment to species overridden.
 
 # [0018](0018/)
 
-Simulation. Preequilibration and RateRules. One state reinitialized, one not (NaN in condition table). InitialAssignment to species overridden.
+Simulation. Preequilibration and RateRules. Non-zero simulation start time. InitialAssignment to species overridden.
 
 # [0019](0019/)
 

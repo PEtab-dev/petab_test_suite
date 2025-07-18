@@ -2,16 +2,15 @@
 
 ## Objective
 
-This case tests support for partial preequilibration with `NaN`'s in the
-condition file.
+This case tests support for pre-equilibration with reinitialization of a
+species.
 
-The model is to be simulated for a preequilibration condition and a
+The model is to be simulated for a pre-equilibration condition and a
 simulation condition.
-For preequilibration, species `B` is initialized with `0`. For simulation,
-`B` is set to `NaN`, meaning that it is initialized with the result from
-preequilibration.
+For pre-equilibration, species `B` is initialized with `2`. For simulation,
 `A` is reinitialized to the value in the condition table after
-preequilibration.
+pre-equilibration. `B` is not updated, meaning that it keeps the state from
+pre-equilibration.
 
 ## Model
 
