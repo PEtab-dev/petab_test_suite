@@ -1,13 +1,13 @@
+condition_files: []
+experiment_files: []
 format_version: 2.0.0
-parameter_file: _parameters.tsv
-problems:
-- condition_files: []
-  experiment_files: []
-  measurement_files:
-  - _measurements.tsv
-  model_files:
-    model_0:
-      language: sbml
-      location: _model.xml
-  observable_files:
-  - _observables.tsv
+measurement_files:
+- _measurements.tsv
+model_files:
+  model_0:
+    language: sbml
+    location: _model.xml
+observable_files:
+- _observables.tsv
+parameter_file:
+- _parameters.tsv

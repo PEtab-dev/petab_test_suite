@@ -307,7 +307,7 @@ class PetabV2TestCase:
         model_files = (
             [self.model] if isinstance(self.model, Path) else self.model
         )
-        parameter_df = self.parameter_df
+        parameter_dfs = [self.parameter_df]
 
         # id to string
         dir_ = get_case_dir(id_=test_id, format_=format_, version=version)
@@ -315,13 +315,10 @@ class PetabV2TestCase:
         # petab yaml
         config = {
             FORMAT_VERSION: format_version,
-            PROBLEMS: [
-                {
-                    CONDITION_FILES: [],
-                    MEASUREMENT_FILES: [],
-                    OBSERVABLE_FILES: [],
-                },
-            ],
+            PARAMETER_FILE: [],
+            CONDITION_FILES: [],
+            MEASUREMENT_FILES: [],
+            OBSERVABLE_FILES: [],
         }
 
         if format_ == "sbml":
@@ -346,20 +343,22 @@ class PetabV2TestCase:
             copied_model_files.append(copied_model_file)
 
         petab = v2
-        config[PROBLEMS][0][MODEL_FILES] = {}
-        config[PROBLEMS][0][EXPERIMENT_FILES] = []
+        config[MODEL_FILES] = {}
+        config[EXPERIMENT_FILES] = []
         for model_idx, model_file in enumerate(copied_model_files):
-            config[PROBLEMS][0][MODEL_FILES][f"model_{model_idx}"] = {
+            config[MODEL_FILES][f"model_{model_idx}"] = {
                 MODEL_LANGUAGE: format_,
                 MODEL_LOCATION: model_file,
             }
 
         # write parameters
-        parameters_file = "_parameters.tsv"
-        petab.write_parameter_df(
-            parameter_df, os.path.join(dir_, parameters_file)
+        _write_dfs_to_files(
+            dir_,
+            "parameters",
+            petab.write_parameter_df,
+            parameter_dfs,
+            config[PARAMETER_FILE],
         )
-        config[PARAMETER_FILE] = parameters_file
 
         # write conditions
         _write_dfs_to_files(
@@ -367,7 +366,7 @@ class PetabV2TestCase:
             "conditions",
             petab.write_condition_df,
             condition_dfs,
-            config[PROBLEMS][0][CONDITION_FILES],
+            config[CONDITION_FILES],
         )
 
         # write observables
@@ -376,7 +375,7 @@ class PetabV2TestCase:
             "observables",
             petab.write_observable_df,
             observable_dfs,
-            config[PROBLEMS][0][OBSERVABLE_FILES],
+            config[OBSERVABLE_FILES],
         )
 
         # write measurements
@@ -385,18 +384,18 @@ class PetabV2TestCase:
             "measurements",
             petab.write_measurement_df,
             measurement_dfs,
-            config[PROBLEMS][0][MEASUREMENT_FILES],
+            config[MEASUREMENT_FILES],
         )
 
         # write experiments
         if experiment_dfs is not None:
-            config[PROBLEMS][0].setdefault(EXPERIMENT_FILES, [])
+            config.setdefault(EXPERIMENT_FILES, [])
             _write_dfs_to_files(
                 dir_,
                 "experiments",
                 v2.write_experiment_df,
                 experiment_dfs,
-                config[PROBLEMS][0][EXPERIMENT_FILES],
+                config[EXPERIMENT_FILES],
             )
 
         if mapping_df is not None:
@@ -405,11 +404,7 @@ class PetabV2TestCase:
             petab.write_mapping_df(
                 mapping_df, os.path.join(dir_, mappings_file)
             )
-            config[PROBLEMS][0][MAPPING_FILES] = [mappings_file]
-
-        # validate petab yaml
-        # TODO move to v2 or replace by ProblemConfig validator
-        v1.validate(config, path_prefix=dir_)
+            config[MAPPING_FILES] = [mappings_file]
 
         # write yaml
         yaml_file = problem_yaml_name(test_id)
