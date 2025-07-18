@@ -17,7 +17,7 @@ contained species with state-dependent expressions.
 ## Model
 
 A species `S`, defined in terms of concentrations, with `dS/dt = p = 1`,
-in a compartment `C`. `S` and `C` are changed via the conditions table.
+in a compartment `C`. `S` and `C` are changed via the condition table.
 
 There is an event triggered at `t=10` that re-initializes the compartment
 size that must be executed after the conditions table is applied.
@@ -38,7 +38,7 @@ model petab_test_0023
     p = 1
     S' = p
 
-    at S >= 12: C = C * 2 # this happens at t=10
+    at S >= 12: C = C * 2 # this triggers at t=14
 end
 """
 sbml_file.write_text(antimony_to_sbml_str(ant_model))
@@ -51,7 +51,7 @@ problem.add_observable("obs_conc_S", "S", noise_formula="1")
 problem.add_parameter("p", lb=0, ub=10, nominal_value=1)
 
 problem.add_experiment("experiment1", 0, "condition1", 10, "condition2")
-# t=0
+# at t=0
 problem.add_condition(
     "condition1",
     "condition1",
@@ -77,27 +77,30 @@ simulation_df = problem.measurement_df.copy(deep=True).rename(
 )
 simulation_df[SIMULATION] = [
     # vol, amount, conc
-    # t=0
+    # --- t=0 ---
     vol0,
     2 * vol0,
     2,
-    # t=5
+    # --- t=5 ---
     vol0,
     7 * vol0,
     7,
     # t=10-ε
     # vol0=4, 12 * vol0=48, 12,
-    # t=10
+    # --- t=10 ---
     # condition table:
     # 8, (4+12) * 4 = 64 , (4+12) * 4 / 8 = 8
-    # event
-    16,
+    8,
     64,
-    4,
-    # t=15
+    8,
+    # pre-event, t=14:
+    # 8, 12*8=96, 12
+    # event
+    # C = 8 * 2 = 16, 96, 96 / 16 = 6
+    # --- t=15 ---
     16,
-    9 * 16,
-    9,
+    7 * 16,
+    7,
 ]
 
 case = PetabV2TestCase.from_problem(
