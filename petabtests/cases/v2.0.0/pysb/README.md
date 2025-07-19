@@ -24,7 +24,7 @@ Simulation. Time-point specific numeric observable parameter overrides.
 
 # [0007](0007/)
 
-Simulation. Observable transformation log10.
+Simulation. Log-normal noise.
 
 # [0008](0008/)
 
@@ -60,13 +60,9 @@ Simulation. Single parametric noise parameter override.
 
 # [0016](0016/)
 
-Simulation. Observable transformation log.
+Parameters in mapping table.
 
 # [0017](0017/)
 
 Simulation. Preequilibration. One species reinitialized, one not (NaN in condition table). InitialAssignment to species overridden.
-
-# [0018](0018/)
-
-Parameters in mapping table.
 

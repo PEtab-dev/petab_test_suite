@@ -1,3 +1,2 @@
 experimentId	time	conditionId
-experiment1	0.0	condition1
-experiment1	10.0	condition2
+experiment1	-inf	

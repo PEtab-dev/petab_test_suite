@@ -24,7 +24,7 @@ Simulation. Time-point specific numeric observable parameter overrides.
 
 # [0007](0007/)
 
-Simulation. Observable transformation log10.
+Simulation. Log-normal noise.
 
 # [0008](0008/)
 
@@ -60,7 +60,7 @@ Simulation. Single parametric noise parameter override.
 
 # [0016](0016/)
 
-Simulation. Observable transformation log.
+Simultaneous state-dependent re-initialization of compartment size and contained species followed by event.
 
 # [0017](0017/)
 
@@ -87,10 +87,6 @@ Observable-dependent noise formula.
 Simultaneous re-initialization of compartment size and contained species.
 
 # [0023](0023/)
-
-Simultaneous state-dependent re-initialization of compartment size and contained species followed by event.
-
-# [0024](0024/)
 
 Events during steady-state simulations.
 

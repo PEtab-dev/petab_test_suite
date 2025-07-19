@@ -13,11 +13,12 @@ from petabtests import (
 DESCRIPTION = cleandoc("""
 ## Objective
 
-This case tests support for observable transformations to log10 scale.
+This case tests log-normal noise.
 
-The model is to be simulated for a single experimental condition. Measurements
-for observable `obs_a` are to be used as is, measurements for `obs_b` are to
-be transformed to log10 scale for computing chi2 and likelihood.
+The model is to be simulated for a single experimental condition.
+Observables `obs_a` and `obs_b` are the same except for the noise distribution.
+The noise distributions need to be accounted for when computing chi2 and
+likelihood.
 
 ## Model
 
@@ -67,7 +68,7 @@ simulation_df[SIMULATION] = [
 
 case = PetabV2TestCase(
     id=7,
-    brief="Simulation. Observable transformation log10.",
+    brief="Simulation. Log-normal noise.",
     description=DESCRIPTION,
     model=DEFAULT_SBML_FILE,
     condition_dfs=[],

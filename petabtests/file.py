@@ -501,7 +501,6 @@ def write_solution(
     _write_dfs_to_files(
         dir_,
         "simulations",
-        # TODO v2
         v1.write_measurement_df,
         simulation_dfs,
         config[SIMULATION_FILES],

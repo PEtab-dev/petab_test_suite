@@ -2,13 +2,12 @@
 
 ## Objective
 
-This case tests simultaneous re-initialization of compartment size and
-contained species with state-dependent expressions.
+This case tests events occurring during steady-state simulations.
 
 ## Model
 
-A species `S`, defined in terms of concentrations, with `dS/dt = p = 1`,
-in a compartment `C`. `S` and `C` are changed via the condition table.
-
-There is an event triggered at `t=10` that re-initializes the compartment
-size that must be executed after the conditions table is applied.
+A parameter `p` is target of an event assignment that is executed at t = 1000.
+Although the model starts with $\dot{x} = 0$, the simulation must still run
+until $\dot{x}$ *remains* 0, i.e., the event must still be executed.
+This is applies to both the pre-simulation and the simulation for the
+steady state measurement.
