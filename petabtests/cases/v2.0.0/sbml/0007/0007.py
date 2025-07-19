@@ -40,7 +40,7 @@ observable_df = pd.DataFrame(
     data={
         OBSERVABLE_ID: ["obs_a", "obs_b"],
         OBSERVABLE_FORMULA: ["A", "B"],
-        NOISE_DISTRIBUTION: [NORMAL, LOG10_NORMAL],
+        NOISE_DISTRIBUTION: [NORMAL, LOG_NORMAL],
         NOISE_FORMULA: [0.5, 0.6],
     }
 ).set_index([OBSERVABLE_ID])
