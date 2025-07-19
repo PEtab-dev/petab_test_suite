@@ -1,4 +1,4 @@
 pytest
 ruff
-git+https://github.com/PEtab-dev/libpetab-python@develop
+git+https://github.com/PEtab-dev/libpetab-python@main
 sympy>=1.12.1

@@ -3,7 +3,7 @@ from inspect import cleandoc
 import pandas as pd
 from petab.v1.C import *
 
-from petabtests import DEFAULT_SBML_FILE, PetabTestCase, analytical_a
+from petabtests import DEFAULT_SBML_FILE, PetabV1TestCase, analytical_a
 
 DESCRIPTION = cleandoc("""
 ## Objective
@@ -63,7 +63,7 @@ simulation_df[SIMULATION] = [
 ]
 
 
-case = PetabTestCase(
+case = PetabV1TestCase(
     id=1,
     brief="Simulation. Nothing special.",
     description=DESCRIPTION,

@@ -1,11 +1,11 @@
 from inspect import cleandoc
 
 import pandas as pd
-from petab.v1.C import *
+from petab.v2.C import *
 
 from petabtests import (
     DEFAULT_SBML_FILE,
-    PetabTestCase,
+    PetabV2TestCase,
     analytical_a,
     analytical_b,
 )
@@ -13,11 +13,12 @@ from petabtests import (
 DESCRIPTION = cleandoc("""
 ## Objective
 
-This case tests support for observable transformations to log10 scale.
+This case tests log-normal noise.
 
-The model is to be simulated for a single experimental condition. Measurements
-for observable `obs_a` are to be used as is, measurements for `obs_b` are to
-be transformed to log10 scale for computing chi2 and likelihood.
+The model is to be simulated for a single experimental condition.
+Observables `obs_a` and `obs_b` are the same except for the noise distribution.
+The noise distributions need to be accounted for when computing chi2 and
+likelihood.
 
 ## Model
 
@@ -27,16 +28,10 @@ mass action kinetics.
 
 # problem --------------------------------------------------------------------
 
-condition_df = pd.DataFrame(
-    data={
-        CONDITION_ID: ["c0"],
-    }
-).set_index([CONDITION_ID])
-
 measurement_df = pd.DataFrame(
     data={
         OBSERVABLE_ID: ["obs_a", "obs_b"],
-        SIMULATION_CONDITION_ID: ["c0", "c0"],
+        EXPERIMENT_ID: ["", ""],
         TIME: [10, 10],
         MEASUREMENT: [0.2, 0.8],
     }
@@ -46,7 +41,7 @@ observable_df = pd.DataFrame(
     data={
         OBSERVABLE_ID: ["obs_a", "obs_b"],
         OBSERVABLE_FORMULA: ["A", "B"],
-        OBSERVABLE_TRANSFORMATION: [LIN, LOG10],
+        NOISE_DISTRIBUTION: [NORMAL, LOG_NORMAL],
         NOISE_FORMULA: [0.5, 0.6],
     }
 ).set_index([OBSERVABLE_ID])
@@ -54,11 +49,10 @@ observable_df = pd.DataFrame(
 parameter_df = pd.DataFrame(
     data={
         PARAMETER_ID: ["a0", "b0", "k1", "k2"],
-        PARAMETER_SCALE: [LIN] * 4,
         LOWER_BOUND: [0] * 4,
         UPPER_BOUND: [10] * 4,
         NOMINAL_VALUE: [1, 0, 0.8, 0.6],
-        ESTIMATE: [1] * 4,
+        ESTIMATE: ["true"] * 4,
     }
 ).set_index(PARAMETER_ID)
 
@@ -72,12 +66,12 @@ simulation_df[SIMULATION] = [
     analytical_b(10, 1, 0, 0.8, 0.6),
 ]
 
-case = PetabTestCase(
+case = PetabV2TestCase(
     id=7,
-    brief="Simulation. Observable transformation log10.",
+    brief="Simulation. Log-normal noise.",
     description=DESCRIPTION,
     model=DEFAULT_SBML_FILE,
-    condition_dfs=[condition_df],
+    condition_dfs=[],
     observable_dfs=[observable_df],
     measurement_dfs=[measurement_df],
     simulation_dfs=[simulation_df],

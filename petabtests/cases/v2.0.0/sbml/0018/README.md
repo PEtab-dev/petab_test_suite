@@ -2,16 +2,14 @@
 
 ## Objective
 
-This case tests support for RateRules and partial preequilibration with `NaN`'s
-in the condition file.
+This case tests support for non-zero simulation start time after
+pre-equilibration.
 
 The model is to be simulated for a preequilibration condition and a
 simulation condition.
 For preequilibration, species `B` is initialized with `0`. For simulation,
-`B` is set to `NaN`, meaning that it is initialized with the result from
-preequilibration.
 `A` is reinitialized to the value in the condition table after
-preequilibration.
+preequilibration, `B` is not updated.
 
 ## Model
 

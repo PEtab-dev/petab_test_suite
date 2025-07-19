@@ -1,3 +1,2 @@
-observableId	observableFormula	observableTransformation	noiseFormula
-obs_a	A	lin	0.5
-obs_b	B	log	0.7
+observableId	observableName	observableFormula	noiseFormula	noiseDistribution	observablePlaceholders	noisePlaceholders
+obs_a		A	0.500000000000000	normal		

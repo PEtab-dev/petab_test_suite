@@ -1,2 +1,2 @@
-observableId	observableFormula	noiseFormula
-obs_a	A	noiseParameter1_obs_a + noiseParameter2_obs_a
+observableId	observableFormula	noiseFormula	noisePlaceholders
+obs_a	A	noise_placeholder1 + noise_placeholder2	noise_placeholder1;noise_placeholder2

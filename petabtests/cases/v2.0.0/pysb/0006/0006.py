@@ -1,9 +1,8 @@
 from inspect import cleandoc
 
-import pandas as pd
-from petab.v1.C import *
-
-from petabtests import DEFAULT_PYSB_FILE, PetabTestCase, analytical_a
+from petabtests import DEFAULT_PYSB_FILE, PetabV2TestCase, analytical_a
+from petab.v2 import Problem
+from petab.v2.C import *
 
 DESCRIPTION = cleandoc("""
 ## Objective
@@ -21,45 +20,29 @@ mass action kinetics.
 """)
 
 # problem --------------------------------------------------------------------
+problem = Problem()
 
-condition_df = pd.DataFrame(
-    data={
-        CONDITION_ID: ["c0"],
-    }
-).set_index([CONDITION_ID])
-
-measurement_df = pd.DataFrame(
-    data={
-        OBSERVABLE_ID: ["obs_a", "obs_a"],
-        SIMULATION_CONDITION_ID: ["c0", "c0"],
-        TIME: [0, 10],
-        MEASUREMENT: [0.7, 0.1],
-        OBSERVABLE_PARAMETERS: [10, 15],
-    }
+problem.add_observable(
+    "obs_a",
+    "observableParameter1_obs_a * A",
+    noise_formula=1,
+    observable_placeholders=["observableParameter1_obs_a"],
 )
 
-observable_df = pd.DataFrame(
-    data={
-        OBSERVABLE_ID: ["obs_a"],
-        OBSERVABLE_FORMULA: ["observableParameter1_obs_a * A"],
-        NOISE_FORMULA: [1],
-    }
-).set_index([OBSERVABLE_ID])
+problem.add_measurement(
+    "obs_a", "", time=0, measurement=0.7, observable_parameters=(10,)
+)
+problem.add_measurement(
+    "obs_a", "", time=10, measurement=0.1, observable_parameters=(15,)
+)
 
-parameter_df = pd.DataFrame(
-    data={
-        PARAMETER_ID: ["a0", "b0", "k1", "k2"],
-        PARAMETER_SCALE: [LIN] * 4,
-        LOWER_BOUND: [0] * 4,
-        UPPER_BOUND: [10] * 4,
-        NOMINAL_VALUE: [1, 0, 0.8, 0.6],
-        ESTIMATE: [1] * 4,
-    }
-).set_index(PARAMETER_ID)
-
+problem.add_parameter("a0", lb=0, ub=10, nominal_value=1, estimate=True)
+problem.add_parameter("b0", lb=0, ub=10, nominal_value=0, estimate=True)
+problem.add_parameter("k1", lb=0, ub=10, nominal_value=0.8, estimate=True)
+problem.add_parameter("k2", lb=0, ub=10, nominal_value=0.6, estimate=True)
 # solutions ------------------------------------------------------------------
 
-simulation_df = measurement_df.copy(deep=True).rename(
+simulation_df = problem.measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION}
 )
 simulation_df[SIMULATION] = [
@@ -67,15 +50,15 @@ simulation_df[SIMULATION] = [
     15 * analytical_a(10, 1, 0, 0.8, 0.6),
 ]
 
-case = PetabTestCase(
+case = PetabV2TestCase(
     id=6,
     brief="Simulation. Time-point specific numeric observable parameter "
     "overrides.",
     description=DESCRIPTION,
     model=DEFAULT_PYSB_FILE,
-    condition_dfs=[condition_df],
-    observable_dfs=[observable_df],
-    measurement_dfs=[measurement_df],
+    condition_dfs=[problem.condition_df],
+    observable_dfs=[problem.observable_df],
+    measurement_dfs=[problem.measurement_df],
     simulation_dfs=[simulation_df],
-    parameter_df=parameter_df,
+    parameter_df=problem.parameter_df,
 )

@@ -2,13 +2,13 @@
 
 ## Objective
 
-This case tests support for observable transformations to log scale.
-
-The model is to be simulated for a single experimental condition. Measurements
-for observable `obs_a` are to be used as is, measurements for `obs_b` are to
-be transformed to log scale for computing chi2 and likelihood.
+This case tests simultaneous re-initialization of compartment size and
+contained species with state-dependent expressions.
 
 ## Model
 
-A simple conversion reaction `A <=> B` in a single compartment, following
-mass action kinetics.
+A species `S`, defined in terms of concentrations, with `dS/dt = p = 1`,
+in a compartment `C`. `S` and `C` are changed via the condition table.
+
+There is an event triggered at `t=10` that re-initializes the compartment
+size that must be executed after the conditions table is applied.
