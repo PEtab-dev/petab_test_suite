@@ -520,7 +520,7 @@ def _write_dfs_to_files(
     config_list: list[str] = None,
 ):
     """Write data frames to files and add them to config."""
-    dfs = [df for df in dfs if df is not None]
+    dfs = [df for df in dfs if df is not None and not df.empty]
     for idx, df in enumerate(dfs):
         if len(dfs) == 1:
             idx = ""
