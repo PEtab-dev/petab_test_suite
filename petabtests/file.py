@@ -367,6 +367,7 @@ class PetabV2TestCase:
             petab.write_condition_df,
             condition_dfs,
             config[CONDITION_FILES],
+            skip_empty=True,
         )
 
         # write observables
@@ -518,9 +519,12 @@ def _write_dfs_to_files(
     writer: Callable,
     dfs: list[pd.DataFrame],
     config_list: list[str] = None,
+    skip_empty: bool = False,
 ):
     """Write data frames to files and add them to config."""
-    dfs = [df for df in dfs if df is not None and not df.empty]
+    dfs = [
+        df for df in dfs if df is not None and (not skip_empty or not df.empty)
+    ]
     for idx, df in enumerate(dfs):
         if len(dfs) == 1:
             idx = ""
