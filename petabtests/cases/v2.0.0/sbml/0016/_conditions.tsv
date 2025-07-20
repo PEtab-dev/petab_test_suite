@@ -1,2 +1,4 @@
-conditionId
-c0
+conditionId	targetId	targetValue
+condition1	S	S - 1.0
+condition2	S	C + S
+condition2	C	8.0

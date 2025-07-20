@@ -1,9 +1,9 @@
 from inspect import cleandoc
 
 import pandas as pd
-from petab.v1.C import *
+from petab.v2.C import *
 
-from petabtests import DEFAULT_SBML_FILE, PetabTestCase, analytical_a
+from petabtests import DEFAULT_SBML_FILE, PetabV2TestCase, analytical_a
 
 DESCRIPTION = cleandoc("""
 ## Objective
@@ -21,16 +21,11 @@ mass action kinetics.
 
 # problem --------------------------------------------------------------------
 
-condition_df = pd.DataFrame(
-    data={
-        CONDITION_ID: ["c0"],
-    }
-).set_index([CONDITION_ID])
 
 measurement_df = pd.DataFrame(
     data={
         OBSERVABLE_ID: ["obs_a", "obs_a", "obs_a"],
-        SIMULATION_CONDITION_ID: ["c0", "c0", "c0"],
+        EXPERIMENT_ID: ["", "", ""],
         TIME: [0, 10, 10],
         MEASUREMENT: [0.7, 0.1, 0.2],
     }
@@ -47,11 +42,10 @@ observable_df = pd.DataFrame(
 parameter_df = pd.DataFrame(
     data={
         PARAMETER_ID: ["a0", "b0", "k1", "k2"],
-        PARAMETER_SCALE: [LIN] * 4,
         LOWER_BOUND: [0] * 4,
         UPPER_BOUND: [10] * 4,
         NOMINAL_VALUE: [1, 0, 0.8, 0.6],
-        ESTIMATE: [1] * 4,
+        ESTIMATE: ["true"] * 4,
     }
 ).set_index(PARAMETER_ID)
 
@@ -64,12 +58,12 @@ simulation_df[SIMULATION] = [
     analytical_a(t, 1, 0, 0.8, 0.6) for t in simulation_df[TIME]
 ]
 
-case = PetabTestCase(
+case = PetabV2TestCase(
     id=8,
     brief="Simulation. Replicate measurements.",
     description=DESCRIPTION,
     model=DEFAULT_SBML_FILE,
-    condition_dfs=[condition_df],
+    condition_dfs=[],
     observable_dfs=[observable_df],
     measurement_dfs=[measurement_df],
     simulation_dfs=[simulation_df],

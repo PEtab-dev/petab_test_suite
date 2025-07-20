@@ -76,4 +76,5 @@ Simulation. Estimated initial value via conditions table.
 
 # [0020](0020/)
 
-Simulation. NaN for initial value in condition table.
+Simulation. NaN in condition table for model without preequilibration.
+

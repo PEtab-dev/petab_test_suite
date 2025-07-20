@@ -1,2 +1,2 @@
-observableId	observableFormula	noiseFormula
-obs_a	maps_to_A	0.5
+observableId	observableName	observableFormula	noiseFormula	noiseDistribution	observablePlaceholders	noisePlaceholders
+obs_a		maps_to_A	0.500000000000000	normal		

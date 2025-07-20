@@ -37,7 +37,7 @@ dependencies = [
 homepage = "https://github.com/PEtab-dev/petab_test_suite"
 
 [project.scripts]
-petabtests_create = "petabtests.core:create"
+petabtests_create = "petabtests.core:_cli_create"
 petabtests_clear = "petabtests.core:clear"
 
 

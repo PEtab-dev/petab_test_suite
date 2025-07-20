@@ -1,9 +1,9 @@
 from inspect import cleandoc
 
-import pandas as pd
-from petab.v1.C import *
+from petab.v2.C import *
+from petab.v2 import Problem
 
-from petabtests import PetabTestCase, analytical_a, antimony_to_sbml_str
+from petabtests import PetabV2TestCase, analytical_a, antimony_to_sbml_str
 from pathlib import Path
 
 DESCRIPTION = cleandoc("""
@@ -38,55 +38,35 @@ end
 model_file = Path(__file__).parent / "_model.xml"
 model_file.write_text(antimony_to_sbml_str(ant_model))
 
-condition_df = pd.DataFrame(data={CONDITION_ID: ["c0"], "B": [2]}).set_index(
-    [CONDITION_ID]
-)
+problem = Problem()
 
-measurement_df = pd.DataFrame(
-    data={
-        OBSERVABLE_ID: ["obs_a", "obs_a"],
-        SIMULATION_CONDITION_ID: ["c0", "c0"],
-        TIME: [0, 10],
-        MEASUREMENT: [0.7, 0.1],
-    }
-)
+problem.add_condition("c0", B=2)
 
-observable_df = pd.DataFrame(
-    data={
-        OBSERVABLE_ID: ["obs_a"],
-        OBSERVABLE_FORMULA: ["A"],
-        NOISE_FORMULA: [0.5],
-    }
-).set_index([OBSERVABLE_ID])
+problem.add_experiment("e1", 0, "c0")
 
-parameter_df = pd.DataFrame(
-    data={
-        PARAMETER_ID: ["k1", "k2"],
-        PARAMETER_SCALE: [LIN] * 2,
-        LOWER_BOUND: [0] * 2,
-        UPPER_BOUND: [10] * 2,
-        NOMINAL_VALUE: [0.8, 0.6],
-        ESTIMATE: [1] * 2,
-    }
-).set_index(PARAMETER_ID)
+problem.add_observable("obs_a", "A", noise_formula="0.5")
+
+problem.add_measurement("obs_a", "e1", 0, 0.7)
+problem.add_measurement("obs_a", "e1", 10, 0.1)
+
+problem.add_parameter("k1", lb=0, ub=10, nominal_value=0.8, estimate=True)
+problem.add_parameter("k2", lb=0, ub=10, nominal_value=0.6, estimate=True)
+
 
 # solutions ------------------------------------------------------------------
 
-simulation_df = measurement_df.copy(deep=True).rename(
+simulation_df = problem.measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION}
 )
 simulation_df[SIMULATION] = [
     analytical_a(t, 1, 2, 0.8, 0.6) for t in simulation_df[TIME]
 ]
 
-case = PetabTestCase(
+case = PetabV2TestCase.from_problem(
     id=11,
     brief="Simulation. InitialAssignment to species overridden.",
     description=DESCRIPTION,
     model=model_file,
-    condition_dfs=[condition_df],
-    observable_dfs=[observable_df],
-    measurement_dfs=[measurement_df],
-    simulation_dfs=[simulation_df],
-    parameter_df=parameter_df,
+    problem=problem,
+    simulation_df=simulation_df,
 )

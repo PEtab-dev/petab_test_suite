@@ -1,9 +1,9 @@
 from inspect import cleandoc
 
-import pandas as pd
-from petab.v1.C import *
-
-from petabtests import PetabTestCase, analytical_a
+from petab.v2 import Problem
+from petab.v2.C import *
+from pathlib import Path
+from petabtests import PetabV2TestCase, analytical_a
 
 DESCRIPTION = cleandoc("""
 ## Objective
@@ -23,59 +23,95 @@ mass action kinetics.
 
 # problem --------------------------------------------------------------------
 
-condition_df = pd.DataFrame(
-    data={
-        CONDITION_ID: ["c0", "c1"],
-        "offset_A": ["offset_A_c0", "offset_A_c1"],
-    }
-).set_index([CONDITION_ID])
+problem = Problem()
 
-measurement_df = pd.DataFrame(
-    data={
-        OBSERVABLE_ID: ["obs_a", "obs_a"],
-        SIMULATION_CONDITION_ID: ["c0", "c1"],
-        TIME: [10, 10],
-        MEASUREMENT: [2.1, 3.2],
-    }
+problem.add_condition("c0", offset_A="offset_A_c0")
+problem.add_condition("c1", offset_A="offset_A_c1")
+
+problem.add_experiment("e0", 0, "c0")
+problem.add_experiment("e1", 0, "c1")
+
+problem.add_observable(
+    "obs_a",
+    "A + offset_A",
+    noise_formula=1,
 )
 
-observable_df = pd.DataFrame(
-    data={
-        OBSERVABLE_ID: ["obs_a"],
-        OBSERVABLE_FORMULA: ["A + offset_A"],
-        NOISE_FORMULA: [1],
-    }
-).set_index([OBSERVABLE_ID])
+problem.add_measurement(
+    "obs_a",
+    "e0",
+    time=10,
+    measurement=2.1,
+)
+problem.add_measurement(
+    "obs_a",
+    "e1",
+    time=10,
+    measurement=3.2,
+)
 
-parameter_df = pd.DataFrame(
-    data={
-        PARAMETER_ID: ["a0", "b0", "k1", "k2", "offset_A_c0", "offset_A_c1"],
-        PARAMETER_SCALE: [LIN] * 6,
-        LOWER_BOUND: [0] * 6,
-        UPPER_BOUND: [10] * 6,
-        NOMINAL_VALUE: [1, 0, 0.8, 0.6, 2, 3],
-        ESTIMATE: [1] * 6,
-    }
-).set_index(PARAMETER_ID)
+problem.add_parameter(
+    "a0",
+    lb=0,
+    ub=10,
+    nominal_value=1,
+    estimate=True,
+)
+problem.add_parameter(
+    "b0",
+    lb=0,
+    ub=10,
+    nominal_value=0,
+    estimate=True,
+)
+problem.add_parameter(
+    "k1",
+    lb=0,
+    ub=10,
+    nominal_value=0.8,
+    estimate=True,
+)
+problem.add_parameter(
+    "k2",
+    lb=0,
+    ub=10,
+    nominal_value=0.6,
+    estimate=True,
+)
+problem.add_parameter(
+    "offset_A_c0",
+    lb=0,
+    ub=10,
+    nominal_value=2,
+    estimate=False,
+)
+problem.add_parameter(
+    "offset_A_c1",
+    lb=0,
+    ub=10,
+    nominal_value=3,
+    estimate=False,
+)
 
 # solutions ------------------------------------------------------------------
 
-simulation_df = measurement_df.copy(deep=True).rename(
+simulation_df = problem.measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION}
 )
 simulation_df[SIMULATION] = [
     analytical_a(10, 1, 0, 0.8, 0.6) + offset for offset in [2, 3]
 ]
 
-case = PetabTestCase(
+case = PetabV2TestCase(
     id=5,
     brief="Simulation. Condition-specific parameters only defined in "
     "parameter table.",
     description=DESCRIPTION,
-    model="conversion_modified_pysb.py",
-    condition_dfs=[condition_df],
-    observable_dfs=[observable_df],
-    measurement_dfs=[measurement_df],
+    model=Path("conversion_modified_pysb.py"),
+    condition_dfs=[problem.condition_df],
+    observable_dfs=[problem.observable_df],
+    measurement_dfs=[problem.measurement_df],
     simulation_dfs=[simulation_df],
-    parameter_df=parameter_df,
+    parameter_df=problem.parameter_df,
+    experiment_dfs=[problem.experiment_df],
 )

@@ -24,7 +24,7 @@ Simulation. Time-point specific numeric observable parameter overrides.
 
 # [0007](0007/)
 
-Simulation. Observable transformation log10.
+Simulation. Log-normal noise.
 
 # [0008](0008/)
 
@@ -60,15 +60,15 @@ Simulation. Single parametric noise parameter override.
 
 # [0016](0016/)
 
-Simulation. Observable transformation log.
+Simultaneous state-dependent re-initialization of compartment size and contained species followed by event.
 
 # [0017](0017/)
 
-Simulation. Preequilibration. One species reinitialized, one not (NaN in condition table). InitialAssignment to species overridden.
+Simulation. Pre-equilibration. One species reinitialized, one not.InitialAssignment to species overridden.
 
 # [0018](0018/)
 
-Simulation. Preequilibration and RateRules. One state reinitialized, one not (NaN in condition table). InitialAssignment to species overridden.
+Simulation. Preequilibration and RateRules. Non-zero simulation start time. InitialAssignment to species overridden.
 
 # [0019](0019/)
 
@@ -80,5 +80,13 @@ Simulation. Estimated initial value via conditions table.
 
 # [0021](0021/)
 
-Simulation. Nothing special.
+Observable-dependent noise formula.
+
+# [0022](0022/)
+
+Simultaneous re-initialization of compartment size and contained species.
+
+# [0023](0023/)
+
+Events during steady-state simulations.
 

@@ -1,5 +1,5 @@
-parameterId	parameterScale	lowerBound	upperBound	nominalValue	estimate
-k1	lin	0	10	0.8	1
-k2	lin	0	10	0.6	1
-initial_A	log10	1	10	2.0	1
-initial_B	lin	0	10	3.0	0
+parameterId	lowerBound	upperBound	nominalValue	estimate	priorDistribution	priorParameters
+k1	0.0	10.0	0.8	true		
+k2	0.0	10.0	0.6	true		
+initial_A	1.0	10.0	2.0	true		
+initial_B	0.0	10.0	3.0	false		

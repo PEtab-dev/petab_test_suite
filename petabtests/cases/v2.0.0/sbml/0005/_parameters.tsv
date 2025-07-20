@@ -1,7 +1,7 @@
-parameterId	parameterScale	lowerBound	upperBound	nominalValue	estimate
-a0	lin	0	10	1.0	1
-b0	lin	0	10	0.0	1
-k1	lin	0	10	0.8	1
-k2	lin	0	10	0.6	1
-offset_A_c0	lin	0	10	2.0	1
-offset_A_c1	lin	0	10	3.0	1
+parameterId	lowerBound	upperBound	nominalValue	estimate	priorDistribution	priorParameters
+a0	0.0	10.0	1.0	true		
+b0	0.0	10.0	0.0	true		
+k1	0.0	10.0	0.8	true		
+k2	0.0	10.0	0.6	true		
+offset_A_c0	0.0	10.0	2.0	true		
+offset_A_c1	0.0	10.0	3.0	true		
