@@ -9,5 +9,5 @@ model_files:
     location: _model.py
 observable_files:
 - _observables.tsv
-parameter_file:
+parameter_files:
 - _parameters.tsv
