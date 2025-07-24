@@ -1,13 +1,5 @@
 import numpy as np
 import pandas as pd
-from petab.v1.C import (
-    OBSERVABLE_ID,
-    SIMULATION_CONDITION_ID,
-    TIME,
-    PREEQUILIBRATION_CONDITION_ID,
-    SIMULATION,
-)
-from petab.v2.C import EXPERIMENT_ID
 
 __all__ = [
     "evaluate_llh",
@@ -85,6 +77,14 @@ def absolute_simulations_distance_for_table(
     simulations: pd.DataFrame, gt_simulations: pd.DataFrame
 ):
     """Compute absolute normalized distance between simulations."""
+    from petab.v1.C import (
+        OBSERVABLE_ID,
+        SIMULATION_CONDITION_ID,
+        TIME,
+        PREEQUILIBRATION_CONDITION_ID,
+        SIMULATION,
+    )
+    from petab.v2.C import EXPERIMENT_ID
 
     # check if we have a petab v1 or v2 file
     if (
