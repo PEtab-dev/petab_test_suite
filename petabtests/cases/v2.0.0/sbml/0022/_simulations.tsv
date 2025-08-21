@@ -7,11 +7,11 @@ obs_a	experiment1	5.0	2.000000611804641
 obs_A	experiment1	5.0	1.0000003059023206		
 obs_b	experiment1	5.0	3.999999388195359		
 obs_B	experiment1	5.0	1.9999996940976794		
-obs_a	experiment1	10.0	10.0		
-obs_A	experiment1	10.0	2.5		
+obs_a	experiment1	10.0	20.0		
+obs_A	experiment1	10.0	5.0		
 obs_b	experiment1	10.0	4.0		
 obs_B	experiment1	10.0	1.0		
-obs_a	experiment1	15.0	4.6666682981457095		
-obs_A	experiment1	15.0	1.1666670745364274		
-obs_b	experiment1	15.0	9.333331701854291		
-obs_B	experiment1	15.0	2.333332925463573		
+obs_a	experiment1	15.0	8.000003670827846		
+obs_A	experiment1	15.0	2.0000009177069615		
+obs_b	experiment1	15.0	15.999996329172154		
+obs_B	experiment1	15.0	3.9999990822930385		

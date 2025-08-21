@@ -19,13 +19,12 @@ at time 10. The assigned values are independent of the model state.
 At time 10, the conditions table changes:
 * The compartment size from 2 to 4.
 * The concentration of `A` to `5`. This implies that the amount of
-  `A` is changed to `5 * 2 = 10` (concentration * compartment size).
-* The amount of `a` to `10`.
+  `A` is changed to `5 * 4 = 20` (concentration * compartment size).
+* The amount of `a` to `20`.
 
 This leads to the following model state at time 10:
-* The concentration of `A` is `10 / 4 = 2.5`
-  (new amount divided by new volume).
-* The amount of `a` is `10`, unaffected by the compartment size change.
+* The concentration of `A` is the values assigned in the conditions table, `5`.
+* The amount of `a` is `20`, unaffected by the compartment size change.
 * The concentration of `B` is `(2 * 2) / 4 = 1`
   (previous amount / new volume
   = previous concentration * previous volume / new volume).
