@@ -19,8 +19,8 @@ mass action kinetics.
 # problem --------------------------------------------------------------------
 problem = Problem()
 problem.add_observable("obs_a", "A", noise_formula=0.5)
-problem.add_measurement("obs_a", "", time=0, measurement=0.7)
-problem.add_measurement("obs_a", "", time=10, measurement=0.1)
+problem.add_measurement("obs_a", experiment_id="", time=0, measurement=0.7)
+problem.add_measurement("obs_a", experiment_id="", time=10, measurement=0.1)
 problem.add_parameter(
     "maps_to_a0", lb=0, ub=10, nominal_value=1, estimate=True
 )

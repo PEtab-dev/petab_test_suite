@@ -41,8 +41,12 @@ problem.add_parameter("p", estimate=True, lb=0, ub=10, nominal_value=1)
 problem.add_observable("obs_p", "p", noise_formula="1")
 problem.add_experiment("experiment1", float("-inf"), None)
 
-problem.add_measurement("obs_p", "experiment1", 0, 2)
-problem.add_measurement("obs_p", "experiment1", float("inf"), 3)
+problem.add_measurement(
+    "obs_p", experiment_id="experiment1", time=0, measurement=2
+)
+problem.add_measurement(
+    "obs_p", experiment_id="experiment1", time=float("inf"), measurement=3
+)
 
 # solutions ------------------------------------------------------------------
 

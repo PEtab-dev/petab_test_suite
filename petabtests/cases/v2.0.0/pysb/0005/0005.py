@@ -39,13 +39,13 @@ problem.add_observable(
 
 problem.add_measurement(
     "obs_a",
-    "e0",
+    experiment_id="e0",
     time=10,
     measurement=2.1,
 )
 problem.add_measurement(
     "obs_a",
-    "e1",
+    experiment_id="e1",
     time=10,
     measurement=3.2,
 )

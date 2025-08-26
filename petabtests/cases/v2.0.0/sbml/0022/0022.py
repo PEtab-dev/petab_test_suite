@@ -106,10 +106,18 @@ problem.add_condition(
 
 ts = [0, 5, 10, 15]
 for t in ts:
-    problem.add_measurement("obs_a", "experiment1", t, 2)
-    problem.add_measurement("obs_A", "experiment1", t, 2)
-    problem.add_measurement("obs_b", "experiment1", t, 1)
-    problem.add_measurement("obs_B", "experiment1", t, 1)
+    problem.add_measurement(
+        "obs_a", experiment_id="experiment1", time=t, measurement=2
+    )
+    problem.add_measurement(
+        "obs_A", experiment_id="experiment1", time=t, measurement=2
+    )
+    problem.add_measurement(
+        "obs_b", experiment_id="experiment1", time=t, measurement=1
+    )
+    problem.add_measurement(
+        "obs_B", experiment_id="experiment1", time=t, measurement=1
+    )
 
 # solutions ------------------------------------------------------------------
 

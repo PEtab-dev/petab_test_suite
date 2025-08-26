@@ -36,8 +36,8 @@ problem.add_observable(
     "obs_b", "B", noise_formula=0.6, noise_distribution=LOG_NORMAL
 )
 
-problem.add_measurement("obs_a", "", time=10, measurement=0.2)
-problem.add_measurement("obs_b", "", time=10, measurement=0.8)
+problem.add_measurement("obs_a", time=10, measurement=0.2)
+problem.add_measurement("obs_b", time=10, measurement=0.8)
 
 problem.add_parameter("a0", lb=0, ub=10, nominal_value=1, estimate=True)
 problem.add_parameter("b0", lb=0, ub=10, nominal_value=0, estimate=True)

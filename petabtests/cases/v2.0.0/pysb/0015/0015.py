@@ -25,10 +25,18 @@ problem.add_observable(
     noise_placeholders=["noiseParameter1_obs_a"],
 )
 problem.add_measurement(
-    "obs_a", "", time=0, measurement=0.7, noise_parameters=("noise",)
+    "obs_a",
+    experiment_id="",
+    time=0,
+    measurement=0.7,
+    noise_parameters=("noise",),
 )
 problem.add_measurement(
-    "obs_a", "", time=10, measurement=0.1, noise_parameters=("noise",)
+    "obs_a",
+    experiment_id="",
+    time=10,
+    measurement=0.1,
+    noise_parameters=("noise",),
 )
 problem.add_parameter("a0", lb=0, ub=10, nominal_value=1, estimate=True)
 problem.add_parameter("b0", lb=0, ub=10, nominal_value=0, estimate=True)

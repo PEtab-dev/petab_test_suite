@@ -39,10 +39,14 @@ problem.add_experiment("e0", 0, "c0")
 problem.add_observable("conc_a", "A", noise_formula="0.5")
 problem.add_observable("amount_a", "A * compartment", noise_formula="0.5")
 
-problem.add_measurement("conc_a", "e0", 0, 0.7)
-problem.add_measurement("conc_a", "e0", 10, 0.1)
-problem.add_measurement("amount_a", "e0", 0, 0.7)
-problem.add_measurement("amount_a", "e0", 10, 0.1)
+problem.add_measurement("conc_a", experiment_id="e0", time=0, measurement=0.7)
+problem.add_measurement("conc_a", experiment_id="e0", time=10, measurement=0.1)
+problem.add_measurement(
+    "amount_a", experiment_id="e0", time=0, measurement=0.7
+)
+problem.add_measurement(
+    "amount_a", experiment_id="e0", time=10, measurement=0.1
+)
 
 problem.add_parameter("k1", lb=0, ub=10, nominal_value=k1, estimate=True)
 problem.add_parameter("k2", lb=0, ub=10, nominal_value=k2, estimate=True)

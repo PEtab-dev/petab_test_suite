@@ -51,8 +51,8 @@ problem.add_experiment("e1", 0, "c0")
 
 problem.add_observable("obs_a", "A", noise_formula="0.5")
 
-problem.add_measurement("obs_a", "e1", 0, 0.7)
-problem.add_measurement("obs_a", "e1", 10, 0.1)
+problem.add_measurement("obs_a", experiment_id="e1", time=0, measurement=0.7)
+problem.add_measurement("obs_a", experiment_id="e1", time=10, measurement=0.1)
 
 problem.add_parameter("k1", lb=0, ub=10, nominal_value=k1, estimate=True)
 problem.add_parameter("k2", lb=0, ub=10, nominal_value=k2, estimate=True)
