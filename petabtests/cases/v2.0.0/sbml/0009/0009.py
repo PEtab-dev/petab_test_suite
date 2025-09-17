@@ -33,8 +33,8 @@ problem.add_experiment("e0", "-inf", "preeq_c0", 0, "c0")
 
 problem.add_observable("obs_a", "A", noise_formula="0.5")
 
-problem.add_measurement("obs_a", "e0", 1, 0.7)
-problem.add_measurement("obs_a", "e0", 10, 0.1)
+problem.add_measurement("obs_a", experiment_id="e0", time=1, measurement=0.7)
+problem.add_measurement("obs_a", experiment_id="e0", time=10, measurement=0.1)
 
 problem.add_parameter("a0", lb=0, ub=10, nominal_value=1, estimate=True)
 problem.add_parameter("b0", lb=0, ub=10, nominal_value=0, estimate=True)

@@ -10,9 +10,9 @@ DESCRIPTION = cleandoc("""
 
 This case tests initial compartment sizes in the condition table.
 
-Note that this change will preserve the initial state of the model in terms
-of amounts. I.e., the change of the compartment size via the conditions table,
-will change the concentrations of all contained species.
+Note that changing the compartment size will only change the compartment size
+itself. It will not change the concentration of concentration-based species
+therein.
 
 ## Model
 
@@ -21,30 +21,52 @@ mass action kinetics.
 """)
 
 # problem --------------------------------------------------------------------
+k1 = 0.8
+k2 = 0.6
+# initial concentrations in the SBML model
+a0_model = 1
+b0_model = 1
+# size of `compartment` in the SBML model and new value from petab condition
+size_model = 1
+size_new = 4
 
 problem = Problem()
 
-problem.add_condition("c0", compartment=4)
+problem.add_condition("c0", compartment=size_new)
 
 problem.add_experiment("e0", 0, "c0")
 
-problem.add_observable("obs_a", "A", noise_formula="0.5")
+problem.add_observable("conc_a", "A", noise_formula="0.5")
+problem.add_observable("amount_a", "A * compartment", noise_formula="0.5")
 
-problem.add_measurement("obs_a", "e0", 0, 0.7)
-problem.add_measurement("obs_a", "e0", 10, 0.1)
+problem.add_measurement("conc_a", experiment_id="e0", time=0, measurement=0.7)
+problem.add_measurement("conc_a", experiment_id="e0", time=10, measurement=0.1)
+problem.add_measurement(
+    "amount_a", experiment_id="e0", time=0, measurement=0.7
+)
+problem.add_measurement(
+    "amount_a", experiment_id="e0", time=10, measurement=0.1
+)
 
-problem.add_parameter("k1", lb=0, ub=10, nominal_value=0.8, estimate=True)
-problem.add_parameter("k2", lb=0, ub=10, nominal_value=0.6, estimate=True)
+problem.add_parameter("k1", lb=0, ub=10, nominal_value=k1, estimate=True)
+problem.add_parameter("k2", lb=0, ub=10, nominal_value=k2, estimate=True)
 
 # solutions ------------------------------------------------------------------
 
 simulation_df = problem.measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION}
 )
-# changing the compartent volume from 1 to 4 will change the initial
-#  concentration to 1 * (1/4)
 simulation_df[SIMULATION] = [
-    analytical_a(t, 0.25, 0.25, 0.8, 0.6) for t in simulation_df[TIME]
+    # changing the compartment size does not change the concentration
+    *(
+        analytical_a(t, a0=a0_model, b0=b0_model, k1=k1, k2=k2)
+        for t in simulation_df.query("observableId == 'conc_a'")[TIME]
+    ),
+    # but does change the amount
+    *(
+        analytical_a(t, a0=a0_model, b0=b0_model, k1=k1, k2=k2) * size_new
+        for t in simulation_df.query("observableId == 'amount_a'")[TIME]
+    ),
 ]
 
 case = PetabV2TestCase.from_problem(
