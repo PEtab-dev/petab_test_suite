@@ -5,6 +5,7 @@
     <listOfParameters>
       <parameter id="p0" value="2" constant="true"/>
       <parameter id="p" constant="false"/>
+      <parameter id="dpdt" value="1" constant="true"/>
     </listOfParameters>
     <listOfInitialAssignments>
       <initialAssignment symbol="p">
@@ -13,14 +14,33 @@
         </math>
       </initialAssignment>
     </listOfInitialAssignments>
+    <listOfRules>
+      <rateRule variable="p">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <piecewise>
+            <piece>
+              <ci> dpdt </ci>
+              <apply>
+                <leq/>
+                <ci> p </ci>
+                <cn type="integer"> 500 </cn>
+              </apply>
+            </piece>
+            <otherwise>
+              <cn type="integer"> 0 </cn>
+            </otherwise>
+          </piecewise>
+        </math>
+      </rateRule>
+    </listOfRules>
     <listOfEvents>
       <event id="_E0" useValuesFromTriggerTime="true">
-        <trigger initialValue="true" persistent="true">
+        <trigger initialValue="false" persistent="true">
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <geq/>
-              <csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time"> time </csymbol>
-              <cn type="integer"> 1000 </cn>
+              <ci> p </ci>
+              <cn type="integer"> 500 </cn>
             </apply>
           </math>
         </trigger>
@@ -30,7 +50,7 @@
               <apply>
                 <plus/>
                 <ci> p </ci>
-                <cn type="integer"> 1 </cn>
+                <cn type="integer"> 1000 </cn>
               </apply>
             </math>
           </eventAssignment>

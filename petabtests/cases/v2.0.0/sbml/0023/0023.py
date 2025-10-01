@@ -15,11 +15,11 @@ This case tests events occurring during steady-state simulations.
 
 ## Model
 
-A parameter `p` is target of an event assignment that is executed at t = 1000.
-Although the model starts with $\dot{x} = 0$, the simulation must still run
-until $\dot{x}$ *remains* 0, i.e., the event must still be executed.
-This is applies to both the pre-simulation and the simulation for the
-steady state measurement.
+A parameter `p` is target of an event assignment that is executed at t = 490,
+which is also the time point when the steady state is reached.
+The event increases `p` by 1000, which is also the value of the observable.
+The event must not be executed again after pre-equilibration
+(the trigger state is not reinitialized).
 """)
 
 # problem --------------------------------------------------------------------
@@ -30,14 +30,15 @@ ant_model = """
 model petab_test_0023
     p0 = 2
     p = p0
-
-    at time >= 1000: p = p + 1
+    dpdt = 1
+    p' = piecewise(dpdt, p <= 500, 0)
+    at p >= 500, t0=false: p = p + 1000
 end
 """
 sbml_file.write_text(antimony_to_sbml_str(ant_model))
 
 problem = Problem()
-problem.add_parameter("p", estimate=True, lb=0, ub=10, nominal_value=1)
+problem.add_parameter("p0", estimate=True, lb=0, ub=10, nominal_value=10)
 problem.add_observable("obs_p", "p", noise_formula="1")
 problem.add_experiment("experiment1", float("-inf"), None)
 
@@ -54,13 +55,13 @@ simulation_df = problem.measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION}
 )
 simulation_df[SIMULATION] = [
-    # pre-simulation starts with p=1, then p is increased by 1 at t=1000
-    # then the observable is evaluated for the t=0 measurement
-    2,
-    # then the steady state simulation is run,
-    #  where p is increased by 1 at t=1000,
-    #  and the observable is evaluated for the t=inf measurement
-    3,
+    # pre-equilibration starts with p=10, steady state is reached at
+    #  t=490 with p=500, but the event must still be executed.
+    # Then the observable is evaluated for the t=0 measurement
+    1500,
+    # Nothing happens during the "main" simulation until the
+    #  observable is evaluated for the t=inf measurement.
+    1500,
 ]
 
 case = PetabV2TestCase.from_problem(
