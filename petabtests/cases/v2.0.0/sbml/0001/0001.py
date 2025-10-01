@@ -18,15 +18,19 @@ mass action kinetics.
 """)
 
 # problem --------------------------------------------------------------------
+a0 = 1
+b0 = 0
+k1 = 0.8
+k2 = 0.6
 
 problem = Problem()
 problem += Observable(id="obs_a", formula="A", noise_formula=0.5)
 problem += Measurement(observable_id="obs_a", time=0, measurement=0.7)
 problem += Measurement(observable_id="obs_a", time=10, measurement=0.1)
-problem += Parameter(id="a0", lb=0, ub=10, nominal_value=1)
-problem += Parameter(id="b0", lb=0, ub=10, nominal_value=0)
-problem += Parameter(id="k1", lb=0, ub=10, nominal_value=0.8)
-problem += Parameter(id="k2", lb=0, ub=10, nominal_value=0.6)
+problem += Parameter(id="a0", lb=0, ub=10, nominal_value=a0)
+problem += Parameter(id="b0", lb=0, ub=10, nominal_value=b0)
+problem += Parameter(id="k1", lb=0, ub=10, nominal_value=k1)
+problem += Parameter(id="k2", lb=0, ub=10, nominal_value=k2)
 
 # solutions ------------------------------------------------------------------
 
@@ -34,7 +38,7 @@ simulation_df = problem.measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION}
 )
 simulation_df[SIMULATION] = [
-    analytical_a(t, 1, 0, 0.8, 0.6) for t in simulation_df[TIME]
+    analytical_a(t=t, a0=a0, b0=b0, k1=k1, k2=k2) for t in simulation_df[TIME]
 ]
 
 

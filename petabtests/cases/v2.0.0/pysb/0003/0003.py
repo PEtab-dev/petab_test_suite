@@ -34,10 +34,10 @@ problem.add_observable(
 )
 
 problem.add_measurement(
-    "obs_a", "", time=0, measurement=0.7, observable_parameters=(0.5, 2)
+    "obs_a", time=0, measurement=0.7, observable_parameters=(0.5, 2)
 )
 problem.add_measurement(
-    "obs_a", "", time=10, measurement=0.1, observable_parameters=(0.5, 2)
+    "obs_a", time=10, measurement=0.1, observable_parameters=(0.5, 2)
 )
 
 problem.add_parameter("a0", lb=0, ub=10, nominal_value=1)

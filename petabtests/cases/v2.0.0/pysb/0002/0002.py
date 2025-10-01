@@ -33,10 +33,10 @@ problem.add_experiment("e1", 0, "c1")
 
 problem.add_observable("obs_a", "A", noise_formula=1)
 
-problem.add_measurement("obs_a", "e0", time=0, measurement=0.7)
-problem.add_measurement("obs_a", "e0", time=10, measurement=0.1)
-problem.add_measurement("obs_a", "e1", time=0, measurement=0.8)
-problem.add_measurement("obs_a", "e1", time=10, measurement=0.2)
+problem.add_measurement("obs_a", experiment_id="e0", time=0, measurement=0.7)
+problem.add_measurement("obs_a", experiment_id="e0", time=10, measurement=0.1)
+problem.add_measurement("obs_a", experiment_id="e1", time=0, measurement=0.8)
+problem.add_measurement("obs_a", experiment_id="e1", time=10, measurement=0.2)
 
 problem.add_parameter("k1", lb=0, ub=10, nominal_value=0.8, estimate=True)
 problem.add_parameter("k2", lb=0, ub=10, nominal_value=0.6, estimate=True)
