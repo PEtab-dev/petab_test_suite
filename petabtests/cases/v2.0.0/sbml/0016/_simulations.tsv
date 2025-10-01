@@ -9,5 +9,5 @@ modelId	observableId	experimentId	time	simulation	observableParameters	noisePara
 	obs_amount_S	experiment1	10.0	128		
 	obs_conc_S	experiment1	10.0	8		
 	obs_C	experiment1	15.0	32		
-	obs_amount_S	experiment1	15.0	288		
-	obs_conc_S	experiment1	15.0	9		
+	obs_amount_S	experiment1	15.0	224		
+	obs_conc_S	experiment1	15.0	7		

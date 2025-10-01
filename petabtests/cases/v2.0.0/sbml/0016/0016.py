@@ -100,13 +100,14 @@ simulation_df[SIMULATION] = [
     conc10 * vol10,
     conc10,
     # pre-event, t=14:
-    # vol=vol10=16, 16*8=128, 8
+    # vol=vol10=16, 12*16=192, 12
     # event
-    # C = 16 * 2 = 32, 128, 128 / 16 = 8
+    # volume is changed by event, amount is preserved, conc changes
+    # C = 16 * 2 = 32, 192, 192 / 32 = 6
     # --- t=15 ---
     vol10 * 2,
-    (8 + 1 * dSdt) * (vol10 * 2),
-    (8 + 1 * dSdt),
+    (6 + 1 * dSdt) * (vol10 * 2),
+    (6 + 1 * dSdt),
 ]
 
 case = PetabV2TestCase.from_problem(
