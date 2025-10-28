@@ -21,23 +21,31 @@ mass action kinetics.
 """)
 
 # problem --------------------------------------------------------------------
+a0_c0 = 0.8
+a0_c1 = 0.9
+b0 = 1
+k1 = 0.8
+k2 = 0.6
 
 problem = Problem()
-problem.add_condition("c0", A=0.8)
-problem.add_condition("c1", A=0.9)
+problem.add_condition("c0", A=a0_c0)
+problem.add_condition("c1", A=a0_c1)
 
 problem.add_experiment("e1", 0, "c0")
 problem.add_experiment("e2", 0, "c1")
 
 problem.add_observable("obs_a", "A", noise_formula="1")
+problem.add_observable("obs_b", "B", noise_formula="1")
 
-problem.add_measurement("obs_a", "e1", 0, 0.7)
-problem.add_measurement("obs_a", "e1", 10, 0.1)
-problem.add_measurement("obs_a", "e2", 0, 0.8)
-problem.add_measurement("obs_a", "e2", 10, 0.2)
+problem.add_measurement("obs_a", experiment_id="e1", time=0, measurement=0.01)
+problem.add_measurement("obs_a", experiment_id="e1", time=10, measurement=0.1)
+problem.add_measurement("obs_a", experiment_id="e2", time=0, measurement=0.02)
+problem.add_measurement("obs_a", experiment_id="e2", time=10, measurement=0.2)
+problem.add_measurement("obs_b", experiment_id="e1", time=0, measurement=0.01)
+problem.add_measurement("obs_b", experiment_id="e2", time=0, measurement=0.01)
 
-problem.add_parameter("k1", lb=0, ub=10, nominal_value=0.8, estimate=True)
-problem.add_parameter("k2", lb=0, ub=10, nominal_value=0.6, estimate=True)
+problem.add_parameter("k1", lb=0, ub=10, nominal_value=k1, estimate=True)
+problem.add_parameter("k2", lb=0, ub=10, nominal_value=k2, estimate=True)
 
 
 # solutions ------------------------------------------------------------------
@@ -46,8 +54,10 @@ simulation_df = problem.measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION}
 )
 simulation_df[SIMULATION] = [
-    *[analytical_a(t, 0.8, 1, 0.8, 0.6) for t in [0, 10]],
-    *[analytical_a(t, 0.9, 1, 0.8, 0.6) for t in [0, 10]],
+    *[analytical_a(t=t, a0=a0_c0, b0=b0, k1=k1, k2=k2) for t in [0, 10]],
+    *[analytical_a(t=t, a0=a0_c1, b0=b0, k1=k1, k2=k2) for t in [0, 10]],
+    b0,
+    b0,
 ]
 
 case = PetabV2TestCase.from_problem(

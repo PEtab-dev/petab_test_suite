@@ -28,6 +28,10 @@ size that must be executed after the condition table is applied.
 sbml_file = Path(__file__).parent / "model.xml"
 
 vol0 = 4
+conc0 = 2
+conc10 = 8
+dSdt = 1
+vol10 = (conc0 + 10 * dSdt) + vol0  # = 16
 
 ant_model = f"""
 model petab_test_0016
@@ -35,7 +39,7 @@ model petab_test_0016
 
     species S in C = 3 # this is overwritten by the condition table
 
-    p = 1
+    p = {dSdt}
     S' = p
 
     at S >= 12: C = C * 2 # this triggers at t=14
@@ -55,20 +59,22 @@ problem.add_experiment("experiment1", 0, "condition1", 10, "condition2")
 problem.add_condition(
     "condition1",
     "condition1",
-    S="S - 1",
+    S=conc0,
 )
 # t=10
 problem.add_condition(
     "condition2",
     "condition2",
     S="S + C",
-    C=8,
+    C=conc10,
 )
 
 ts = [0, 5, 10, 15]
 for t in ts:
     for obs in ["obs_C", "obs_amount_S", "obs_conc_S"]:
-        problem.add_measurement(obs, "experiment1", t, t)
+        problem.add_measurement(
+            obs, experiment_id="experiment1", time=t, measurement=t
+        )
 
 # solutions ------------------------------------------------------------------
 
@@ -79,28 +85,29 @@ simulation_df[SIMULATION] = [
     # vol, amount, conc
     # --- t=0 ---
     vol0,
-    2 * vol0,
-    2,
+    conc0 * vol0,
+    conc0,
     # --- t=5 ---
     vol0,
-    7 * vol0,
-    7,
+    (conc0 + 5 * dSdt) * vol0,
+    (conc0 + 5 * dSdt),
     # t=10-ε
-    # vol0=4, 12 * vol0=48, 12,
+    # vol0=4, 12 * vol0=48, S=12,
     # --- t=10 ---
     # condition table:
     # 8, (4+12) * 4 = 64 , (4+12) * 4 / 8 = 8
-    8,
-    64,
-    8,
+    vol10,
+    conc10 * vol10,
+    conc10,
     # pre-event, t=14:
-    # 8, 12*8=96, 12
+    # vol=vol10=16, 12*16=192, 12
     # event
-    # C = 8 * 2 = 16, 96, 96 / 16 = 6
+    # volume is changed by event, amount is preserved, conc changes
+    # C = 16 * 2 = 32, 192, 192 / 32 = 6
     # --- t=15 ---
-    16,
-    7 * 16,
-    7,
+    vol10 * 2,
+    (6 + 1 * dSdt) * (vol10 * 2),
+    (6 + 1 * dSdt),
 ]
 
 case = PetabV2TestCase.from_problem(

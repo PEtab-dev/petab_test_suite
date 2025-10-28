@@ -1,3 +1,5 @@
-observableId	experimentId	time	measurement	observableParameters	noiseParameters
-obs_a		0.0	0.7		
-obs_a		10.0	0.1		
+modelId	observableId	experimentId	time	measurement	observableParameters	noiseParameters
+	obs_a		0.0	0.7		
+	obs_a		10.0	0.1		
+	obs_b		0.0	0.7		
+	obs_b		10.0	0.1		

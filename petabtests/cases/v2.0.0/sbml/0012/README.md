@@ -4,9 +4,9 @@
 
 This case tests initial compartment sizes in the condition table.
 
-Note that this change will preserve the initial state of the model in terms
-of amounts. I.e., the change of the compartment size via the conditions table,
-will change the concentrations of all contained species.
+Note that changing the compartment size will only change the compartment size
+itself. It will not change the concentration of concentration-based species
+therein.
 
 ## Model
 

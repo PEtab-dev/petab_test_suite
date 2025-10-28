@@ -3,7 +3,12 @@ from inspect import cleandoc
 from petab.v2 import Problem
 from petab.v2.C import *
 
-from petabtests import DEFAULT_PYSB_FILE, PetabV2TestCase, analytical_a
+from petabtests import (
+    DEFAULT_PYSB_FILE,
+    PetabV2TestCase,
+    analytical_a,
+    analytical_b,
+)
 
 DESCRIPTION = cleandoc("""
 ## Objective
@@ -19,8 +24,11 @@ mass action kinetics.
 # problem --------------------------------------------------------------------
 problem = Problem()
 problem.add_observable("obs_a", "A", noise_formula=0.5)
-problem.add_measurement("obs_a", "", time=0, measurement=0.7)
-problem.add_measurement("obs_a", "", time=10, measurement=0.1)
+problem.add_observable("obs_b", "B", noise_formula=0.5)
+problem.add_measurement("obs_a", experiment_id="", time=0, measurement=0.7)
+problem.add_measurement("obs_a", experiment_id="", time=10, measurement=0.1)
+problem.add_measurement("obs_b", experiment_id="", time=0, measurement=0.7)
+problem.add_measurement("obs_b", experiment_id="", time=10, measurement=0.1)
 problem.add_parameter(
     "maps_to_a0", lb=0, ub=10, nominal_value=1, estimate=True
 )
@@ -41,7 +49,8 @@ simulation_df = problem.measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION}
 )
 simulation_df[SIMULATION] = [
-    analytical_a(t, 1, 0, 0.8, 0.6) for t in simulation_df[TIME]
+    *(analytical_a(t, 1, 0, 0.8, 0.6) for t in (0, 10)),
+    *(analytical_b(t, 1, 0, 0.8, 0.6) for t in (0, 10)),
 ]
 
 case = PetabV2TestCase(

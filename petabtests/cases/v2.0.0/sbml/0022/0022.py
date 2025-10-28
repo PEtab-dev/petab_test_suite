@@ -30,16 +30,14 @@ at time 10. The assigned values are independent of the model state.
 At time 10, the conditions table changes:
 * The compartment size from 2 to 4.
 * The concentration of `A` to `5`. This implies that the amount of
-  `A` is changed to `5 * 2 = 10` (concentration * compartment size).
-* The amount of `a` to `10`.
+  `A` is changed to `5 * 4 = 20` (concentration * compartment size).
+* The amount of `a` to `20`.
 
 This leads to the following model state at time 10:
-* The concentration of `A` is `10 / 4 = 2.5`
-  (new amount divided by new volume).
-* The amount of `a` is `10`, unaffected by the compartment size change.
-* The concentration of `B` is `(2 * 2) / 4 = 1`
-  (previous amount / new volume
-  = previous concentration * previous volume / new volume).
+* The concentration of `A` is the value assigned in the conditions table, `5`.
+* The amount of `a` is `20`, unaffected by the compartment size change.
+* The concentration of `B` remains `2`, unaffected by the compartment size
+  change.
 * The amount of `b` remains at `4`, unaffected by the compartment size change.
 """)
 
@@ -60,8 +58,8 @@ a_update = 5
 vol_update = 4
 # Values after re-initialization
 # [A], [B], compartment volume
-a_c10 = 2.5
-b_c10 = 1
+a_c10 = 5
+b_c10 = 2
 vol_10 = vol_update
 
 ant_model = f"""
@@ -83,11 +81,6 @@ model petab_test_0022
     B' = - k2 * B + k1 * A
     a' = k2 * b - k1 * a
     b' = - k2 * b + k1 * a
-
-    # the result of the PEtab reinitialization should be the same as with
-    #  the following event and no reinitialization:
-    #
-    #  at time >= 10: A = {a_update}, a = {a_update} * default_compartment, default_compartment = {vol_10}
 end
 """
 sbml_file.write_text(antimony_to_sbml_str(ant_model))
@@ -104,7 +97,7 @@ problem.add_experiment("experiment1", 0, "", 10, "condition2")
 problem.add_condition(
     "condition2",
     "condition2",
-    a=a_update * vol0,
+    a=a_update * vol_10,
     A=a_update,
     default_compartment=vol_10,
 )
@@ -112,10 +105,18 @@ problem.add_condition(
 
 ts = [0, 5, 10, 15]
 for t in ts:
-    problem.add_measurement("obs_a", "experiment1", t, 2)
-    problem.add_measurement("obs_A", "experiment1", t, 2)
-    problem.add_measurement("obs_b", "experiment1", t, 1)
-    problem.add_measurement("obs_B", "experiment1", t, 1)
+    problem.add_measurement(
+        "obs_a", experiment_id="experiment1", time=t, measurement=2
+    )
+    problem.add_measurement(
+        "obs_A", experiment_id="experiment1", time=t, measurement=2
+    )
+    problem.add_measurement(
+        "obs_b", experiment_id="experiment1", time=t, measurement=1
+    )
+    problem.add_measurement(
+        "obs_B", experiment_id="experiment1", time=t, measurement=1
+    )
 
 # solutions ------------------------------------------------------------------
 
@@ -137,12 +138,12 @@ simulation_df[SIMULATION] = [
     # t=10, re-initialize compartment size and contained species
     a_c10 * vol_10,
     a_c10,
-    b_c10 * vol_10,
+    b_c10 * vol0,
     b_c10,
     # t=15 (5s after re-initialization)
-    analytical_a(5, a_c10, b_c10, k1, k2) * vol_10,
+    analytical_a(5, a_c10 * vol_10, b_c10 * vol0, k1, k2),
     analytical_a(5, a_c10, b_c10, k1, k2),
-    analytical_b(5, a_c10, b_c10, k1, k2) * vol_10,
+    analytical_b(5, a_c10 * vol_10, b_c10 * vol0, k1, k2),
     analytical_b(5, a_c10, b_c10, k1, k2),
 ]
 
