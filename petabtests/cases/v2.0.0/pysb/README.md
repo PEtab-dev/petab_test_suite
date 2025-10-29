@@ -58,10 +58,6 @@ Simulation. Multiple numeric noise parameter overrides.
 
 Simulation. Single parametric noise parameter override.
 
-# [0016](0016/)
-
-Parameters in mapping table.
-
 # [0017](0017/)
 
 Simulation. Preequilibration. One species reinitialized, one not (NaN in condition table). InitialAssignment to species overridden.
