@@ -70,10 +70,6 @@ Simulation. Pre-equilibration. One species reinitialized, one not.InitialAssignm
 
 Simulation. Preequilibration and RateRules. Non-zero simulation start time. InitialAssignment to species overridden.
 
-# [0019](0019/)
-
-Mapping table.
-
 # [0020](0020/)
 
 Simulation. Estimated initial value via conditions table.
