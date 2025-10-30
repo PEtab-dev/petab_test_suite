@@ -42,7 +42,7 @@ model petab_test_0016
     p = {dSdt}
     S' = p
 
-    at S >= 12: C = C * 2 # this triggers at t=14
+    at S >= 12, fromTrigger=false: C = C * 2 # this triggers at t=14
 end
 """
 sbml_file.write_text(antimony_to_sbml_str(ant_model))

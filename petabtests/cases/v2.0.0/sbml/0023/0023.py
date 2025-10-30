@@ -32,7 +32,7 @@ model petab_test_0023
     p = p0
     dpdt = 1
     p' = piecewise(dpdt, p <= 500, 0)
-    at p >= 500, t0=false: p = p + 1000
+    at p >= 500, t0=false, fromTrigger=false: p = p + 1000
 end
 """
 sbml_file.write_text(antimony_to_sbml_str(ant_model))

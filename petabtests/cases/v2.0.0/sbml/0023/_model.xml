@@ -34,7 +34,7 @@
       </rateRule>
     </listOfRules>
     <listOfEvents>
-      <event id="_E0" useValuesFromTriggerTime="true">
+      <event id="_E0" useValuesFromTriggerTime="false">
         <trigger initialValue="false" persistent="true">
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
