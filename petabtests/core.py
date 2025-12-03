@@ -11,7 +11,6 @@ from .file import (
     get_case_dir,
     test_id_str,
     write_info,
-    write_solution,
     PetabV2TestCase,
 )
 
@@ -85,39 +84,15 @@ def create_case(format_: str, version: str, id_: str) -> None:
     case_dir = get_case_dir(format_=format_, version=version, id_=id_)
 
     if version == "v1.0.0":
-        from petab.v1.calculate import calculate_chi2, calculate_llh
-
         case = PetabV1TestCase.load(case_dir, id_)
     elif version == "v2.0.0":
-        from petab.v2.calculate import calculate_chi2, calculate_llh
-
         case = PetabV2TestCase.load(case_dir, id_)
     else:
         raise NotImplementedError(f"Unknown PEtab version {version}")
 
     write_info(case, format_, version=version)
 
-    case.write_problem(
-        format_=format_,
-    )
-
-    chi2 = calculate_chi2(
-        case.measurement_dfs,
-        case.simulation_dfs,
-        case.observable_dfs,
-        case.parameter_df,
-    )
-    llh = calculate_llh(
-        case.measurement_dfs,
-        case.simulation_dfs,
-        case.observable_dfs,
-        case.parameter_df,
-    )
-    write_solution(
-        test_id=case.id,
-        chi2=chi2,
-        llh=llh,
-        simulation_dfs=case.simulation_dfs,
+    case.write(
         format_=format_,
         version=version,
     )

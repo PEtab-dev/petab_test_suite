@@ -62,14 +62,30 @@ class PetabV1TestCase:
 
     def write(self, version: str, format_: str):
         """Write the test case to files."""
+        from petab.v1.calculate import calculate_chi2, calculate_llh
+
         self.write_problem(
             format_=format_,
         )
+
+        chi2 = calculate_chi2(
+            self.measurement_dfs,
+            self.simulation_dfs,
+            self.observable_dfs,
+            self.parameter_df,
+        )
+        llh = calculate_llh(
+            self.measurement_dfs,
+            self.simulation_dfs,
+            self.observable_dfs,
+            self.parameter_df,
+        )
+
         write_solution(
             test_id=self.id,
             simulation_dfs=self.simulation_dfs,
-            chi2=None,
-            llh=None,
+            chi2=chi2,
+            llh=llh,
             version=version,
             format_=format_,
         )
@@ -257,15 +273,30 @@ class PetabV2TestCase:
 
     def write(self, version: str, format_: str):
         """Write the test case to files."""
+        from petab.v2.calculate import calculate_chi2, calculate_llh
+
         self.write_problem(
             format_=format_,
-            version=version,
         )
+
+        chi2 = calculate_chi2(
+            self.measurement_dfs,
+            self.simulation_dfs,
+            self.observable_dfs,
+            self.parameter_df,
+        )
+        llh = calculate_llh(
+            self.measurement_dfs,
+            self.simulation_dfs,
+            self.observable_dfs,
+            self.parameter_df,
+        )
+
         write_solution(
             test_id=self.id,
             simulation_dfs=self.simulation_dfs,
-            chi2=None,
-            llh=None,
+            chi2=chi2,
+            llh=llh,
             version=version,
             format_=format_,
         )
