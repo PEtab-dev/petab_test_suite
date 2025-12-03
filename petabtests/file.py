@@ -18,6 +18,7 @@ from petab.v1.lint import lint_problem as lint_problem_v1
 from petab.v2.lint import lint_problem as lint_problem_v2
 import importlib
 import sys
+from math import log
 
 logger = logging.getLogger("petab_test_suite")
 
@@ -225,6 +226,7 @@ class PetabV2TestCase:
     parameter_df: pd.DataFrame
     mapping_df: pd.DataFrame = None
     experiment_dfs: list[pd.DataFrame] = None
+    version = "v2.0.0"
 
     @staticmethod
     def from_problem(
@@ -274,6 +276,8 @@ class PetabV2TestCase:
     def write(self, version: str, format_: str):
         """Write the test case to files."""
         from petab.v2.calculate import calculate_chi2, calculate_llh
+        from petab.v2 import Problem
+        from petab.v2 import Uniform
 
         self.write_problem(
             format_=format_,
@@ -292,6 +296,30 @@ class PetabV2TestCase:
             self.parameter_df,
         )
 
+        yaml_path = get_case_dir(
+            id_=self.id, format_=format_, version=self.version
+        ) / problem_yaml_name(self.id)
+        problem = Problem.from_yaml(yaml_path)
+
+        if problem.has_ml_objective:
+            log_prior = None
+            unnorm_log_posterior = None
+        else:
+            log_prior = {
+                p.id: log(
+                    float(
+                        (
+                            p.prior_dist
+                            if p.prior_dist
+                            else Uniform(p.lb, p.ub)
+                        ).pdf(p.nominal_value)
+                    )
+                )
+                for p in problem.parameters
+                if p.estimate
+            }
+            unnorm_log_posterior = llh + sum(log_prior.values())
+
         write_solution(
             test_id=self.id,
             simulation_dfs=self.simulation_dfs,
@@ -299,6 +327,8 @@ class PetabV2TestCase:
             llh=llh,
             version=version,
             format_=format_,
+            log_prior=log_prior,
+            unnorm_log_posterior=unnorm_log_posterior,
         )
 
     def write_problem(
@@ -311,10 +341,9 @@ class PetabV2TestCase:
         ----------
         format_: Model format (SBML/PySB)
         """
-        version = "v2.0.0"
-        format_version = version[1:]
+        format_version = self.version[1:]
         test_id = self.id
-        print(f"Writing case {version} {format_} {test_id}...")
+        print(f"Writing case {self.version} {format_} {test_id}...")
         # convenience
         condition_dfs = (
             [self.condition_dfs]
@@ -343,7 +372,7 @@ class PetabV2TestCase:
         parameter_dfs = [self.parameter_df]
 
         # id to string
-        dir_ = get_case_dir(id_=test_id, format_=format_, version=version)
+        dir_ = get_case_dir(id_=test_id, format_=format_, version=self.version)
 
         # petab yaml
         config = {
@@ -499,6 +528,8 @@ def write_solution(
     tol_simulations: float = 1e-3,
     tol_chi2: float = 1e-3,
     tol_llh: float = 1e-3,
+    log_prior: dict[str, float] = None,
+    unnorm_log_posterior: float = None,
 ):
     """Write solution to files.
 
@@ -525,11 +556,16 @@ def write_solution(
         #  unrelated test cases
         CHI2: round(float(chi2), 14),
         LLH: round(float(llh), 14),
-        # TODO: add log-prior, log-posterior
         TOL_SIMULATIONS: float(tol_simulations),
         TOL_CHI2: float(tol_chi2),
         TOL_LLH: float(tol_llh),
     }
+    if log_prior is not None:
+        config[LOG_PRIOR] = log_prior
+        config[TOL_LOG_PRIOR] = 1e-14
+    if unnorm_log_posterior is not None:
+        config[UNNORM_LOG_POSTERIOR] = unnorm_log_posterior
+        config[TOL_UNNORM_LOG_POSTERIOR] = float(tol_llh)
 
     # write simulations
     _write_dfs_to_files(
@@ -543,7 +579,7 @@ def write_solution(
     # write yaml
     yaml_file = solution_yaml_name(test_id)
     with open(os.path.join(dir_, yaml_file), "w") as outfile:
-        yaml.dump(config, outfile, default_flow_style=False)
+        yaml.safe_dump(config, outfile, default_flow_style=False)
 
 
 def _write_dfs_to_files(

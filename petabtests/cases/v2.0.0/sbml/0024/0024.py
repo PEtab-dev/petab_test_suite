@@ -12,7 +12,8 @@ from petab.v2 import PriorDistribution
 DESCRIPTION = cleandoc(r"""
 ## Objective
 
-This case tests different prior distributions.
+This case tests different prior distributions, their truncation, as well as
+implicit uniform priors and fixed parameters.
 
 ## Model
 
@@ -65,9 +66,12 @@ for prior_type, prior_pars in priors:
         prior_distribution=prior_type,
         prior_parameters=prior_pars,
     )
+# implicit uniform prior
+problem.add_parameter("p1", estimate=True, nominal_value=1, lb=0, ub=2)
+# fixed, i.e., no prior
+problem.add_parameter("p_fixed", estimate=False, nominal_value=1)
 # we need some observable and measurement
-problem.add_parameter("p1", estimate=False, nominal_value=1)
-problem.add_observable("obs_p1", "p1", noise_formula="1")
+problem.add_observable("obs_p1", "p1", noise_formula="p_fixed")
 problem.add_measurement("obs_p1", experiment_id="", time=0, measurement=1)
 
 # solutions ------------------------------------------------------------------
