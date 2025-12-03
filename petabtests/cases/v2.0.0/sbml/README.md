@@ -86,3 +86,7 @@ Simultaneous re-initialization of compartment size and contained species.
 
 Events during steady-state simulations.
 
+# [0024](0024/)
+
+Prior distributions.
+
