@@ -25,7 +25,7 @@
             <apply>
               <geq/>
               <ci> S </ci>
-              <cn type="integer"> 12 </cn>
+              <cn type="integer"> 14 </cn>
             </apply>
           </math>
         </trigger>

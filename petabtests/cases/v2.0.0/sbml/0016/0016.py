@@ -19,8 +19,9 @@ contained species with state-dependent expressions.
 A species `S`, defined in terms of concentrations, with `dS/dt = p = 1`,
 in a compartment `C`. `S` and `C` are changed via the condition table.
 
-There is an event triggered at `t=10` that re-initializes the compartment
-size that must be executed after the condition table is applied.
+There is a PEtab condition triggered at `t=10` which triggers an SBML
+event that re-initializes the compartment size that must be executed
+after the condition table is applied.
 """)
 
 # problem --------------------------------------------------------------------
@@ -42,7 +43,7 @@ model petab_test_0016
     p = {dSdt}
     S' = p
 
-    at S >= 12, fromTrigger=false: C = C * 2 # this triggers at t=14
+    at S >= 14, fromTrigger=false: C = C * 2 # this is triggered by the PEtab condition
 end
 """
 sbml_file.write_text(antimony_to_sbml_str(ant_model))
@@ -91,23 +92,19 @@ simulation_df[SIMULATION] = [
     vol0,
     (conc0 + 5 * dSdt) * vol0,
     (conc0 + 5 * dSdt),
-    # t=10-ε
-    # vol0=4, 12 * vol0=48, S=12,
     # --- t=10 ---
     # condition table:
-    # 8, (4+12) * 4 = 64 , (4+12) * 4 / 8 = 8
+    # 8, 8 * 2 = 16 , 8 * 2 / 8 = 2
+    # event (triggered by condition table)
+    # volume is changed by event, amount is preserved, conc changes
+    # C = 8 * 2 = 16, 128, 8
     vol10,
     conc10 * vol10,
     conc10,
-    # pre-event, t=14:
-    # vol=vol10=16, 12*16=192, 12
-    # event
-    # volume is changed by event, amount is preserved, conc changes
-    # C = 16 * 2 = 32, 192, 192 / 32 = 6
     # --- t=15 ---
-    vol10 * 2,
-    (6 + 1 * dSdt) * (vol10 * 2),
-    (6 + 1 * dSdt),
+    vol10,
+    (conc10 + 5 * dSdt) * vol10,
+    (conc10 + 5 * dSdt)
 ]
 
 case = PetabV2TestCase.from_problem(
