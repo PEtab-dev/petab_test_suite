@@ -561,7 +561,9 @@ def write_solution(
         TOL_LLH: float(tol_llh),
     }
     if log_prior is not None:
-        config[LOG_PRIOR] = log_prior
+        config[LOG_PRIOR] = {
+            k: round(float(v), 14) for k, v in log_prior.items()
+        }
         config[TOL_LOG_PRIOR] = 1e-14
     if unnorm_log_posterior is not None:
         config[UNNORM_LOG_POSTERIOR] = unnorm_log_posterior
