@@ -94,7 +94,7 @@ simulation_df[SIMULATION] = [
     (conc0 + 5 * dSdt),
     # --- t=10 ---
     # condition table:
-    # 8, 8 * 2 = 16 , 8 * 2 / 8 = 2
+    # 8, 16 * 8 = 128 , 12 + 4 = 16
     # event (triggered by condition table)
     # volume is changed by event, amount is preserved, conc changes
     # C = 8 * 2 = 16, 128, 8
