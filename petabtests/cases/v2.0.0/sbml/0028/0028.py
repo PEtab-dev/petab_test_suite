@@ -3,7 +3,6 @@ from inspect import cleandoc
 from petab.v2.C import *
 from petab.v2 import Problem
 from petabtests import PetabV2TestCase, analytical_a, analytical_b, DEFAULT_SBML_FILE
-from pathlib import Path
 
 DESCRIPTION = cleandoc("""
 ## Objective
