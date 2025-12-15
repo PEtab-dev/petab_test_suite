@@ -1,5 +1,5 @@
-chi2: 4.0
-llh: -2.91893853320467
+chi2: 0.0
+llh: -0.91893853320467
 log_prior:
   p1: -0.69314718055995
   p_cauchy: -2.15728237835358
@@ -20,4 +20,4 @@ tol_llh: 0.001
 tol_log_prior: 1.0e-14
 tol_simulations: 0.001
 tol_unnorm_log_posterior: 0.001
-unnorm_log_posterior: -27.111631733702236
+unnorm_log_posterior: -25.111631733702236
