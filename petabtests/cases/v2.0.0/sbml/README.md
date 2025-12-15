@@ -94,7 +94,7 @@ Truncated prior distributions.
 
 Non-truncated prior distributions.
 
-# [0025](0025/)
+# [0030](0030/)
 
-Non-truncated prior distributions.
+Simultaneous trigger of PEtab condition and SBML event.
 
