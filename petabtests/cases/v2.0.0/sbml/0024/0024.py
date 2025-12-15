@@ -12,7 +12,7 @@ from petab.v2 import PriorDistribution
 DESCRIPTION = cleandoc(r"""
 ## Objective
 
-This case tests different prior distributions, their truncation, as well as
+This case tests different truncated prior distributions, as well as
 implicit uniform priors and fixed parameters.
 
 ## Model
@@ -80,7 +80,7 @@ simulation_df = problem.measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION}
 )
 simulation_df[SIMULATION] = [
-    3,
+    1,
 ]
 
 case = PetabV2TestCase.from_problem(

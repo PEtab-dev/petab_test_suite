@@ -2,7 +2,7 @@
 
 ## Objective
 
-This case tests different prior distributions, their truncation, as well as
+This case tests different truncated prior distributions, as well as
 implicit uniform priors and fixed parameters.
 
 ## Model
