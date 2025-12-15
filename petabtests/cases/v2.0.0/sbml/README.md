@@ -94,7 +94,7 @@ Truncated prior distributions.
 
 Non-truncated prior distributions.
 
-# [0025](0025/)
+# [0031](0031/)
 
-Non-truncated prior distributions.
+Simulation. Two PEtab conditions applied at the same time point.
 
