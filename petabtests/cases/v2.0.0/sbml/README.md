@@ -94,7 +94,7 @@ Truncated prior distributions.
 
 Non-truncated prior distributions.
 
-# [0025](0025/)
+# [0026](0026/)
 
-Non-truncated prior distributions.
+Simulation. Estimated initial value via math expressions in conditions table.
 
