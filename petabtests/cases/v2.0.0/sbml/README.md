@@ -94,7 +94,7 @@ Truncated prior distributions.
 
 Non-truncated prior distributions.
 
-# [0025](0025/)
+# [0028](0028/)
 
-Non-truncated prior distributions.
+Simulation. None t0 condition applied at time-point without measurements.
 
