@@ -98,3 +98,7 @@ Non-truncated prior distributions.
 
 Simulation. Estimated initial value via math expressions in conditions table.
 
+# [0027](0027/)
+
+Simulation. Condition-specific parameters defined via math expressions in the parameter table.
+
