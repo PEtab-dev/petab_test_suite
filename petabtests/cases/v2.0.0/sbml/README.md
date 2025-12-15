@@ -110,3 +110,7 @@ Simulation. None t0 condition applied at time-point without measurements.
 
 Simulation. Non-zero simulation start time
 
+# [0030](0030/)
+
+Simultaneous trigger of PEtab condition and SBML event.
+
