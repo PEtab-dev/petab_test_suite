@@ -2,7 +2,7 @@ from inspect import cleandoc
 
 from petab.v2.C import *
 from petab.v2 import Problem
-from petabtests import PetabV2TestCase, analytical_a, analytical_b, antimony_to_sbml_str
+from petabtests import PetabV2TestCase, analytical_a, analytical_b, DEFAULT_SBML_FILE
 from pathlib import Path
 
 DESCRIPTION = cleandoc("""
@@ -23,24 +23,6 @@ a0 = 1
 b0 = 1
 k1 = 0.8
 k2 = 0.6
-
-ant_model = f"""
-model *petab_test_0028()
-  compartment compartment_ = 1;
-  species A in compartment_, B in compartment_;
-
-  fwd: A => B; compartment_ * k1 * A;
-  rev: B => A; compartment_ * k2 * B;
-
-  A = 1;
-  B = 1;
-  k1 = 0;  # overridden by parameter table
-  k2 = 0;  # overridden by parameter table
-end
-"""
-model_file = Path(__file__).parent / "_model.xml"
-model_file.write_text(antimony_to_sbml_str(ant_model))
-
 problem = Problem()
 
 problem.add_condition(
@@ -78,7 +60,7 @@ case = PetabV2TestCase.from_problem(
     brief="Simulation. None t0 condition applied at time-point "
     "without measurements.",
     description=DESCRIPTION,
-    model=model_file,
+    model=DEFAULT_SBML_FILE,
     problem=problem,
     simulation_df=simulation_df,
 )
