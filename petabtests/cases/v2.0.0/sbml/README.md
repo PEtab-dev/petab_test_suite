@@ -88,7 +88,7 @@ Events during steady-state simulations.
 
 # [0024](0024/)
 
-Prior distributions.
+Truncated prior distributions.
 
 # [0025](0025/)
 
