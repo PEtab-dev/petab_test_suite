@@ -102,3 +102,7 @@ Simulation. Estimated initial value via math expressions in conditions table.
 
 Simulation. Condition-specific parameters defined via math expressions in the parameter table.
 
+# [0028](0028/)
+
+Simulation. None t0 condition applied at time-point without measurements.
+
