@@ -1,0 +1,86 @@
+from inspect import cleandoc
+from pathlib import Path
+
+from petab.v2.C import *
+from petab.v2 import Problem
+from petabtests import PetabV2TestCase, analytical_a, antimony_to_sbml_str
+
+DESCRIPTION = cleandoc("""
+## Objective
+
+This case tests support for parametric overrides from condition table
+via math expressions.
+
+The model is simulated for two different experimental conditions
+(here: different initial concentrations). The observable is offset via
+a parametric override in the condition table (i.e. the actual value
+has to be taken from the parameter table). The formulas in the
+condition table are mathematical expressions consisting of
+numerical values, parameters to be estimated, and parameters that
+are not to be estimated.
+
+## Model
+
+A simple conversion reaction `A <=> B` in a single compartment, following
+mass action kinetics.
+""")
+
+# problem --------------------------------------------------------------------
+ant_model = """
+model *petab_test_0027()
+  compartment compartment_ = 1;
+  species A in compartment_, B in compartment_;
+
+  fwd: A => B; compartment_ * k1 * A;
+  rev: B => A; compartment_ * k2 * B;
+
+  A = a0;
+  B = b0;
+  offset_A = 0;
+  a0 = 1;
+  b0 = 0;
+  k1 = 0;
+  k2 = 0;
+end
+"""
+model_file = Path(__file__).parent / "_model.xml"
+model_file.write_text(antimony_to_sbml_str(ant_model))
+
+problem = Problem()
+problem.add_condition("c0", offset_A="offset_A1_c0 + offset_A2_c0")
+problem.add_condition("c1", offset_A="offset_A1_c1 / 3.0")
+
+problem.add_experiment("e1", 0, "c0")
+problem.add_experiment("e2", 0, "c1")
+
+problem.add_observable("obs_a", "A + offset_A", noise_formula="1")
+
+problem.add_measurement("obs_a", experiment_id="e1", time=10, measurement=2.1)
+problem.add_measurement("obs_a", experiment_id="e2", time=10, measurement=3.2)
+
+problem.add_parameter("a0", lb=0, ub=10, nominal_value=1, estimate=True)
+problem.add_parameter("b0", lb=0, ub=10, nominal_value=0, estimate=True)
+problem.add_parameter("k1", lb=0, ub=10, nominal_value=0.8, estimate=True)
+problem.add_parameter("k2", lb=0, ub=10, nominal_value=0.6, estimate=True)
+problem.add_parameter("offset_A1_c0", lb=0, ub=10, nominal_value=0.5, estimate=True)
+problem.add_parameter("offset_A2_c0", lb=0, ub=10, nominal_value=1.5, estimate=False)
+problem.add_parameter("offset_A1_c1", lb=0, ub=10, nominal_value=9, estimate=True)
+
+# solutions ------------------------------------------------------------------
+
+simulation_df = problem.measurement_df.copy(deep=True).rename(
+    columns={MEASUREMENT: SIMULATION}
+)
+simulation_df[SIMULATION] = [
+    analytical_a(10, 1, 0, 0.8, 0.6) + offset for offset in [2, 3]
+]
+
+case = PetabV2TestCase.from_problem(
+    id=27,
+    brief="Simulation. Condition-specific parameters defined via "
+    "math expressions in the parameter table.",
+    description=DESCRIPTION,
+    model=model_file,
+    problem=problem,
+    simulation_df=simulation_df,
+)
