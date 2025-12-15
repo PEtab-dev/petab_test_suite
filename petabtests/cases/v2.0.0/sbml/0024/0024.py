@@ -85,7 +85,7 @@ simulation_df[SIMULATION] = [
 
 case = PetabV2TestCase.from_problem(
     id=24,
-    brief="Prior distributions.",
+    brief="Truncated prior distributions.",
     description=DESCRIPTION,
     model=sbml_file,
     problem=problem,
