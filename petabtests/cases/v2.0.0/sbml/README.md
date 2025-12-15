@@ -36,7 +36,8 @@ Simulation. Preequilibration.
 
 # [0010](0010/)
 
-Simulation. Preequilibration. One species reinitialized, one not. InitialAssignment to species overridden.
+Simulation. Preequilibration. One species reinitialized, one not. InitialAssignment to
+species overridden.
 
 # [0011](0011/)
 
@@ -60,15 +61,18 @@ Simulation. Single parametric noise parameter override.
 
 # [0016](0016/)
 
-Simultaneous state-dependent re-initialization of compartment size and contained species followed by event.
+Simultaneous state-dependent re-initialization of compartment size and contained species
+followed by event.
 
 # [0017](0017/)
 
-Simulation. Pre-equilibration. One species reinitialized, one not.InitialAssignment to species overridden.
+Simulation. Pre-equilibration. One species reinitialized, one not.InitialAssignment to
+species overridden.
 
 # [0018](0018/)
 
-Simulation. Preequilibration and RateRules. Non-zero simulation start time. InitialAssignment to species overridden.
+Simulation. Preequilibration and RateRules. Non-zero simulation start time.
+InitialAssignment to species overridden.
 
 # [0020](0020/)
 
@@ -94,7 +98,11 @@ Truncated prior distributions.
 
 Non-truncated prior distributions.
 
-# [0025](0025/)
+# [0026](0026/)
 
-Non-truncated prior distributions.
+Simulation. Estimated initial value via math expressions in conditions table.
 
+# [0027](0027/)
+
+Simulation. Condition-specific parameters defined via math expressions in the parameter
+table.
