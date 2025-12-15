@@ -1,4 +1,5 @@
 from inspect import cleandoc
+from numpy import inf
 
 from petab.v2.C import *
 from petab.v2 import Problem
@@ -12,7 +13,7 @@ from petab.v2 import PriorDistribution
 DESCRIPTION = cleandoc(r"""
 ## Objective
 
-This case tests different truncated prior distributions, as well as
+This case tests different non-truncated prior distributions, as well as
 implicit uniform priors and fixed parameters.
 
 ## Model
@@ -23,20 +24,20 @@ A simple model with all constant parameters.
 # problem --------------------------------------------------------------------
 
 priors = [
-    (PriorDistribution.UNIFORM, (2, 8)),
-    (PriorDistribution.NORMAL, (4, 2)),
-    (PriorDistribution.LOG_NORMAL, (5, 2)),
-    (PriorDistribution.CAUCHY, (3, 5)),
-    (PriorDistribution.CHI_SQUARED, (4)),
-    (PriorDistribution.EXPONENTIAL, (3)),
-    (PriorDistribution.GAMMA, (3, 5)),
-    (PriorDistribution.LAPLACE, (3, 5)),
-    (PriorDistribution.LOG_LAPLACE, (3, 5)),
-    (PriorDistribution.LOG_UNIFORM, (3, 5)),
-    (PriorDistribution.RAYLEIGH, (3)),
+    (PriorDistribution.UNIFORM, (2, 8), 2, 8),
+    (PriorDistribution.NORMAL, (4, 2), -inf, inf),
+    (PriorDistribution.LOG_NORMAL, (5, 2), 0.0, inf),
+    (PriorDistribution.CAUCHY, (3, 5), -inf, inf),
+    (PriorDistribution.CHI_SQUARED, (4), 0.0, inf),
+    (PriorDistribution.EXPONENTIAL, (3), 0.0, inf),
+    (PriorDistribution.GAMMA, (3, 5), 0, inf),
+    (PriorDistribution.LAPLACE, (3, 5), -inf, inf),
+    (PriorDistribution.LOG_LAPLACE, (3, 5), 0, inf),
+    (PriorDistribution.LOG_UNIFORM, (3, 5), 3, 5),
+    (PriorDistribution.RAYLEIGH, (3), 0, inf),
 ]
 
-tested_prior_distrs = {pd for pd, _ in priors}
+tested_prior_distrs = {pd for pd, _, _, _ in priors}
 untested_distrs = [
     pd.value for pd in PriorDistribution if pd not in tested_prior_distrs
 ]
@@ -46,22 +47,22 @@ if untested_distrs:
 sbml_file = Path(__file__).parent / "_model.xml"
 
 parameters = "\n".join(
-    f"p_{prior_type.value.replace('-', '_')} = 5;" for prior_type, _ in priors
+    f"p_{prior_type.value.replace('-', '_')} = 5;" for prior_type, _, _, _ in priors
 )
 ant_model = f"""
-model petab_test_0024
+model petab_test_0025
     {parameters}
 end
 """
 sbml_file.write_text(antimony_to_sbml_str(ant_model))
 
 problem = Problem()
-for prior_type, prior_pars in priors:
+for prior_type, prior_pars, support_lb, support_ub in priors:
     problem.add_parameter(
         f"p_{prior_type.value.replace('-', '_')}",
         estimate=True,
-        lb=0,
-        ub=10,
+        lb=support_lb,
+        ub=support_ub,
         nominal_value=5,
         prior_distribution=prior_type,
         prior_parameters=prior_pars,
@@ -84,8 +85,8 @@ simulation_df[SIMULATION] = [
 ]
 
 case = PetabV2TestCase.from_problem(
-    id=24,
-    brief="Truncated prior distributions.",
+    id=25,
+    brief="Non-truncated prior distributions.",
     description=DESCRIPTION,
     model=sbml_file,
     problem=problem,
