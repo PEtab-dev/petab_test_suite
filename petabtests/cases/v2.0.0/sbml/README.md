@@ -36,8 +36,7 @@ Simulation. Preequilibration.
 
 # [0010](0010/)
 
-Simulation. Preequilibration. One species reinitialized, one not. InitialAssignment to
-species overridden.
+Simulation. Preequilibration. One species reinitialized, one not. InitialAssignment to species overridden.
 
 # [0011](0011/)
 
@@ -61,18 +60,15 @@ Simulation. Single parametric noise parameter override.
 
 # [0016](0016/)
 
-Simultaneous state-dependent re-initialization of compartment size and contained species
-followed by event.
+Simultaneous state-dependent re-initialization of compartment size and contained species followed by event.
 
 # [0017](0017/)
 
-Simulation. Pre-equilibration. One species reinitialized, one not.InitialAssignment to
-species overridden.
+Simulation. Pre-equilibration. One species reinitialized, one not.InitialAssignment to species overridden.
 
 # [0018](0018/)
 
-Simulation. Preequilibration and RateRules. Non-zero simulation start time.
-InitialAssignment to species overridden.
+Simulation. Preequilibration and RateRules. Non-zero simulation start time. InitialAssignment to species overridden.
 
 # [0020](0020/)
 
@@ -121,4 +117,8 @@ Simultaneous trigger of PEtab condition and SBML event.
 # [0031](0031/)
 
 Simulation. Two PEtab conditions applied at the same time point.
+
+# [0032](0032/)
+
+Simulation. A parameter to estimate both sets initial value and appears in observable         formulas
 
