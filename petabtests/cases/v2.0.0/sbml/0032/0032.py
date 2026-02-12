@@ -72,8 +72,8 @@ simulation_df = problem.measurement_df.copy(deep=True).rename(
 )
 initial_A = 2.0
 simulation_df[SIMULATION] = [
-    *(analytical_a(t, 2, 3, 0.8, 0.6) + initial_A for t in (0, 10)),
-    *(analytical_b(t, 2, 3, 0.8, 0.6) for t in (0, 10)),
+    *(analytical_a(t, initial_A, 3, 0.8, 0.6) + initial_A for t in (0, 10)),
+    *(analytical_b(t, initial_A, 3, 0.8, 0.6) for t in (0, 10)),
 ]
 
 case = PetabV2TestCase.from_problem(
