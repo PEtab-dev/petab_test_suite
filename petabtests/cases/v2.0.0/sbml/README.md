@@ -118,3 +118,7 @@ Simultaneous trigger of PEtab condition and SBML event.
 
 Simulation. Two PEtab conditions applied at the same time point.
 
+# [0032](0032/)
+
+Simulation. A parameter to estimate both sets initial value and appears in observable         formulas
+
