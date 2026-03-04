@@ -1,9 +1,11 @@
 name: CI tests
 
-# trigger
 on:
   push:
   pull_request:
+  schedule:
+    - cron:  '48 4 * * *'
+  workflow_dispatch:
 
 jobs:
   build:
