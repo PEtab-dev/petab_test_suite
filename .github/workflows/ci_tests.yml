@@ -39,8 +39,6 @@ jobs:
         # uninstall, otherwise git+... installation from .ci_pip_reqs.txt won't do anything
         pip uninstall -y petab
         pip install -r .ci_pip_reqs.txt
-        # https://github.com/sbmlteam/python-libsbml/issues/40
-        pip install -U python-libsbml==5.20.5
     - name: Check style
       run: ruff check
     - name: Run tests
