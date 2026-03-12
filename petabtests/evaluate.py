@@ -110,9 +110,9 @@ def absolute_simulations_distance_for_table(
     # append simulation column last for correct sorting
     relevant_cols.append(SIMULATION)
 
-    # restrict tables
-    simulations = simulations[relevant_cols]
-    gt_simulations = gt_simulations[relevant_cols]
+    # restrict tables, fillna to simplify comparisons (nan!=nan)
+    simulations = simulations[relevant_cols].fillna("")
+    gt_simulations = gt_simulations[relevant_cols].fillna("")
 
     # sort both in the same way to enable direct comparison
     # and to get the smallest distance
