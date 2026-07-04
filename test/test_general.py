@@ -1,7 +1,6 @@
 import petabtests
 import os
 import pytest
-from pathlib import Path
 
 
 def test_cases_dir_exists():
