@@ -17,5 +17,5 @@ Rule('conversion', A_() ** compartment | B_() ** compartment, k1, k2)
 Initial(A_() ** compartment, a0)
 Initial(B_() ** compartment, b0)
 
-Observable("A_o", A_())
-Observable("B_o", B_())
+Observable("A", A_())
+Observable("B", B_())
