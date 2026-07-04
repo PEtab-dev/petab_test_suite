@@ -56,6 +56,7 @@ exclude = ["petabtests/cases/**/*.md", "cases/**"]
 [tool.ruff.lint.per-file-ignores]
 "petabtests/cases/v2.0.0/pysb/*/_model.py" = ["F821"]
 "petabtests/cases/v2.0.0/pysb/*/conversion_modified_pysb.py" = ["F821"]
+"petabtests/cases/v2.0.0/pysb/*/conversion_pysb.py" = ["F821"]
 "petabtests/conversion_*pysb.py" = ["F821"]
 
 # add UP rules for ruff via extend-select
