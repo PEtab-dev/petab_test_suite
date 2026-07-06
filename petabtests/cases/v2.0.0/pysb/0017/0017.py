@@ -32,8 +32,8 @@ mass action kinetics.
 
 # problem --------------------------------------------------------------------
 problem = Problem()
-problem.add_condition("preeq_c0", k1=0.3, B=2.0, A=0)
-problem.add_condition("c0", k1=0.8, A=1)
+problem.add_condition("preeq_c0", k1=0.3, B_c=2.0, A_c=0)
+problem.add_condition("c0", k1=0.8, A_c=1)
 problem.add_experiment("e0", TIME_PREEQUILIBRATION, "preeq_c0", 0, "c0")
 problem.add_observable("obs_a", "A", noise_formula=0.5)
 problem.add_measurement("obs_a", experiment_id="e0", time=1, measurement=0.7)
@@ -41,8 +41,8 @@ problem.add_measurement("obs_a", experiment_id="e0", time=10, measurement=0.1)
 problem.add_parameter(
     "k2", lb=0, ub=10, nominal_value=0.6, scale=LIN, estimate=True
 )
-problem.add_mapping("A", "A_() ** compartment")
-problem.add_mapping("B", "B_() ** compartment")
+problem.add_mapping("A_c", "A_() ** compartment")
+problem.add_mapping("B_c", "B_() ** compartment")
 
 # solutions ------------------------------------------------------------------
 
