@@ -1,7 +1,9 @@
-from petabtests.antimony import antimony_to_sbml_str
-import libsbml
 import tempfile
 from pathlib import Path
+
+import libsbml
+
+from petabtests.antimony import antimony_to_sbml_str
 
 
 def test_antimony_file_to_sbml_str():

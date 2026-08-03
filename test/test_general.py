@@ -1,6 +1,8 @@
-import petabtests
 import os
+
 import pytest
+
+import petabtests
 
 
 def test_cases_dir_exists():

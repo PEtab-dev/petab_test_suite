@@ -1,10 +1,8 @@
-from petabtests.core import create_all
-from petabtests.C import CASES_DIR
-
-import sys
 import subprocess
+import sys
 
-from petabtests.core import create_case
+from petabtests.C import CASES_DIR
+from petabtests.core import create_all, create_case
 
 
 def test_check_cases_up_to_date():

@@ -2,12 +2,12 @@ import numpy as np
 import pandas as pd
 
 __all__ = [
-    "evaluate_llh",
-    "evaluate_chi2",
-    "evaluate_simulations",
-    "absolute_simulations_distance_for_tables",
     "absolute_simulations_distance_for_array",
     "absolute_simulations_distance_for_table",
+    "absolute_simulations_distance_for_tables",
+    "evaluate_chi2",
+    "evaluate_llh",
+    "evaluate_simulations",
 ]
 
 
@@ -79,10 +79,10 @@ def absolute_simulations_distance_for_table(
     """Compute absolute normalized distance between simulations."""
     from petab.v1.C import (
         OBSERVABLE_ID,
-        SIMULATION_CONDITION_ID,
-        TIME,
         PREEQUILIBRATION_CONDITION_ID,
         SIMULATION,
+        SIMULATION_CONDITION_ID,
+        TIME,
     )
     from petab.v2.C import EXPERIMENT_ID
 

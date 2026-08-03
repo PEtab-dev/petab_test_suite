@@ -1,8 +1,9 @@
 from inspect import cleandoc
+from pathlib import Path
 
 from petab.v2 import Problem
 from petab.v2.C import *
-from pathlib import Path
+
 from petabtests import PetabV2TestCase, analytical_a
 
 DESCRIPTION = cleandoc("""

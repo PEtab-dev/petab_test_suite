@@ -2,19 +2,19 @@ import itertools
 import logging
 import os
 import re
-from pathlib import Path
 from collections.abc import Iterable
+from pathlib import Path
 
 from .C import CASES_DIR
 from .file import (
     PetabV1TestCase,
+    PetabV2TestCase,
     get_case_dir,
     test_id_str,
     write_info,
-    PetabV2TestCase,
 )
 
-__all__ = ["get_cases", "create_all", "clear", "get_cases_dir"]
+__all__ = ["clear", "create_all", "get_cases", "get_cases_dir"]
 
 test_formats = ("sbml", "pysb")
 test_versions = ("v1.0.0", "v2.0.0")

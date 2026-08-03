@@ -1,7 +1,7 @@
 """Constants."""
 
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # paths
 BASE_DIR = Path(__file__).parent

@@ -1,10 +1,10 @@
 from inspect import cleandoc
+from pathlib import Path
 
 import pandas as pd
 from petab.v1.C import *
 
 from petabtests import PetabV1TestCase, analytical_a, antimony_to_sbml_str
-from pathlib import Path
 
 DESCRIPTION = cleandoc("""
 ## Objective

@@ -1,13 +1,13 @@
 from inspect import cleandoc
+from pathlib import Path
 
+from petab.v2 import PriorDistribution, Problem
 from petab.v2.C import *
-from petab.v2 import Problem
+
 from petabtests import (
     PetabV2TestCase,
     antimony_to_sbml_str,
 )
-from pathlib import Path
-from petab.v2 import PriorDistribution
 
 DESCRIPTION = cleandoc(r"""
 ## Objective

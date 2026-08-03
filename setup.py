@@ -1,7 +1,8 @@
 """PEtab test suite python package"""
 
-from setuptools import setup, find_namespace_packages
 from os import path
+
+from setuptools import find_namespace_packages, setup
 
 here = path.abspath(path.dirname(__file__))
 

@@ -1,6 +1,7 @@
-from petabtests import evaluate_simulations, evaluate_chi2, evaluate_llh
-from petab.v1.C import *
 import pandas as pd
+from petab.v1.C import *
+
+from petabtests import evaluate_chi2, evaluate_llh, evaluate_simulations
 
 
 def test_evaluate_chi2():

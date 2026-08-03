@@ -1,7 +1,8 @@
 """Antimony -> SBML"""
 
-import antimony as ant
 from pathlib import Path
+
+import antimony as ant
 
 __all__ = ["antimony_to_sbml_str"]
 

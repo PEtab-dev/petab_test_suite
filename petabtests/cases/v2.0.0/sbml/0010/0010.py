@@ -1,7 +1,7 @@
 from inspect import cleandoc
 
-from petab.v2.C import *
 from petab.v2 import Problem
+from petab.v2.C import *
 
 from petabtests import DEFAULT_SBML_FILE, PetabV2TestCase, analytical_a
 

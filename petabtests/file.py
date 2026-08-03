@@ -1,33 +1,35 @@
 """File input and output."""
 
 from __future__ import annotations
+
+import importlib
+import logging
 import os
-from dataclasses import dataclass
-from shutil import copyfile, SameFileError
+import sys
 from collections.abc import Callable
+from dataclasses import dataclass
+from math import log
 from pathlib import Path
+from shutil import SameFileError, copyfile
+
 import pandas as pd
-from petab import v1
-from petab import v2
-import yaml
 import petab.v1.C as C1
 import petab.v2.C as C2
-from .C import *  # noqa: F403
-import logging
+import yaml
+from petab import v1, v2
 from petab.v1.lint import lint_problem as lint_problem_v1
 from petab.v2.lint import lint_problem as lint_problem_v2
-import importlib
-import sys
-from math import log
+
+from .C import *
 
 logger = logging.getLogger("petab_test_suite")
 
 
 __all__ = [
-    "get_case_dir",
-    "load_solution",
     "PetabV1TestCase",
     "PetabV2TestCase",
+    "get_case_dir",
+    "load_solution",
     "problem_yaml_name",
     "solution_yaml_name",
     "test_id_str",
@@ -275,9 +277,8 @@ class PetabV2TestCase:
 
     def write(self, version: str, format_: str):
         """Write the test case to files."""
+        from petab.v2 import Problem, Uniform
         from petab.v2.calculate import calculate_chi2, calculate_llh
-        from petab.v2 import Problem
-        from petab.v2 import Uniform
 
         self.write_problem(
             format_=format_,
@@ -528,8 +529,8 @@ def write_solution(
     tol_simulations: float = 1e-3,
     tol_chi2: float = 1e-3,
     tol_llh: float = 1e-3,
-    log_prior: dict[str, float] = None,
-    unnorm_log_posterior: float = None,
+    log_prior: dict[str, float] | None = None,
+    unnorm_log_posterior: float | None = None,
 ):
     """Write solution to files.
 
@@ -589,7 +590,7 @@ def _write_dfs_to_files(
     name: str,
     writer: Callable,
     dfs: list[pd.DataFrame],
-    config_list: list[str] = None,
+    config_list: list[str] | None = None,
     skip_empty: bool = False,
 ):
     """Write data frames to files and add them to config."""

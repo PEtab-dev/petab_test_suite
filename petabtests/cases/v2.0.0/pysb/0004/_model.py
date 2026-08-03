@@ -1,11 +1,11 @@
 from pysb import (
+    Compartment,
+    Initial,
     Model,
     Monomer,
-    Parameter,
-    Compartment,
-    Rule,
-    Initial,
     Observable,
+    Parameter,
+    Rule,
 )
 
 Model()
