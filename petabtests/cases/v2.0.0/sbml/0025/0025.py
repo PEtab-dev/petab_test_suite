@@ -47,7 +47,8 @@ if untested_distrs:
 sbml_file = Path(__file__).parent / "_model.xml"
 
 parameters = "\n".join(
-    f"p_{prior_type.value.replace('-', '_')} = 5;" for prior_type, _, _, _ in priors
+    f"p_{prior_type.value.replace('-', '_')} = 5;"
+    for prior_type, _, _, _ in priors
 )
 ant_model = f"""
 model petab_test_0025

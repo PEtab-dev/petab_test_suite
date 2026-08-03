@@ -49,7 +49,9 @@ model_file.write_text(antimony_to_sbml_str(ant_model))
 
 problem = Problem()
 
-problem.add_condition("c0", A="initial_A1 + initial_A2", B="initial_B1 / initial_B2")
+problem.add_condition(
+    "c0", A="initial_A1 + initial_A2", B="initial_B1 / initial_B2"
+)
 problem.add_experiment("e1", 0, "c0")
 
 problem.add_observable("obs_a", "A", noise_formula="0.5")
@@ -61,10 +63,18 @@ problem.add_measurement("obs_b", experiment_id="e1", time=10, measurement=0.1)
 
 problem.add_parameter("k1", lb=0, ub=10, nominal_value=0.8, estimate=True)
 problem.add_parameter("k2", lb=0, ub=10, nominal_value=0.6, estimate=True)
-problem.add_parameter("initial_A1", lb=1, ub=10, nominal_value=0.5, estimate=True)
-problem.add_parameter("initial_A2", lb=1, ub=10, nominal_value=1.5, estimate=False)
-problem.add_parameter("initial_B1", lb=0, ub=10, nominal_value=9, estimate=False)
-problem.add_parameter("initial_B2", lb=0, ub=10, nominal_value=3, estimate=False)
+problem.add_parameter(
+    "initial_A1", lb=1, ub=10, nominal_value=0.5, estimate=True
+)
+problem.add_parameter(
+    "initial_A2", lb=1, ub=10, nominal_value=1.5, estimate=False
+)
+problem.add_parameter(
+    "initial_B1", lb=0, ub=10, nominal_value=9, estimate=False
+)
+problem.add_parameter(
+    "initial_B2", lb=0, ub=10, nominal_value=3, estimate=False
+)
 
 
 # solutions ------------------------------------------------------------------

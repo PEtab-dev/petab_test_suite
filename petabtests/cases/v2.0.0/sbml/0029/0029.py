@@ -40,7 +40,8 @@ simulation_df = problem.measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION}
 )
 simulation_df[SIMULATION] = [
-    analytical_a(t=(t - 5.0), a0=a0, b0=b0, k1=k1, k2=k2) for t in simulation_df[TIME]
+    analytical_a(t=(t - 5.0), a0=a0, b0=b0, k1=k1, k2=k2)
+    for t in simulation_df[TIME]
 ]
 
 

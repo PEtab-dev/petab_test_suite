@@ -62,9 +62,15 @@ problem.add_parameter("a0", lb=0, ub=10, nominal_value=1, estimate=True)
 problem.add_parameter("b0", lb=0, ub=10, nominal_value=0, estimate=True)
 problem.add_parameter("k1", lb=0, ub=10, nominal_value=0.8, estimate=True)
 problem.add_parameter("k2", lb=0, ub=10, nominal_value=0.6, estimate=True)
-problem.add_parameter("offset_A1_c0", lb=0, ub=10, nominal_value=0.5, estimate=True)
-problem.add_parameter("offset_A2_c0", lb=0, ub=10, nominal_value=1.5, estimate=False)
-problem.add_parameter("offset_A1_c1", lb=0, ub=10, nominal_value=9, estimate=True)
+problem.add_parameter(
+    "offset_A1_c0", lb=0, ub=10, nominal_value=0.5, estimate=True
+)
+problem.add_parameter(
+    "offset_A2_c0", lb=0, ub=10, nominal_value=1.5, estimate=False
+)
+problem.add_parameter(
+    "offset_A1_c1", lb=0, ub=10, nominal_value=9, estimate=True
+)
 
 # solutions ------------------------------------------------------------------
 

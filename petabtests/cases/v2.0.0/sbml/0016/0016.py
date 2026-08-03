@@ -104,7 +104,7 @@ simulation_df[SIMULATION] = [
     # --- t=15 ---
     vol10,
     (conc10 + 5 * dSdt) * vol10,
-    (conc10 + 5 * dSdt)
+    (conc10 + 5 * dSdt),
 ]
 
 case = PetabV2TestCase.from_problem(

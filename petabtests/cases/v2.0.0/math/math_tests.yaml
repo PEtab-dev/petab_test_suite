@@ -197,4 +197,3 @@ cases:
   expected: -1.0
 - expression: "true ^ true"
   expected: 1.0
-

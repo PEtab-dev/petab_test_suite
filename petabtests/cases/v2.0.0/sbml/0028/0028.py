@@ -2,7 +2,12 @@ from inspect import cleandoc
 
 from petab.v2.C import *
 from petab.v2 import Problem
-from petabtests import PetabV2TestCase, analytical_a, analytical_b, DEFAULT_SBML_FILE
+from petabtests import (
+    PetabV2TestCase,
+    analytical_a,
+    analytical_b,
+    DEFAULT_SBML_FILE,
+)
 
 DESCRIPTION = cleandoc("""
 ## Objective
@@ -33,8 +38,12 @@ problem.add_experiment("experiment1", 0, "", 7, "condition1")
 
 
 problem.add_observable("obs_a", "A", noise_formula="0.5")
-problem.add_measurement("obs_a", experiment_id="experiment1", time=0, measurement=0.7)
-problem.add_measurement("obs_a", experiment_id="experiment1", time=10, measurement=0.1)
+problem.add_measurement(
+    "obs_a", experiment_id="experiment1", time=0, measurement=0.7
+)
+problem.add_measurement(
+    "obs_a", experiment_id="experiment1", time=10, measurement=0.1
+)
 
 problem.add_parameter("k1", lb=0, ub=10, nominal_value=k1, estimate=True)
 problem.add_parameter("k2", lb=0, ub=10, nominal_value=k2, estimate=True)
@@ -51,7 +60,7 @@ a7 = analytical_a(7.0, a0=a0, b0=b0, k1=k1, k2=k2)
 b7 = analytical_b(7.0, a0=a0, b0=b0, k1=k1, k2=k2)
 simulation_df[SIMULATION] = [
     a0,
-    analytical_a(3.0, a0=(a7 + 5.0), b0=b7, k1=k1, k2=k2)
+    analytical_a(3.0, a0=(a7 + 5.0), b0=b7, k1=k1, k2=k2),
 ]
 
 case = PetabV2TestCase.from_problem(
