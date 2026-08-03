@@ -16,7 +16,7 @@ def read(fname):
 long_description = read(path.join(here, "README.md"))
 
 # Get the version
-exec(read(path.join(here, "petabtests", "version.py")))
+exec(read(path.join(here, "petabtests", "version.py")))  # noqa S102
 
 setup(
     version=__version__,  # noqa: F821

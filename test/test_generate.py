@@ -9,7 +9,9 @@ def test_check_cases_up_to_date():
     sys.path.insert(0, CASES_DIR)
     create_all()
     res = subprocess.run(
-        ["git", "diff", "--exit-code", CASES_DIR], capture_output=True
+        ["git", "diff", "--exit-code", CASES_DIR],
+        capture_output=True,
+        check=False,
     )
     has_changes = res.returncode
     assert not has_changes, res.stdout.decode()
