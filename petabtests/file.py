@@ -267,8 +267,11 @@ class PetabV2TestCase:
     @staticmethod
     def load(case_dir: Path, case_id: str) -> PetabV2TestCase:
         """Load a test case definition module."""
+        from petab.v2 import option_context
+
         sys.path.append(str(case_dir))
-        case_module = importlib.import_module(case_id)
+        with option_context(table_columns="non_empty"):
+            case_module = importlib.import_module(case_id)
         sys.path.pop()
         # noinspection PyUnresolvedReferences
         case: PetabV2TestCase = case_module.case
