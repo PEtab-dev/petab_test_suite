@@ -14,15 +14,15 @@ authors = [
 maintainers = [
     { name = "Daniel Weindl", email = "sci@danielweindl.de" },
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: BSD License",
     "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 ]
 keywords = ["PEtab", "testsuite"]
 dependencies = [
@@ -39,6 +39,16 @@ homepage = "https://github.com/PEtab-dev/petab_test_suite"
 [project.scripts]
 petabtests_create = "petabtests.core:_cli_create"
 petabtests_clear = "petabtests.core:clear"
+
+[tool.uv]
+# pysb<1.17 fails to build: its legacy `ez_setup.py` bootstrap downloads
+# setuptools from a defunct pypi.python.org URL.
+constraint-dependencies = ["pysb>=1.17.0"]
+# pysb pins an older sympy than petab needs; force a newer one.
+override-dependencies = ["sympy>=1.12.1"]
+
+[tool.uv.sources]
+petab = { git = "https://github.com/PEtab-dev/libpetab-python", branch = "main" }
 
 
 [tool.ruff]

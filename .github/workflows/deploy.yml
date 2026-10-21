@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.11"]
+        python-version: ["3.12"]
     environment:
       name: pypi
-      url: https://pypi.org/p/sbmlmath
+      url: https://pypi.org/p/petabtests
     permissions:
       id-token: write
 
