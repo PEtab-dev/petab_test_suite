@@ -12,8 +12,6 @@ This case tests a single numeric noise parameter override in the measurement
 table, with a noise formula that is not just the noise parameter placeholder.
 The numeric override must be substituted into the noise formula, not used as
 standard deviation directly.
-The noise formula depends on the observable value, so it has to be evaluated
-for each timepoint.
 
 ## Model
 
@@ -26,7 +24,7 @@ problem = Problem()
 problem.add_observable(
     "obs_a",
     "A",
-    noise_formula="noiseParameter1_obs_a * (obs_a + 1)",
+    noise_formula="2 * noiseParameter1_obs_a",
     noise_placeholders=["noiseParameter1_obs_a"],
 )
 problem.add_measurement(

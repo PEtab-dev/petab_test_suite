@@ -16,8 +16,6 @@ model output is scaled by a different parameter at each timepoint, and the
 noise parameter differs between timepoints. The noise formula is not just the
 noise parameter placeholder, so the numeric override must be substituted into
 the noise formula, not used as standard deviation directly.
-The noise formula depends on the observable value, so it has to be evaluated
-for each timepoint.
 
 ## Model
 
@@ -42,7 +40,7 @@ observable_df = pd.DataFrame(
     data={
         OBSERVABLE_ID: ["obs_a"],
         OBSERVABLE_FORMULA: ["obs_a_scale * A"],
-        NOISE_FORMULA: ["noiseParameter1_obs_a * (obs_a + 1)"],
+        NOISE_FORMULA: ["2 * noiseParameter1_obs_a"],
         OBSERVABLE_PLACEHOLDERS: ["obs_a_scale"],
         NOISE_PLACEHOLDERS: ["noiseParameter1_obs_a"],
     }

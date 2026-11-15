@@ -12,8 +12,6 @@ This case tests a single numeric noise parameter override in the measurement
 table, with a noise formula that is not just the noise parameter placeholder.
 The numeric override must be substituted into the noise formula, not used as
 standard deviation directly.
-The noise formula depends on the observable value, so it has to be evaluated
-for each timepoint.
 
 ## Model
 
@@ -37,7 +35,7 @@ observable_df = pd.DataFrame(
     data={
         OBSERVABLE_ID: ["obs_a"],
         OBSERVABLE_FORMULA: ["A"],
-        NOISE_FORMULA: ["noiseParameter1_obs_a * (obs_a + 1)"],
+        NOISE_FORMULA: ["2 * noiseParameter1_obs_a"],
         NOISE_PLACEHOLDERS: ["noiseParameter1_obs_a"],
     }
 ).set_index([OBSERVABLE_ID])

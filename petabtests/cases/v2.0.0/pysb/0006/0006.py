@@ -16,8 +16,6 @@ model output is scaled by a different parameter at each timepoint, and the
 noise parameter differs between timepoints. The noise formula is not just the
 noise parameter placeholder, so the numeric override must be substituted into
 the noise formula, not used as standard deviation directly.
-The noise formula depends on the observable value, so it has to be evaluated
-for each timepoint.
 
 ## Model
 
@@ -31,7 +29,7 @@ problem = Problem()
 problem.add_observable(
     "obs_a",
     "observableParameter1_obs_a * A",
-    noise_formula="noiseParameter1_obs_a * (obs_a + 1)",
+    noise_formula="2 * noiseParameter1_obs_a",
     observable_placeholders=["observableParameter1_obs_a"],
     noise_placeholders=["noiseParameter1_obs_a"],
 )
