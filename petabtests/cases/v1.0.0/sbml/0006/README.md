@@ -6,7 +6,10 @@ This case tests support for time-point specific overrides in the measurement
 table.
 
 The model is to be simulated for a single experimental condition. The single
-model output is scaled by a different parameter at each timepoint.
+model output is scaled by a different parameter at each timepoint, and the
+noise parameter differs between timepoints. The noise formula is not just the
+noise parameter placeholder, so the numeric override must be substituted into
+the noise formula, not used as standard deviation directly.
 
 ## Model
 

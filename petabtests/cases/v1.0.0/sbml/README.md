@@ -20,7 +20,7 @@ Simulation. Condition-specific parameters only defined in parameter table.
 
 # [0006](0006/)
 
-Simulation. Time-point specific numeric observable parameter overrides.
+Simulation. Time-point specific numeric observable and noise parameter overrides.
 
 # [0007](0007/)
 
@@ -77,4 +77,8 @@ Simulation. Estimated initial value via conditions table.
 # [0020](0020/)
 
 Simulation. NaN in condition table for model without preequilibration.
+
+# [0021](0021/)
+
+Simulation. Single numeric noise parameter override in non-trivial noise formula.
 
