@@ -1,2 +1,2 @@
 observableId	observableFormula	noiseFormula
-obs_a	observableParameter1_obs_a * A	1
+obs_a	observableParameter1_obs_a * A	2 * noiseParameter1_obs_a

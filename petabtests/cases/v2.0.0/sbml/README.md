@@ -20,7 +20,7 @@ Simulation. Condition-specific parameters only defined in parameter table.
 
 # [0006](0006/)
 
-Simulation. Time-point specific numeric observable parameter overrides.
+Simulation. Time-point specific numeric observable and noise parameter overrides.
 
 # [0007](0007/)
 
@@ -121,4 +121,8 @@ Simulation. Two PEtab conditions applied at the same time point.
 # [0032](0032/)
 
 Simulation. A parameter to estimate both sets initial value and appears in observable         formulas
+
+# [0033](0033/)
+
+Simulation. Single numeric noise parameter override in non-trivial noise formula.
 
