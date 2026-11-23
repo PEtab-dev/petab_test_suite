@@ -1,0 +1,4 @@
+observableId	observableFormula	noiseFormula	noiseDistribution
+obs_a	A	0.5	normal
+obs_b	B	0.5	normal
+obs_ab	AB	0.5	normal

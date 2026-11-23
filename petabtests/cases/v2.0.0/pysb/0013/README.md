@@ -2,7 +2,7 @@
 
 ## Objective
 
-This case tests parametric initial concentrations in the condition table.
+This case tests parametric initial amounts in the condition table.
 
 ## Model
 

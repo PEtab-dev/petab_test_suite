@@ -5,10 +5,10 @@
 This case tests support for multiple simulation conditions
 
 The model is to be simulated for two different experimental conditions
-(here: different initial concentrations).
+(here: different initial amounts of `A`).
 
-For `b0`, `nan` is used in the condition table, indicating that the default
-model values for `b0` should be used for either condition.
+`b0` is not changed in the condition table, so the model value of `b0` is
+used for either condition.
 
 ## Model
 

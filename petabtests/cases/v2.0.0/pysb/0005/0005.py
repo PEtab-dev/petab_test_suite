@@ -12,7 +12,7 @@ DESCRIPTION = cleandoc("""
 This case tests support for parametric overrides from condition table.
 
 The model is to be simulated for two different experimental conditions
-(here: different initial concentrations). The observable is offsetted by
+(here: different observable offsets). The observable is offset by
 a parametric override in the condition table (i.e. the actual value has
 to be taken from the parameter table).
 

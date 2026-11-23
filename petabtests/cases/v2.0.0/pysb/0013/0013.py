@@ -9,7 +9,7 @@ from petabtests import PetabV2TestCase, analytical_a
 DESCRIPTION = cleandoc("""
 ## Objective
 
-This case tests parametric initial concentrations in the condition table.
+This case tests parametric initial amounts in the condition table.
 
 ## Model
 
@@ -39,16 +39,13 @@ problem.add_mapping("B_c", "B_() ** compartment")
 simulation_df = problem.measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION}
 )
-# in the model, concentrations are used, which do not depend on the
-#  compartment size, so that the species values should stay the same
 simulation_df[SIMULATION] = [
     analytical_a(t, 1, 7, 0.8, 0.6) for t in simulation_df[TIME]
 ]
 
 case = PetabV2TestCase(
     id=13,
-    brief="Simulation. Species with InitialAssignment overridden by "
-    "parameter.",
+    brief="Simulation. Initial amount of species overridden by parameter.",
     description=DESCRIPTION,
     model=Path("conversion_modified_pysb.py"),
     condition_dfs=[problem.condition_df],

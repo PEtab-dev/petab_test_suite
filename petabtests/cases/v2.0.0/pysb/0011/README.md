@@ -2,9 +2,9 @@
 
 ## Objective
 
-This case tests initial concentrations in the condition table.
-For species `B`, the initial concentration is specified in the condition
-table, while for `A` it is given via an assignment rule in the SBML model.
+This case tests initial amounts in the condition table.
+For species `B`, the initial amount is specified in the condition
+table, while for `A` it is given by the model's `Initial`.
 
 ## Model
 

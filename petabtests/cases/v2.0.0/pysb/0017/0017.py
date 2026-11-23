@@ -13,14 +13,14 @@ from petabtests import (
 DESCRIPTION = cleandoc("""
 ## Objective
 
-This case tests support for partial preequilibration with `NaN`'s in the
-condition file, and usage of the mapping table.
+This case tests support for partial preequilibration and usage of the
+mapping table.
 
 The model is to be simulated for a preequilibration condition and a
 simulation condition.
-For preequilibration, species `B` is initialized with `0`. For simulation,
-`B` is set to `NaN`, meaning that it is initialized with the result from
-preequilibration.
+For preequilibration, `A` is initialized with `0` and `B` with `2`.
+For simulation, `B` is not changed in the condition table, meaning that it
+keeps the result from preequilibration.
 `A` is reinitialized to the value in the condition table after
 preequilibration.
 
@@ -58,8 +58,8 @@ simulation_df[SIMULATION] = [
 
 case = PetabV2TestCase(
     id=17,
-    brief="Simulation. Preequilibration. One species reinitialized, one not "
-    "(NaN in condition table). InitialAssignment to species overridden.",
+    brief="Simulation. Preequilibration. One species reinitialized, one not. "
+    "Mapping table.",
     description=DESCRIPTION,
     model=DEFAULT_PYSB_FILE,
     condition_dfs=[problem.condition_df],

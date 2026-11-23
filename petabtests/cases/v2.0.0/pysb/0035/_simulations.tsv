@@ -1,0 +1,4 @@
+observableId	experimentId	time	simulation
+obs_a	e0	0.0	2.0
+obs_a	e0	10.0	1.2857148796633706
+obs_a	e0	15.0	1.285714286255897
