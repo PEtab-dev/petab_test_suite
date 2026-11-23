@@ -53,8 +53,7 @@ simulation_df[SIMULATION] = [
 
 case = PetabV2TestCase(
     id=10,
-    brief="Simulation. Preequilibration. One species reinitialized, one not. "
-    "InitialAssignment to species overridden.",
+    brief="Simulation. Preequilibration. One species reinitialized, one not.",
     description=DESCRIPTION,
     model=DEFAULT_PYSB_FILE,
     condition_dfs=[problem.condition_df],

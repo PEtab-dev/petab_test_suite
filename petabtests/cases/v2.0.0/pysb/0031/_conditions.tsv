@@ -1,0 +1,3 @@
+conditionId	targetId	targetValue
+condition1	A_c	A_c + 5
+condition2	B_c	B_c + 3

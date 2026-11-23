@@ -1,0 +1,4 @@
+parameterId	lowerBound	upperBound	nominalValue	estimate
+kdeg	0.0	10.0	0.5	true
+a0_new	0.0	10.0	3.0	true
+p_add	0.0	10.0	2.0	true

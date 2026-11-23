@@ -9,9 +9,9 @@ from petabtests import PetabV2TestCase, analytical_a
 DESCRIPTION = cleandoc("""
 ## Objective
 
-This case tests initial concentrations in the condition table.
-For species `B`, the initial concentration is specified in the condition
-table, while for `A` it is given via an assignment rule in the SBML model.
+This case tests initial amounts in the condition table.
+For species `B`, the initial amount is specified in the condition
+table, while for `A` it is given by the model's `Initial`.
 
 ## Model
 
@@ -48,7 +48,7 @@ simulation_df[SIMULATION] = [
 
 case = PetabV2TestCase(
     id=11,
-    brief="Simulation. InitialAssignment to species overridden.",
+    brief="Simulation. Initial amount of species overridden.",
     description=DESCRIPTION,
     model=Path("conversion_modified_pysb.py"),
     condition_dfs=[problem.condition_df],

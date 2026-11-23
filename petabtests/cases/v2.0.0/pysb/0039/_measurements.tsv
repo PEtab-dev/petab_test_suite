@@ -1,0 +1,7 @@
+observableId	experimentId	time	measurement
+obs_a	e_a0	0.0	1.0
+obs_a	e_a0	10.0	1.0
+obs_a	e_a0	15.0	1.0
+obs_a	e_add	0.0	1.0
+obs_a	e_add	10.0	1.0
+obs_a	e_add	15.0	1.0

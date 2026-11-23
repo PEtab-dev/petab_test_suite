@@ -36,11 +36,11 @@ Simulation. Preequilibration.
 
 # [0010](0010/)
 
-Simulation. Preequilibration. One species reinitialized, one not. InitialAssignment to species overridden.
+Simulation. Preequilibration. One species reinitialized, one not.
 
 # [0011](0011/)
 
-Simulation. InitialAssignment to species overridden.
+Simulation. Initial amount of species overridden.
 
 # [0012](0012/)
 
@@ -48,7 +48,7 @@ Simulation. Initial compartment size in condition table.
 
 # [0013](0013/)
 
-Simulation. Species with InitialAssignment overridden by parameter.
+Simulation. Initial amount of species overridden by parameter.
 
 # [0014](0014/)
 
@@ -60,9 +60,49 @@ Simulation. Single parametric noise parameter override.
 
 # [0017](0017/)
 
-Simulation. Preequilibration. One species reinitialized, one not (NaN in condition table). InitialAssignment to species overridden.
+Simulation. Preequilibration. One species reinitialized, one not. Mapping table.
+
+# [0018](0018/)
+
+Simulation. Preequilibration. Non-zero simulation start time.
+
+# [0028](0028/)
+
+Simulation. State-dependent condition applied at a non-initial time point without measurements.
+
+# [0031](0031/)
+
+Simulation. Two PEtab conditions applied at the same time point.
 
 # [0033](0033/)
 
 Simulation. Single numeric noise parameter override in non-trivial noise formula.
+
+# [0034](0034/)
+
+Simulation. Rate parameter changed to an estimated parameter at a non-initial time point.
+
+# [0035](0035/)
+
+Simulation. Parameter used in an Initial changed in the first and in a later period.
+
+# [0036](0036/)
+
+Simulation. Compartment size in the condition table, with volume-dependent dynamics.
+
+# [0037](0037/)
+
+Simulation. Compartment size and species changed at a non-initial time point.
+
+# [0038](0038/)
+
+Simulation. First-period species changes differing between experiments. Species without Initial changed.
+
+# [0039](0039/)
+
+Simulation. Parameter and species changed to estimated parameter-dependent values at a non-initial time point.
+
+# [0040](0040/)
+
+Simulation. Species change at a non-initial time point in a model with conservation laws.
 

@@ -33,8 +33,9 @@ problem.add_parameter("k2", lb=0, ub=10, nominal_value=0.6, estimate=True)
 simulation_df = problem.measurement_df.copy(deep=True).rename(
     columns={MEASUREMENT: SIMULATION}
 )
-# in the model, concentrations are used, which do not depend on the
-#  compartment size, so that the species values should stay the same
+# PySB species are amounts, which are not changed by the compartment size.
+#  The model only has first-order reactions, so the dynamics do not depend on
+#  the compartment size either. See case 0036 for volume-dependent dynamics.
 simulation_df[SIMULATION] = [
     analytical_a(t, 1, 1, 0.8, 0.6) for t in simulation_df[TIME]
 ]
