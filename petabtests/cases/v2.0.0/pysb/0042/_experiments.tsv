@@ -1,0 +1,5 @@
+experimentId	time	conditionId
+e_t10	0.0	
+e_t10	10.0	c_expr
+e_preeq	-inf	
+e_preeq	5.0	c_expr

@@ -106,3 +106,15 @@ Simulation. Parameter and species changed to estimated parameter-dependent value
 
 Simulation. Species change at a non-initial time point in a model with conservation laws.
 
+# [0041](0041/)
+
+Simulation. Non-zero simulation start time. `time` in the target value of a species change in the first period.
+
+# [0042](0042/)
+
+Simulation. Preequilibration. Non-zero simulation start time. Species change after the first period with `time`, an estimated parameter, and a mapped species in the target value.
+
+# [0043](0043/)
+
+Simulation. Preequilibration. Estimated parameter-dependent species changes in and after preequilibration.
+
