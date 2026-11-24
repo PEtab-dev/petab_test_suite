@@ -1,5 +1,5 @@
-chi2: 88.99318165868516
-llh: -47.72076225687182
+chi2: 89.51925893720399
+llh: -49.02317026632281
 simulation_files:
 - _simulations.tsv
 tol_chi2: 0.001

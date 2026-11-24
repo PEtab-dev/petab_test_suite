@@ -20,7 +20,7 @@ Simulation. Condition-specific parameters only defined in parameter table.
 
 # [0006](0006/)
 
-Simulation. Time-point specific numeric observable and noise parameter overrides.
+Simulation. Time-point specific numeric observable and noise parameter overrides, with and without scaling in the noise formula.
 
 # [0007](0007/)
 

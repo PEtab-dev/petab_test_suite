@@ -5,11 +5,15 @@
 This case tests support for time-point specific overrides in the measurement
 table.
 
-The model is to be simulated for a single experimental condition. The single
-model output is scaled by a different parameter at each timepoint, and the
-noise parameter differs between timepoints. The noise formula is not just the
-noise parameter placeholder, so the numeric override must be substituted into
-the noise formula, not used as standard deviation directly.
+The model is to be simulated for a single experimental condition. The
+noise parameters differ between timepoints for both model outputs:
+
+* `obs_a` is scaled by a different numeric value at each timepoint. Its
+  noise formula is not just the noise parameter placeholder, so the numeric
+  override must be substituted into the noise formula, not used as standard
+  deviation directly.
+* `obs_b` has a noise formula that consists only of the noise parameter
+  placeholder, so the numeric override is the standard deviation.
 
 ## Model
 

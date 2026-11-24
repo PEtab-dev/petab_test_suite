@@ -1,2 +1,3 @@
 observableId	observableFormula	noiseFormula	observablePlaceholders	noisePlaceholders
 obs_a	obs_a_scale * A	2 * noiseParameter1_obs_a	obs_a_scale	noiseParameter1_obs_a
+obs_b	B	noiseParameter1_obs_b		noiseParameter1_obs_b
