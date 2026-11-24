@@ -1,3 +1,5 @@
 observableId	simulationConditionId	time	measurement	observableParameters	noiseParameters
 obs_a	c0	0	0.7	10	0.5
 obs_a	c0	10	0.1	15	2.0
+obs_b	c0	0	0.2		0.3
+obs_b	c0	10	1.0		1.5
