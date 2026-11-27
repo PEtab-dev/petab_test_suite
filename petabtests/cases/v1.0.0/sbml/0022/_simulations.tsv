@@ -1,0 +1,8 @@
+observableId	simulationConditionId	time	simulation	observableParameters
+obs_a	c0	0	1.0	
+obs_a	c0	10	0.5142861181710922	
+obs_b	c0	0	0.2	
+obs_b	c0	10	0.6857138818289079	
+obs_s	c0	0	0.6	
+obs_scaled_a	c0	0	0.6	k2
+obs_scaled_a	c0	10	0.3085716709026553	k2
