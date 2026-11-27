@@ -1,0 +1,5 @@
+observableId	observableFormula	noiseFormula
+obs_a	A	0.5
+obs_b	B	0.5
+obs_s	s	0.5
+obs_scaled_a	observableParameter1_obs_scaled_a * A	0.5

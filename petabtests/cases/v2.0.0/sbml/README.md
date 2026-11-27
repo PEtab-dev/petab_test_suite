@@ -126,3 +126,7 @@ Simulation. A parameter to estimate both sets initial value and appears in obser
 
 Simulation. Single numeric noise parameter override in non-trivial noise formula.
 
+# [0044](0044/)
+
+Simulation. Parameter table entries replace InitialAssignments to parameters.
+

@@ -82,3 +82,7 @@ Simulation. NaN in condition table for model without preequilibration.
 
 Simulation. Single numeric noise parameter override in non-trivial noise formula.
 
+# [0022](0022/)
+
+Simulation. Parameter table entries replace InitialAssignments to parameters.
+

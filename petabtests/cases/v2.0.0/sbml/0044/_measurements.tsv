@@ -1,0 +1,8 @@
+observableId	experimentId	time	measurement	observableParameters
+obs_a	e1	0.0	0.7	
+obs_a	e1	10.0	0.1	
+obs_b	e1	0.0	0.3	
+obs_b	e1	10.0	0.9	
+obs_s	e1	0.0	0.5	
+obs_scaled_a	e1	0.0	0.5	k2
+obs_scaled_a	e1	10.0	0.1	k2
